@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad 精準復刻版 V7</title>
+  <title>Resort Wait Display - iPad 精準復刻版 V8</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -574,13 +574,13 @@
       to { transform: rotate(360deg); }
     }
 
-    /* 單軌列車沿高架滑行 */
+    /* 單軌列車沿高架滑行（精準貼齊 y=576 高架梁軌道） */
     .monorail-glide {
       animation: monorailRun 18s linear infinite;
     }
     @keyframes monorailRun {
-      0% { transform: translateX(-340px); }
-      100% { transform: translateX(1780px); }
+      0% { transform: translate(-340px, 563px); }
+      100% { transform: translate(1780px, 563px); }
     }
 
     /* 城堡尖塔微光與旗幟 */
@@ -1326,7 +1326,7 @@
                 <rect x="1080" y="580" width="6" height="45" fill="#557ec2"/>
                 <rect x="1300" y="580" width="6" height="45" fill="#557ec2"/>
 
-                <g class="monorail-glide" transform="translate(0, 563)">
+                <g class="monorail-glide">
                   <path d="M12,13 Q0,13 4,5 Q12,0 32,0 L238,0 Q258,0 266,5 Q270,13 258,13 Z" fill="#ffffff"/>
                   <rect x="24" y="4" width="222" height="3.5" rx="1.5" fill="#ff4d4f"/>
                   <g fill="#ffd166">
