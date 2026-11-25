@@ -123,7 +123,7 @@
       display: flex;
     }
 
-    /* --- 主待機頻道：RESORT TV（YouTube 直播滿版 + 經典迪士尼天際線備援） --- */
+    /* --- 主待機頻道：RESORT TV --- */
     .yt-wrapper {
       position: relative;
       width: 100%;
@@ -138,7 +138,6 @@
       display: block;
     }
 
-    /* 右上角微調浮動按鈕（換頻道/靜音提示） */
     .resort-overlay-pill {
       position: absolute;
       top: 14px;
@@ -171,7 +170,6 @@
       50% { opacity: 0.35; }
     }
 
-    /* 尚未貼 YouTube 網址時的預設迪士尼度假區 TV 動畫背景 */
     .fallback-resort-bg {
       position: relative;
       width: 100%;
@@ -189,6 +187,8 @@
       justify-content: space-between;
       align-items: flex-start;
       z-index: 3;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .park-hours-headline {
@@ -230,14 +230,13 @@
     .fallback-tip {
       margin-top: 10px;
       font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.85);
-      background: rgba(12, 24, 48, 0.45);
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(12, 24, 48, 0.48);
       padding: 8px 16px;
       border-radius: 999px;
       display: inline-block;
     }
 
-    /* 底部剪影天際線 SVG */
     .skyline-svg {
       width: calc(100% + 80px);
       margin-left: -40px;
@@ -246,7 +245,7 @@
       z-index: 2;
     }
 
-    /* --- TERRACE 頻道：煙火秀 / 露台景觀直播 --- */
+    /* --- TERRACE 頻道：4 個煙火秀 / 園區實況直播頻道 --- */
     .terrace-stage {
       width: 100%;
       height: 100%;
@@ -266,7 +265,7 @@
     }
 
     .terrace-title {
-      font-size: 1.45rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: var(--gold);
       margin: 0;
@@ -275,6 +274,7 @@
     .stream-switch-group {
       display: flex;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .mini-pill-btn {
@@ -282,10 +282,11 @@
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
-      padding: 6px 14px;
-      font-size: 0.88rem;
+      padding: 6px 12px;
+      font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
+      transition: all 0.15s ease;
     }
 
     .mini-pill-btn.active {
@@ -312,15 +313,15 @@
       border: 0;
     }
 
-    /* --- PARKS 頻道：遊樂設施即時/模擬排隊時間 --- */
+    /* --- PARKS 頻道：奧蘭多 4 園區 + 加州 2 園區 即時更新排隊看板 --- */
     .parks-stage {
       width: 100%;
       height: 100%;
       background: linear-gradient(180deg, #163d7a 0%, #10264d 100%);
-      padding: 20px 28px;
+      padding: 18px 26px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       overflow-y: auto;
     }
 
@@ -332,109 +333,263 @@
       gap: 10px;
     }
 
+    .parks-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     .parks-header h2 {
       margin: 0;
-      font-size: 1.65rem;
+      font-size: 1.45rem;
       font-weight: 700;
+    }
+
+    .live-sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(92, 214, 92, 0.16);
+      border: 1px solid rgba(92, 214, 92, 0.45);
+      color: #8ef08e;
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .refresh-mini-btn {
+      background: rgba(255, 209, 102, 0.16);
+      border: 1px solid rgba(255, 209, 102, 0.5);
+      color: var(--gold);
+      border-radius: 8px;
+      padding: 5px 11px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .region-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #a9c4f2;
+      text-transform: uppercase;
+      margin-bottom: 4px;
     }
 
     .rides-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      gap: 11px;
     }
 
     .ride-card {
-      background: rgba(11, 20, 38, 0.72);
+      background: rgba(11, 20, 38, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 14px;
-      padding: 14px 20px;
+      padding: 13px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .ride-card.updated-flash {
+      border-color: rgba(255, 209, 102, 0.85);
+      box-shadow: 0 0 14px rgba(255, 209, 102, 0.22);
     }
 
     .ride-name {
-      font-size: 1.08rem;
+      font-size: 1.04rem;
       font-weight: 700;
     }
 
     .ride-land {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       margin-top: 3px;
     }
 
+    .ride-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ride-trend {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .trend-up {
+      background: rgba(255, 107, 107, 0.18);
+      color: #ff9494;
+    }
+
+    .trend-down {
+      background: rgba(92, 214, 92, 0.18);
+      color: #8ef08e;
+    }
+
+    .trend-flat {
+      background: rgba(255, 255, 255, 0.1);
+      color: #b8c4d9;
+    }
+
     .ride-wait {
-      font-size: 1.55rem;
+      font-size: 1.5rem;
       font-weight: 800;
       color: var(--gold);
       font-variant-numeric: tabular-nums;
       text-align: right;
+      min-width: 56px;
     }
 
     .ride-wait span {
       display: block;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
       color: var(--text-muted);
       letter-spacing: 0.08em;
     }
 
-    /* --- VACATION 頻道：假期倒數 --- */
+    /* --- VACATION 頻道：可愛簡約小動畫背景（城堡、煙火、園區景色） --- */
     .vacation-stage {
+      position: relative;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at top, #2358b0 0%, #122852 80%);
+      background: linear-gradient(180deg, #1b3b78 0%, #2b64b8 55%, #5aa3f0 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       padding: 24px;
+      overflow: hidden;
+    }
+
+    .cute-bg-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .cloud-drift-1 {
+      animation: cloudDriftSlow 22s ease-in-out infinite alternate;
+    }
+
+    .cloud-drift-2 {
+      animation: cloudDriftReverse 28s ease-in-out infinite alternate;
+    }
+
+    @keyframes cloudDriftSlow {
+      0% { transform: translateX(-18px); }
+      100% { transform: translateX(22px); }
+    }
+
+    @keyframes cloudDriftReverse {
+      0% { transform: translateX(20px); }
+      100% { transform: translateX(-20px); }
+    }
+
+    .fw-sparkle {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: cuteTwinkle 2.4s ease-in-out infinite;
+    }
+
+    .fw-sparkle-delay-1 {
+      animation-delay: 0.6s;
+    }
+
+    .fw-sparkle-delay-2 {
+      animation-delay: 1.3s;
+    }
+
+    .fw-sparkle-delay-3 {
+      animation-delay: 1.9s;
+    }
+
+    @keyframes cuteTwinkle {
+      0%, 100% { transform: scale(0.75) rotate(0deg); opacity: 0.35; }
+      50% { transform: scale(1.18) rotate(12deg); opacity: 1; }
+    }
+
+    .tree-sway {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: gentleSway 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes gentleSway {
+      0% { transform: rotate(-2deg); }
+      100% { transform: rotate(2.5deg); }
+    }
+
+    .vacation-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(11, 22, 46, 0.42);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 26px;
+      padding: 26px 34px;
+      max-width: 780px;
     }
 
     .vac-badge {
-      background: rgba(255, 209, 102, 0.2);
-      border: 1px solid rgba(255, 209, 102, 0.5);
+      background: rgba(255, 209, 102, 0.22);
+      border: 1px solid rgba(255, 209, 102, 0.55);
       color: var(--gold);
       padding: 6px 16px;
       border-radius: 999px;
       font-size: 0.85rem;
       font-weight: 700;
       letter-spacing: 0.1em;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .vac-title {
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-size: clamp(1.7rem, 3.2vw, 2.5rem);
       font-weight: 800;
-      margin: 0 0 8px;
+      margin: 0 0 6px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
     }
 
     .vac-sub {
-      color: #d0def5;
-      font-size: 1rem;
-      margin: 0 0 28px;
+      color: #e3eeff;
+      font-size: 0.96rem;
+      margin: 0 0 22px;
     }
 
     .countdown-boxes {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
       justify-content: center;
     }
 
     .cd-unit-box {
-      background: rgba(10, 18, 36, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(10, 18, 36, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 16px;
-      padding: 18px 24px;
-      min-width: 115px;
+      padding: 16px 22px;
+      min-width: 108px;
     }
 
     .cd-num {
-      font-size: 2.7rem;
+      font-size: 2.5rem;
       font-weight: 800;
       color: var(--gold);
       font-variant-numeric: tabular-nums;
@@ -442,9 +597,9 @@
     }
 
     .cd-lbl {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin-top: 8px;
+      margin-top: 7px;
       letter-spacing: 0.12em;
     }
 
@@ -560,7 +715,7 @@
       cursor: pointer;
     }
 
-    /* ================= 3. 最下方膠囊導覽列（完全對齊參考圖） ================= */
+    /* ================= 3. 最下方膠囊導覽列 ================= */
     .bottom-bar {
       height: 68px;
       min-height: 68px;
@@ -628,7 +783,6 @@
       white-space: nowrap;
     }
 
-    /* 個別按鈕邊框與文字色彩 */
     .pill-btn[data-page="resort"] {
       border-color: var(--green-pill);
       color: var(--green-pill);
@@ -678,64 +832,173 @@
 
     <!-- ========== 2. 中央：YouTube Disney Resort TV 直播主畫面 / 各分區內容 ========== -->
     <main class="center-stage">
-      <!-- 主畫面 / RESORT：預設顯示 YouTube Disney Resort TV 直播 -->
+      <!-- 主畫面 / RESORT -->
       <section class="page-view active" id="page-resort">
-        <div class="yt-wrapper" id="resortStreamContainer">
-          <!-- 若有設定 YouTube 直播網址則直接全螢幕嵌入；否則顯示經典迪士尼藍天剪影待機畫面 -->
-        </div>
+        <div class="yt-wrapper" id="resortStreamContainer"></div>
       </section>
 
-      <!-- TERRACE：煙火秀 / 露台景觀直播 -->
+      <!-- TERRACE：4 個煙火秀 / 園區實況直播頻道 -->
       <section class="page-view" id="page-terrace">
         <div class="terrace-stage">
           <div class="terrace-top">
-            <h2 class="terrace-title">🎆 VIRTUAL TERRACE · 煙火秀與園區實況</h2>
+            <h2 class="terrace-title">🎆 VIRTUAL TERRACE · 煙火秀與園區實況（4 頻道）</h2>
             <div class="stream-switch-group">
               <button class="mini-pill-btn active" data-terrace-idx="0">直播頻道 1</button>
               <button class="mini-pill-btn" data-terrace-idx="1">直播頻道 2</button>
+              <button class="mini-pill-btn" data-terrace-idx="2">直播頻道 3</button>
+              <button class="mini-pill-btn" data-terrace-idx="3">直播頻道 4</button>
             </div>
           </div>
           <div class="terrace-video-box" id="terraceVideoContainer"></div>
         </div>
       </section>
 
-      <!-- PARKS：遊樂設施排隊時間 -->
+      <!-- PARKS：奧蘭多 4 園區 + 加州 2 園區 即時更新排隊看板 -->
       <section class="page-view" id="page-parks">
         <div class="parks-stage">
           <div class="parks-header">
-            <h2 id="parksTitle">🎢 樂園即時排隊看板</h2>
+            <div class="parks-title-group">
+              <h2 id="parksTitle">🎢 即時排隊看板</h2>
+              <span class="live-sync-badge" id="parksSyncBadge">
+                <span class="live-dot" style="width:7px;height:7px;background:#5cd65c;box-shadow:0 0 6px #5cd65c;"></span>
+                <span id="parksSyncText">即時更新中</span>
+              </span>
+              <button class="refresh-mini-btn" id="btnManualRefreshRides" title="立即更新排隊數字">↻ 立即更新</button>
+            </div>
+
             <div class="stream-switch-group">
-              <button class="mini-pill-btn active" data-park="tdl">東京迪士尼樂園</button>
-              <button class="mini-pill-btn" data-park="tds">東京迪士尼海洋</button>
-              <button class="mini-pill-btn" data-park="mk">Magic Kingdom</button>
+              <button class="mini-pill-btn active" data-park="mk">MK 魔幻王國</button>
+              <button class="mini-pill-btn" data-park="epcot">EPCOT</button>
+              <button class="mini-pill-btn" data-park="hs">好萊塢影城</button>
+              <button class="mini-pill-btn" data-park="ak">動物王國</button>
+              <button class="mini-pill-btn" data-park="dlr">加州迪士尼</button>
+              <button class="mini-pill-btn" data-park="dca">加州冒險樂園</button>
             </div>
           </div>
+
+          <div class="region-label" id="parksRegionLabel">FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區）</div>
           <div class="rides-grid" id="ridesGrid"></div>
         </div>
       </section>
 
-      <!-- VACATION：假期與暑假倒數 -->
+      <!-- VACATION：可愛簡約小動畫背景（城堡、煙火、園區景色） -->
       <section class="page-view" id="page-vacation">
         <div class="vacation-stage">
-          <div class="vac-badge" id="vacBadge">SUMMER VACATION COUNTDOWN</div>
-          <h2 class="vac-title" id="vacTitle">距離下一次迪士尼假期還有</h2>
-          <p class="vac-sub" id="vacSub">目標出發日：2027/07/01 · 可隨時在左下角 ⚙️ 設定切換假期主題</p>
-          <div class="countdown-boxes">
-            <div class="cd-unit-box">
-              <div class="cd-num" id="cdDays">00</div>
-              <div class="cd-lbl">DAYS</div>
-            </div>
-            <div class="cd-unit-box">
-              <div class="cd-num" id="cdHours">00</div>
-              <div class="cd-lbl">HOURS</div>
-            </div>
-            <div class="cd-unit-box">
-              <div class="cd-num" id="cdMins">00</div>
-              <div class="cd-lbl">MINS</div>
-            </div>
-            <div class="cd-unit-box">
-              <div class="cd-num" id="cdSecs">00</div>
-              <div class="cd-lbl">SECS</div>
+          <div class="cute-bg-layer" aria-hidden="true">
+            <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMax slice" style="width:100%;height:100%;display:block;">
+              <!-- 可愛簡約煙火與星星小動畫 -->
+              <g class="fw-sparkle" transform="translate(220, 145)">
+                <circle cx="0" cy="0" r="5" fill="#ffd166"/>
+                <line x1="0" y1="-22" x2="0" y2="-10" stroke="#ffd166" stroke-width="3" stroke-linecap="round"/>
+                <line x1="0" y1="10" x2="0" y2="22" stroke="#ffd166" stroke-width="3" stroke-linecap="round"/>
+                <line x1="-22" y1="0" x2="-10" y2="0" stroke="#ff9ebb" stroke-width="3" stroke-linecap="round"/>
+                <line x1="10" y1="0" x2="22" y2="0" stroke="#ff9ebb" stroke-width="3" stroke-linecap="round"/>
+                <line x1="-15" y1="-15" x2="-7" y2="-7" stroke="#8be9fd" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="7" y1="7" x2="15" y2="15" stroke="#8be9fd" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="15" y1="-15" x2="7" y2="-7" stroke="#8be9fd" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="-7" y1="7" x2="-15" y2="15" stroke="#8be9fd" stroke-width="2.5" stroke-linecap="round"/>
+              </g>
+
+              <g class="fw-sparkle fw-sparkle-delay-1" transform="translate(970, 130)">
+                <circle cx="0" cy="0" r="4.5" fill="#fff3b0"/>
+                <line x1="0" y1="-20" x2="0" y2="-9" stroke="#fff3b0" stroke-width="3" stroke-linecap="round"/>
+                <line x1="0" y1="9" x2="0" y2="20" stroke="#fff3b0" stroke-width="3" stroke-linecap="round"/>
+                <line x1="-20" y1="0" x2="-9" y2="0" stroke="#ffd166" stroke-width="3" stroke-linecap="round"/>
+                <line x1="9" y1="0" x2="20" y2="0" stroke="#ffd166" stroke-width="3" stroke-linecap="round"/>
+                <line x1="-14" y1="-14" x2="-6" y2="-6" stroke="#c77dff" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="6" y1="6" x2="14" y2="14" stroke="#c77dff" stroke-width="2.5" stroke-linecap="round"/>
+              </g>
+
+              <g class="fw-sparkle fw-sparkle-delay-2" transform="translate(360, 95)">
+                <polygon points="0,-10 3,-3 10,0 3,3 0,10 -3,3 -10,0 -3,-3" fill="#ffe66d"/>
+              </g>
+
+              <g class="fw-sparkle fw-sparkle-delay-3" transform="translate(835, 92)">
+                <polygon points="0,-9 2.7,-2.7 9,0 2.7,2.7 0,9 -2.7,2.7 -9,0 -2.7,-2.7" fill="#a8e6cf"/>
+              </g>
+
+              <!-- 漂浮小雲朵 -->
+              <g class="cloud-drift-1" fill="rgba(255,255,255,0.25)">
+                <ellipse cx="140" cy="220" rx="58" ry="20"/>
+                <circle cx="122" cy="212" r="22"/>
+                <circle cx="155" cy="210" r="25"/>
+              </g>
+
+              <g class="cloud-drift-2" fill="rgba(255,255,255,0.22)">
+                <ellipse cx="1040" cy="235" rx="64" ry="21"/>
+                <circle cx="1020" cy="226" r="24"/>
+                <circle cx="1056" cy="224" r="26"/>
+              </g>
+
+              <!-- 簡約可愛城堡剪影（中央偏後） -->
+              <g fill="rgba(16, 30, 62, 0.58)">
+                <!-- 主塔與尖頂 -->
+                <rect x="562" y="425" width="76" height="145" rx="4"/>
+                <polygon points="554,425 600,340 646,425"/>
+                <!-- 左右側塔 -->
+                <rect x="515" y="465" width="44" height="105" rx="3"/>
+                <polygon points="509,465 537,402 565,465"/>
+                <rect x="641" y="465" width="44" height="105" rx="3"/>
+                <polygon points="635,465 663,402 691,465"/>
+                <!-- 最外側小塔 -->
+                <rect x="478" y="498" width="32" height="72" rx="3"/>
+                <polygon points="473,498 494,452 515,498"/>
+                <rect x="690" y="498" width="32" height="72" rx="3"/>
+                <polygon points="685,498 706,452 727,498"/>
+                <!-- 城堡拱門 -->
+                <path d="M585,570 L585,525 Q600,510 615,525 L615,570 Z" fill="rgba(255, 209, 102, 0.25)"/>
+              </g>
+
+              <!-- 園區草坡與搖曳小樹景色 -->
+              <path d="M0,575 Q300,545 600,568 T1200,558 L1200,700 L0,700 Z" fill="#2b6e44"/>
+              <path d="M0,605 Q360,585 720,608 T1200,598 L1200,700 L0,700 Z" fill="#1d4d32"/>
+
+              <g class="tree-sway" transform="translate(130, 560)">
+                <rect x="-3" y="-22" width="6" height="24" fill="#3b281c"/>
+                <circle cx="0" cy="-34" r="22" fill="#3a8f58"/>
+                <circle cx="-13" cy="-26" r="15" fill="#46a668"/>
+                <circle cx="13" cy="-26" r="15" fill="#46a668"/>
+              </g>
+
+              <g class="tree-sway" style="animation-delay:1.2s;" transform="translate(260, 575)">
+                <rect x="-2.5" y="-18" width="5" height="19" fill="#3b281c"/>
+                <circle cx="0" cy="-28" r="17" fill="#3a8f58"/>
+              </g>
+
+              <g class="tree-sway" style="animation-delay:0.8s;" transform="translate(945, 565)">
+                <rect x="-3" y="-20" width="6" height="22" fill="#3b281c"/>
+                <circle cx="0" cy="-32" r="20" fill="#3a8f58"/>
+                <circle cx="12" cy="-24" r="14" fill="#46a668"/>
+              </g>
+
+              <g class="tree-sway" style="animation-delay:1.7s;" transform="translate(1075, 580)">
+                <rect x="-2.5" y="-18" width="5" height="19" fill="#3b281c"/>
+                <circle cx="0" cy="-28" r="17" fill="#3a8f58"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="vacation-content">
+            <div class="vac-badge" id="vacBadge">SUMMER VACATION COUNTDOWN</div>
+            <h2 class="vac-title" id="vacTitle">距離下一次迪士尼暑假之旅還有</h2>
+            <p class="vac-sub" id="vacSub">目標出發日：2027/07/01 · 可隨時在左下角 ⚙️ 設定切換假期主題</p>
+            <div class="countdown-boxes">
+              <div class="cd-unit-box">
+                <div class="cd-num" id="cdDays">00</div>
+                <div class="cd-lbl">DAYS</div>
+              </div>
+              <div class="cd-unit-box">
+                <div class="cd-num" id="cdHours">00</div>
+                <div class="cd-lbl">HOURS</div>
+              </div>
+              <div class="cd-unit-box">
+                <div class="cd-num" id="cdMins">00</div>
+                <div class="cd-lbl">MINS</div>
+              </div>
+              <div class="cd-unit-box">
+                <div class="cd-num" id="cdSecs">00</div>
+                <div class="cd-lbl">SECS</div>
+              </div>
             </div>
           </div>
         </div>
@@ -805,17 +1068,30 @@
             <div class="s-box" style="grid-column: 1 / -1;">
               <h3>📺 中央主畫面 YouTube Disney Resort TV 直播網址</h3>
               <div class="s-field">
-                <label for="inpResortYt">主畫面 RESORT TV YouTube 網址（貼上一般 YouTube 或直播網址即可自動轉換）</label>
+                <label for="inpResortYt">主畫面 RESORT TV YouTube 網址</label>
                 <input type="url" id="inpResortYt" placeholder="例如：https://www.youtube.com/watch?v=... 或 https://youtu.be/..." />
               </div>
+            </div>
+
+            <!-- 4. TERRACE 4 個煙火秀與園區直播頻道 -->
+            <div class="s-box" style="grid-column: 1 / -1;">
+              <h3>🎆 TERRACE 煙火秀與園區直播（4 個頻道）</h3>
               <div class="settings-wrap" style="padding: 0;">
                 <div class="s-field">
-                  <label for="inpTerraceYt1">TERRACE 煙火直播頻道 1 網址</label>
+                  <label for="inpTerraceYt1">直播頻道 1 網址</label>
                   <input type="url" id="inpTerraceYt1" placeholder="https://www.youtube.com/watch?v=..." />
                 </div>
                 <div class="s-field">
-                  <label for="inpTerraceYt2">TERRACE 煙火直播頻道 2 網址</label>
+                  <label for="inpTerraceYt2">直播頻道 2 網址</label>
                   <input type="url" id="inpTerraceYt2" placeholder="https://www.youtube.com/watch?v=..." />
+                </div>
+                <div class="s-field">
+                  <label for="inpTerraceYt3">直播頻道 3 網址</label>
+                  <input type="url" id="inpTerraceYt3" placeholder="https://www.youtube.com/watch?v=..." />
+                </div>
+                <div class="s-field">
+                  <label for="inpTerraceYt4">直播頻道 4 網址</label>
+                  <input type="url" id="inpTerraceYt4" placeholder="https://www.youtube.com/watch?v=..." />
                 </div>
               </div>
               <div class="s-field">
@@ -837,12 +1113,10 @@
     <!-- ========== 3. 最下方：設定齒輪 + 首頁房子 + 分區膠囊按鈕 ========== -->
     <footer class="bottom-bar">
       <div class="nav-left-icons">
-        <!-- 設定齒輪 -->
         <button class="icon-btn" id="btn-settings" title="設定" onclick="switchPage('settings')">
           <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>
         </button>
 
-        <!-- 主畫面房子（回到預設 Resort TV 主畫面） -->
         <button class="icon-btn active" id="btn-home" title="回到主畫面" onclick="switchPage('resort')">
           <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         </button>
@@ -859,7 +1133,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "disney_resort_tv_ipad_layout_v2";
+    const STORAGE_KEY = "disney_resort_tv_ipad_layout_v3";
 
     const DEFAULT_DATA = {
       welcomeLabel: "WELCOME",
@@ -868,10 +1142,11 @@
       holidayPreset: "summer",
       vacTitle: "距離下一次迪士尼暑假之旅還有",
       vacDate: "2027-07-01T09:00",
-      // 預設留空顯示經典藍天剪影待機畫面；貼上任意 YouTube Resort TV 直播連結後即自動播放
       resortYtUrl: "",
       terraceYt1: "",
       terraceYt2: "",
+      terraceYt3: "",
+      terraceYt4: "",
       fireworksTime: "21:00"
     };
 
@@ -898,36 +1173,72 @@
       }
     };
 
-    const MOCK_RIDES = {
-      tdl: [
-        { name: "美女與野獸「城堡奇緣」", land: "夢幻樂園", wait: 75 },
-        { name: "杯麵歡樂之旅", land: "明日樂園", wait: 50 },
-        { name: "怪獸電力公司「迷藏巡遊車」", land: "明日樂園", wait: 40 },
-        { name: "小熊維尼獵蜜記", land: "夢幻樂園", wait: 45 },
-        { name: "太空山 / 明日樂園巡禮", land: "明日樂園", wait: 35 },
-        { name: "巨雷山", land: "西部樂園", wait: 30 }
-      ],
-      tds: [
-        { name: "翱翔：夢幻奇航", land: "地中海港灣", wait: 85 },
-        { name: "玩具總動員瘋狂遊戲屋", land: "美國海濱", wait: 65 },
-        { name: "驚魂古塔", land: "美國海濱", wait: 55 },
-        { name: "地心探險之旅", land: "神秘島", wait: 60 },
-        { name: "安娜與艾莎的冰雪之旅", land: "夢幻泉鄉", wait: 90 },
-        { name: "印第安納瓊斯冒險旅程", land: "失落河三角洲", wait: 40 }
-      ],
+    // 奧蘭多 4 園區 + 加州 2 園區（移除東京）
+    const PARK_META = {
+      mk: { name: "Magic Kingdom 魔幻王國", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 1/4）" },
+      epcot: { name: "EPCOT 未來世界", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 2/4）" },
+      hs: { name: "Hollywood Studios 好萊塢影城", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 3/4）" },
+      ak: { name: "Animal Kingdom 動物王國", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 4/4）" },
+      dlr: { name: "Disneyland Park 加州迪士尼樂園", region: "CALIFORNIA · DISNEYLAND RESORT（加州園區 1/2）" },
+      dca: { name: "Disney California Adventure 加州冒險樂園", region: "CALIFORNIA · DISNEYLAND RESORT（加州園區 2/2）" }
+    };
+
+    const INITIAL_RIDES = {
       mk: [
-        { name: "Seven Dwarfs Mine Train", land: "Fantasyland", wait: 65 },
-        { name: "TRON Lightcycle / Run", land: "Tomorrowland", wait: 70 },
-        { name: "Space Mountain", land: "Tomorrowland", wait: 45 },
-        { name: "Haunted Mansion", land: "Liberty Square", wait: 35 },
-        { name: "Pirates of the Caribbean", land: "Adventureland", wait: 25 },
-        { name: "Jungle Cruise", land: "Adventureland", wait: 50 }
+        { name: "TRON Lightcycle / Run", land: "Tomorrowland", wait: 75, min: 45, max: 115, delta: 0 },
+        { name: "Seven Dwarfs Mine Train", land: "Fantasyland", wait: 65, min: 40, max: 105, delta: 0 },
+        { name: "Space Mountain", land: "Tomorrowland", wait: 45, min: 25, max: 80, delta: 0 },
+        { name: "Haunted Mansion", land: "Liberty Square", wait: 35, min: 20, max: 65, delta: 0 },
+        { name: "Pirates of the Caribbean", land: "Adventureland", wait: 25, min: 15, max: 50, delta: 0 },
+        { name: "Jungle Cruise", land: "Adventureland", wait: 50, min: 30, max: 85, delta: 0 }
+      ],
+      epcot: [
+        { name: "Guardians of the Galaxy: Cosmic Rewind", land: "World Discovery", wait: 85, min: 55, max: 130, delta: 0 },
+        { name: "Remy's Ratatouille Adventure", land: "France Pavilion", wait: 65, min: 40, max: 100, delta: 0 },
+        { name: "Soarin' Around the World", land: "World Nature", wait: 50, min: 25, max: 85, delta: 0 },
+        { name: "Frozen Ever After", land: "Norway Pavilion", wait: 70, min: 45, max: 110, delta: 0 },
+        { name: "Test Track", land: "World Discovery", wait: 55, min: 30, max: 90, delta: 0 },
+        { name: "Spaceship Earth", land: "World Celebration", wait: 20, min: 10, max: 40, delta: 0 }
+      ],
+      hs: [
+        { name: "Star Wars: Rise of the Resistance", land: "Galaxy's Edge", wait: 80, min: 50, max: 125, delta: 0 },
+        { name: "Twilight Zone Tower of Terror", land: "Sunset Boulevard", wait: 60, min: 35, max: 95, delta: 0 },
+        { name: "Slinky Dog Dash", land: "Toy Story Land", wait: 75, min: 45, max: 115, delta: 0 },
+        { name: "Mickey & Minnie's Runaway Railway", land: "Grand Avenue", wait: 50, min: 30, max: 85, delta: 0 },
+        { name: "Toy Story Mania!", land: "Toy Story Land", wait: 45, min: 25, max: 75, delta: 0 },
+        { name: "Rock 'n' Roller Coaster", land: "Sunset Boulevard", wait: 55, min: 30, max: 90, delta: 0 }
+      ],
+      ak: [
+        { name: "Avatar Flight of Passage", land: "Pandora", wait: 95, min: 60, max: 140, delta: 0 },
+        { name: "Kilimanjaro Safaris", land: "Africa", wait: 40, min: 20, max: 75, delta: 0 },
+        { name: "Expedition Everest", land: "Asia", wait: 35, min: 15, max: 65, delta: 0 },
+        { name: "Na'vi River Journey", land: "Pandora", wait: 60, min: 35, max: 95, delta: 0 },
+        { name: "DINOSAUR", land: "DinoLand U.S.A.", wait: 25, min: 10, max: 45, delta: 0 },
+        { name: "Kali River Rapids", land: "Asia", wait: 30, min: 15, max: 60, delta: 0 }
+      ],
+      dlr: [
+        { name: "Star Wars: Rise of the Resistance", land: "Star Wars: Galaxy's Edge", wait: 70, min: 40, max: 110, delta: 0 },
+        { name: "Indiana Jones Adventure", land: "Adventureland", wait: 55, min: 30, max: 90, delta: 0 },
+        { name: "Space Mountain", land: "Tomorrowland", wait: 45, min: 25, max: 80, delta: 0 },
+        { name: "Haunted Mansion Holiday", land: "New Orleans Square", wait: 65, min: 35, max: 105, delta: 0 },
+        { name: "Matterhorn Bobsleds", land: "Fantasyland", wait: 40, min: 20, max: 75, delta: 0 },
+        { name: "Pirates of the Caribbean", land: "New Orleans Square", wait: 30, min: 15, max: 55, delta: 0 }
+      ],
+      dca: [
+        { name: "Radiator Springs Racers", land: "Cars Land", wait: 85, min: 50, max: 125, delta: 0 },
+        { name: "Guardians of the Galaxy – Mission: BREAKOUT!", land: "Avengers Campus", wait: 60, min: 35, max: 95, delta: 0 },
+        { name: "Incredicoaster", land: "Pixar Pier", wait: 45, min: 25, max: 75, delta: 0 },
+        { name: "WEB SLINGERS: A Spider-Man Adventure", land: "Avengers Campus", wait: 50, min: 25, max: 85, delta: 0 },
+        { name: "Soarin' Around the World", land: "Grizzly Peak", wait: 40, min: 20, max: 70, delta: 0 },
+        { name: "Toy Story Midway Mania!", land: "Pixar Pier", wait: 45, min: 25, max: 75, delta: 0 }
       ]
     };
 
     let state = loadState();
+    let ridesData = structuredClone(INITIAL_RIDES);
     let currentTerraceIdx = 0;
-    let currentParkKey = "tdl";
+    let currentParkKey = "mk";
+    let lastRidesUpdateTime = new Date();
 
     function loadState() {
       try {
@@ -944,19 +1255,16 @@
       } catch {}
     }
 
-    // 將任何 YouTube 網址轉換為可自動播放、靜音的 embed 網址
     function toYouTubeEmbedUrl(inputUrl) {
       if (!inputUrl) return "";
       const url = inputUrl.trim();
-      let videoId = "";
+      if (url.includes("/embed/")) return url;
 
-      if (url.includes("/embed/")) {
-        return url;
-      }
       const watchMatch = url.match(/[?&]v=([^&]+)/);
       const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
       const liveMatch = url.match(/youtube\.com\/live\/([^?&]+)/);
 
+      let videoId = "";
       if (watchMatch) videoId = watchMatch[1];
       else if (shortMatch) videoId = shortMatch[1];
       else if (liveMatch) videoId = liveMatch[1];
@@ -967,7 +1275,6 @@
       return url;
     }
 
-    // 切換主分區頁面
     function switchPage(pageId) {
       document.querySelectorAll(".page-view").forEach(el => el.classList.remove("active"));
       const target = document.getElementById(`page-${pageId}`);
@@ -981,7 +1288,6 @@
       document.getElementById("btn-settings").classList.toggle("active", pageId === "settings");
     }
 
-    // 渲染中央主畫面 RESORT TV
     function renderResortMain() {
       const container = document.getElementById("resortStreamContainer");
       const embedUrl = toYouTubeEmbedUrl(state.resortYtUrl);
@@ -995,11 +1301,10 @@
           <iframe src="${embedUrl}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
         `;
       } else {
-        // 未貼網址時顯示參考圖風格的迪士尼藍天剪影待機畫面
         container.innerHTML = `
           <div class="fallback-resort-bg">
             <div class="fallback-header-row">
-              <h1 class="park-hours-headline">EPCOT &amp; Magic Kingdom Park Hours</h1>
+              <h1 class="park-hours-headline">Walt Disney World &amp; Disneyland Resort</h1>
               <div class="resort-overlay-pill" style="position:static;" onclick="switchPage('settings')">
                 <span class="live-dot"></span>
                 <span>點此貼上 YouTube Resort TV 直播網址</span>
@@ -1021,7 +1326,6 @@
             <svg class="skyline-svg" viewBox="0 0 1200 130" preserveAspectRatio="none">
               <path d="M0,115 Q300,98 600,112 T1200,108 L1200,130 L0,130 Z" fill="#3a7d34"/>
               <path d="M0,120 Q400,110 800,120 T1200,116 L1200,130 L0,130 Z" fill="#101824"/>
-              <!-- 單軌電車高架橋與天際線剪影 -->
               <rect x="0" y="96" width="1200" height="4" fill="#101824"/>
               <rect x="80" y="96" width="5" height="26" fill="#101824"/>
               <rect x="220" y="96" width="5" height="26" fill="#101824"/>
@@ -1031,7 +1335,6 @@
               <rect x="780" y="96" width="5" height="26" fill="#101824"/>
               <rect x="920" y="96" width="5" height="26" fill="#101824"/>
               <rect x="1060" y="96" width="5" height="26" fill="#101824"/>
-              <!-- 地標剪影（金字塔、艾菲爾鐵塔、自由女神、城堡尖塔） -->
               <polygon points="560,114 605,72 650,114" fill="#101824"/>
               <polygon points="735,114 750,48 765,114" fill="#101824"/>
               <rect x="815" y="68" width="10" height="46" fill="#101824"/>
@@ -1045,10 +1348,10 @@
       }
     }
 
-    // 渲染 TERRACE 煙火直播
     function renderTerrace() {
       const container = document.getElementById("terraceVideoContainer");
-      const rawUrl = currentTerraceIdx === 0 ? state.terraceYt1 : state.terraceYt2;
+      const channelUrls = [state.terraceYt1, state.terraceYt2, state.terraceYt3, state.terraceYt4];
+      const rawUrl = channelUrls[currentTerraceIdx] || "";
       const embedUrl = toYouTubeEmbedUrl(rawUrl);
 
       if (embedUrl) {
@@ -1057,29 +1360,72 @@
         container.innerHTML = `
           <div style="text-align:center; padding:24px;">
             <p style="font-size:1.25rem; font-weight:700; margin:0 0 8px;">尚未設定煙火直播頻道 ${currentTerraceIdx + 1}</p>
-            <p style="color:#a9b8d4; margin:0 0 16px;">請點左下角 ⚙️ 設定，貼上 YouTube 煙火或園區直播網址即可播放。</p>
+            <p style="color:#a9b8d4; margin:0 0 16px;">目前共有 4 個直播頻道可切換，請點左下角 ⚙️ 設定貼上 YouTube 煙火或園區直播網址。</p>
             <button class="btn-save" onclick="switchPage('settings')">前往設定貼上網址</button>
           </div>
         `;
       }
     }
 
-    // 渲染 PARKS 排隊時間
-    function renderParks() {
-      const grid = document.getElementById("ridesGrid");
-      const rides = MOCK_RIDES[currentParkKey] || MOCK_RIDES.tdl;
-      grid.innerHTML = rides.map(r => `
-        <div class="ride-card">
-          <div>
-            <div class="ride-name">${r.name}</div>
-            <div class="ride-land">${r.land}</div>
-          </div>
-          <div class="ride-wait">${r.wait}<span>MINS</span></div>
-        </div>
-      `).join("");
+    // 即時更新所有園區排隊數字（每 18 秒自動變動 + 可按立即更新）
+    function tickRideWaitTimes(forceChange = false) {
+      Object.keys(ridesData).forEach(parkKey => {
+        ridesData[parkKey] = ridesData[parkKey].map(ride => {
+          const shouldUpdate = forceChange || Math.random() < 0.65;
+          if (!shouldUpdate) {
+            return { ...ride, delta: 0 };
+          }
+          const steps = [-5, 0, 5, 10];
+          const chosen = steps[Math.floor(Math.random() * steps.length)];
+          const nextWait = Math.min(ride.max, Math.max(ride.min, ride.wait + chosen));
+          const actualDelta = nextWait - ride.wait;
+          return { ...ride, wait: nextWait, delta: actualDelta };
+        });
+      });
+      lastRidesUpdateTime = new Date();
+      renderParks(true);
     }
 
-    // 更新頂部歡迎詞與時間日期
+    function renderParks(highlightChanged = false) {
+      const meta = PARK_META[currentParkKey] || PARK_META.mk;
+      document.getElementById("parksTitle").textContent = `🎢 ${meta.name}`;
+      document.getElementById("parksRegionLabel").textContent = meta.region;
+
+      const timeStr = lastRidesUpdateTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+      document.getElementById("parksSyncText").textContent = `即時更新 · ${timeStr}`;
+
+      const grid = document.getElementById("ridesGrid");
+      const rides = ridesData[currentParkKey] || ridesData.mk;
+
+      grid.innerHTML = rides.map(r => {
+        let trendHtml = `<span class="ride-trend trend-flat">—</span>`;
+        if (r.delta > 0) {
+          trendHtml = `<span class="ride-trend trend-up">▲ +${r.delta}m</span>`;
+        } else if (r.delta < 0) {
+          trendHtml = `<span class="ride-trend trend-down">▼ ${r.delta}m</span>`;
+        }
+
+        const flashClass = highlightChanged && r.delta !== 0 ? "updated-flash" : "";
+
+        return `
+          <div class="ride-card ${flashClass}">
+            <div>
+              <div class="ride-name">${r.name}</div>
+              <div class="ride-land">${r.land}</div>
+            </div>
+            <div class="ride-right">
+              ${trendHtml}
+              <div class="ride-wait">${r.wait}<span>MINS</span></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
     function updateTopBar() {
       document.getElementById("topWelcomeLabel").textContent = state.welcomeLabel || "WELCOME";
       document.getElementById("topFamilyName").textContent = state.familyName || "Smith Family";
@@ -1112,7 +1458,6 @@
       }
     }
 
-    // 更新 VACATION 倒數與 VIP 煙火狀態
     function updateTimers() {
       const presetInfo = PRESETS[state.holidayPreset] || PRESETS.summer;
       document.getElementById("vacBadge").textContent = presetInfo.badge;
@@ -1132,7 +1477,6 @@
       document.getElementById("vipFireworksHeadline").textContent = `今晚煙火秀：${fw} 準時登場`;
     }
 
-    // 同步表單欄位
     function fillSettingsForm() {
       document.getElementById("inpWelcomeLabel").value = state.welcomeLabel;
       document.getElementById("inpFamilyName").value = state.familyName;
@@ -1143,10 +1487,11 @@
       document.getElementById("inpResortYt").value = state.resortYtUrl;
       document.getElementById("inpTerraceYt1").value = state.terraceYt1;
       document.getElementById("inpTerraceYt2").value = state.terraceYt2;
+      document.getElementById("inpTerraceYt3").value = state.terraceYt3;
+      document.getElementById("inpTerraceYt4").value = state.terraceYt4;
       document.getElementById("inpFireworksTime").value = state.fireworksTime;
     }
 
-    // 假期下拉選單切換時自動帶入對應標題與日期
     document.getElementById("inpHolidayPreset").addEventListener("change", (e) => {
       const p = PRESETS[e.target.value];
       if (p) {
@@ -1166,6 +1511,8 @@
         resortYtUrl: document.getElementById("inpResortYt").value.trim(),
         terraceYt1: document.getElementById("inpTerraceYt1").value.trim(),
         terraceYt2: document.getElementById("inpTerraceYt2").value.trim(),
+        terraceYt3: document.getElementById("inpTerraceYt3").value.trim(),
+        terraceYt4: document.getElementById("inpTerraceYt4").value.trim(),
         fireworksTime: document.getElementById("inpFireworksTime").value || "21:00"
       };
       saveState();
@@ -1193,7 +1540,7 @@
       setTimeout(() => (msg.textContent = ""), 2500);
     });
 
-    // TERRACE 頻道切換
+    // TERRACE 4 頻道切換
     document.querySelectorAll("[data-terrace-idx]").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll("[data-terrace-idx]").forEach(b => b.classList.remove("active"));
@@ -1203,14 +1550,19 @@
       });
     });
 
-    // PARKS 園區切換
+    // PARKS 6 園區切換
     document.querySelectorAll("[data-park]").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll("[data-park]").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         currentParkKey = btn.dataset.park;
-        renderParks();
+        renderParks(false);
       });
+    });
+
+    // 手動立即刷新排隊數字
+    document.getElementById("btnManualRefreshRides").addEventListener("click", () => {
+      tickRideWaitTimes(true);
     });
 
     // 初始化
@@ -1219,12 +1571,18 @@
     updateTimers();
     renderResortMain();
     renderTerrace();
-    renderParks();
+    renderParks(false);
 
+    // 每秒更新時鐘與倒數
     setInterval(() => {
       updateTopBar();
       updateTimers();
     }, 1000);
+
+    // 每 18 秒自動即時更新一次排隊看板數字與升降趨勢
+    setInterval(() => {
+      tickRideWaitTimes(false);
+    }, 18000);
   </script>
 </body>
 </html>
