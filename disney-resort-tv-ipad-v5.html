@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad 精準復刻版 V5</title>
+  <title>Resort Wait Display - iPad 精準復刻版 V7</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -472,18 +472,18 @@
       letter-spacing: 0.08em;
     }
 
-    /* --- VACATION 頻道：乾淨平整的迪士尼城堡與閃爍星星插畫 --- */
+    /* --- VACATION 頻道：多地標迪士尼度假區全景與 3D 翻頁倒數 --- */
     .vacation-stage {
       position: relative;
       width: 100%;
       height: 100%;
-      background: linear-gradient(180deg, #0b1c40 0%, #173a78 52%, #2c68bd 100%);
+      background: linear-gradient(180deg, #07132c 0%, #112b5e 50%, #2456a8 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 20px;
+      padding: 16px;
       overflow: hidden;
     }
 
@@ -495,7 +495,7 @@
       overflow: hidden;
     }
 
-    /* 閃爍星星與星光動畫 */
+    /* 閃爍星星與十字星芒 */
     .star-twinkle {
       transform-box: fill-box;
       transform-origin: center;
@@ -509,36 +509,119 @@
 
     @keyframes starTwinkle {
       0%, 100% { transform: scale(0.75); opacity: 0.35; }
-      50% { transform: scale(1.22); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 1; }
+    }
+
+    /* 劃過夜空的流星 */
+    .shooting-star {
+      stroke-dasharray: 95 950;
+      stroke-dashoffset: 1045;
+      animation: shootStar 8.5s linear infinite;
+    }
+    .shooting-star-2 {
+      stroke-dasharray: 75 980;
+      stroke-dashoffset: 1055;
+      animation: shootStar 11s linear infinite 4.2s;
+    }
+    @keyframes shootStar {
+      0% { stroke-dashoffset: 1045; opacity: 0; }
+      6% { opacity: 0.95; }
+      18% { stroke-dashoffset: 0; opacity: 0; }
+      100% { stroke-dashoffset: 0; opacity: 0; }
+    }
+
+    /* 城堡背後與兩側煙火綻放 */
+    .fw-burst {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: fwBurst 5.2s ease-out infinite;
+    }
+    .fw-burst-2 { animation-delay: 1.8s; }
+    .fw-burst-3 { animation-delay: 3.4s; }
+    @keyframes fwBurst {
+      0% { transform: scale(0.15); opacity: 0; }
+      20% { transform: scale(0.95); opacity: 0.88; }
+      45% { transform: scale(1.18); opacity: 0.25; }
+      55%, 100% { transform: scale(1.25); opacity: 0; }
     }
 
     /* 柔和雲朵緩慢移動 */
     .cloud-drift-slow {
-      animation: cloudDriftSlow 28s ease-in-out infinite alternate;
+      animation: cloudDriftSlow 30s ease-in-out infinite alternate;
     }
     @keyframes cloudDriftSlow {
-      0% { transform: translateX(-16px); }
-      100% { transform: translateX(18px); }
+      0% { transform: translateX(-18px); }
+      100% { transform: translateX(20px); }
     }
 
-    /* 城堡尖塔微光呼吸 */
+    /* EPCOT 太空船地球柔和光影脈動 */
+    .epcot-glow {
+      animation: epcotPulse 4.6s ease-in-out infinite alternate;
+    }
+    @keyframes epcotPulse {
+      0% { opacity: 0.45; }
+      100% { opacity: 0.9; }
+    }
+
+    /* 皮克斯摩天輪平穩緩慢旋轉 */
+    .ferris-spin {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: ferrisRotate 36s linear infinite;
+    }
+    @keyframes ferrisRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* 單軌列車沿高架滑行 */
+    .monorail-glide {
+      animation: monorailRun 18s linear infinite;
+    }
+    @keyframes monorailRun {
+      0% { transform: translateX(-340px); }
+      100% { transform: translateX(1780px); }
+    }
+
+    /* 城堡尖塔微光與旗幟 */
     .spire-light {
-      animation: spireGlow 3.4s ease-in-out infinite alternate;
+      animation: spireGlow 3.2s ease-in-out infinite alternate;
     }
     @keyframes spireGlow {
-      0% { opacity: 0.55; }
-      100% { opacity: 1; }
+      0% { opacity: 0.5; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1.08); }
     }
 
-    /* 柔和樹冠輕擺 */
-    .clean-tree-sway {
+    .flag-wave {
       transform-box: fill-box;
-      transform-origin: 50% 90%;
-      animation: cleanTreeSway 5s ease-in-out infinite alternate;
+      transform-origin: left center;
+      animation: flagFlutter 2s ease-in-out infinite alternate;
     }
-    @keyframes cleanTreeSway {
-      0% { transform: rotate(-1.2deg); }
-      100% { transform: rotate(1.2deg); }
+    @keyframes flagFlutter {
+      0% { transform: skewY(-5deg) scaleX(0.92); }
+      100% { transform: skewY(5deg) scaleX(1.04); }
+    }
+
+    /* 路燈暖光呼吸 */
+    .lamp-glow {
+      animation: lampBreathe 3.8s ease-in-out infinite alternate;
+    }
+    @keyframes lampBreathe {
+      0% { opacity: 0.55; }
+      100% { opacity: 0.95; }
+    }
+
+    /* 漂浮魔法金粉 */
+    .pixie-dust {
+      animation: pixieFloat 7s ease-in-out infinite;
+    }
+    .pd-1 { animation-delay: 0s; }
+    .pd-2 { animation-delay: 1.5s; }
+    .pd-3 { animation-delay: 3s; }
+    .pd-4 { animation-delay: 4.5s; }
+    @keyframes pixieFloat {
+      0%, 100% { transform: translateY(0px) scale(0.8); opacity: 0.25; }
+      50% { transform: translateY(-24px) scale(1.25); opacity: 0.92; }
     }
 
     .vacation-content {
@@ -547,68 +630,200 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: rgba(12, 22, 46, 0.72);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow: 0 16px 40px rgba(5, 11, 26, 0.48);
+      background: linear-gradient(165deg, rgba(13, 25, 52, 0.80) 0%, rgba(8, 16, 36, 0.86) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 224, 140, 0.32);
+      box-shadow: 0 20px 50px rgba(3, 8, 22, 0.62), inset 0 1px 0 rgba(255, 255, 255, 0.16);
       border-radius: 26px;
-      padding: 24px 34px;
-      max-width: 760px;
+      padding: 18px 28px 20px;
+      max-width: 780px;
+      width: 94%;
+    }
+
+    .vac-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
     }
 
     .vac-badge {
       background: rgba(255, 209, 102, 0.2);
-      border: 1px solid rgba(255, 209, 102, 0.5);
+      border: 1px solid rgba(255, 209, 102, 0.55);
       color: var(--gold);
-      padding: 6px 16px;
+      padding: 5px 15px;
       border-radius: 999px;
-      font-size: 0.84rem;
+      font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.1em;
-      margin-bottom: 10px;
     }
 
     .vac-title {
-      font-size: clamp(1.65rem, 3.1vw, 2.45rem);
+      font-size: clamp(1.5rem, 2.9vw, 2.25rem);
       font-weight: 800;
-      margin: 0 0 6px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      margin: 0 0 4px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
     }
 
     .vac-sub {
-      color: #e3eeff;
-      font-size: 0.94rem;
-      margin: 0 0 20px;
+      color: #dbe8ff;
+      font-size: 0.88rem;
+      margin: 0 0 14px;
     }
 
+    /* 3D 翻頁日曆數字盒 */
     .countdown-boxes {
       display: flex;
-      gap: 14px;
+      gap: 13px;
       flex-wrap: wrap;
       justify-content: center;
+      perspective: 700px;
     }
 
     .cd-unit-box {
-      background: rgba(9, 16, 33, 0.86);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 16px;
-      padding: 15px 22px;
-      min-width: 106px;
+      position: relative;
+      background: linear-gradient(180deg, #16233d 0%, #0d1629 50%, #091020 50.5%, #111c33 100%);
+      border: 1px solid rgba(255, 218, 130, 0.28);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      border-radius: 15px;
+      padding: 13px 20px 11px;
+      min-width: 102px;
+      overflow: hidden;
+    }
+
+    .cd-unit-box::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.55);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+      pointer-events: none;
     }
 
     .cd-num {
-      font-size: 2.45rem;
+      font-size: 2.35rem;
       font-weight: 800;
       color: var(--gold);
       font-variant-numeric: tabular-nums;
       line-height: 1;
+      text-shadow: 0 2px 8px rgba(255, 209, 102, 0.25);
+      display: inline-block;
+    }
+
+    .cd-num.flip-tick {
+      animation: flipDigit 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes flipDigit {
+      0% { transform: rotateX(-55deg) scale(0.94); opacity: 0.45; }
+      100% { transform: rotateX(0deg) scale(1); opacity: 1; }
     }
 
     .cd-lbl {
-      font-size: 0.76rem;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: var(--text-muted);
       margin-top: 7px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
+    }
+
+    /* 快捷主題切換與旅程籌備進度條 */
+    .vac-quick-pills {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .vac-chip {
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e6f0ff;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .vac-chip.active {
+      background: var(--gold);
+      color: #141414;
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+
+    .trip-progress-wrap {
+      width: 100%;
+      max-width: 580px;
+      margin-top: 12px;
+      background: rgba(7, 13, 27, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .trip-progress-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #cfe0ff;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .trip-bar-track {
+      width: 100%;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 9px;
+    }
+
+    .trip-bar-fill {
+      height: 100%;
+      width: 68%;
+      background: linear-gradient(90deg, #5bc0ff 0%, #ffd166 100%);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .checklist-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .check-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #dce7fa;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .check-pill.done {
+      background: rgba(92, 214, 92, 0.18);
+      border-color: rgba(92, 214, 92, 0.48);
+      color: #a6f7a6;
+      text-decoration: line-through;
     }
 
     /* --- VIP 頻道 --- */
@@ -894,135 +1109,335 @@
         </div>
       </section>
 
-      <!-- VACATION：乾淨俐落的迪士尼城堡、閃爍星星與柔和草坡背景 -->
+      <!-- VACATION：多地標奇幻度假區夜景（城堡＋EPCOT地球＋太空山＋摩天輪＋驚魂古塔＋單軌列車＋煙火） -->
       <section class="page-view" id="page-vacation">
         <div class="vacation-stage">
           <div class="vacation-bg-layer" aria-hidden="true">
             <svg viewBox="0 0 1440 760" preserveAspectRatio="xMidYMax slice" style="width:100%;height:100%;display:block;">
               <defs>
                 <linearGradient id="cleanSky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#0b1d42"/>
-                  <stop offset="55%" stop-color="#1a4285"/>
-                  <stop offset="100%" stop-color="#3575cc"/>
+                  <stop offset="0%" stop-color="#061026"/>
+                  <stop offset="48%" stop-color="#112b5e"/>
+                  <stop offset="100%" stop-color="#275cb3"/>
+                </linearGradient>
+                <radialGradient id="castleAura" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="rgba(255, 214, 112, 0.36)"/>
+                  <stop offset="55%" stop-color="rgba(100, 181, 246, 0.14)"/>
+                  <stop offset="100%" stop-color="rgba(16, 42, 92, 0)"/>
+                </radialGradient>
+                <radialGradient id="epcotSphereGrad" cx="38%" cy="32%" r="68%">
+                  <stop offset="0%" stop-color="#e3f2fd"/>
+                  <stop offset="55%" stop-color="#90caf9"/>
+                  <stop offset="100%" stop-color="#3b6cb7"/>
+                </radialGradient>
+                <linearGradient id="spaceMtnGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f4f8ff"/>
+                  <stop offset="100%" stop-color="#9db8e6"/>
+                </linearGradient>
+                <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#7c637a"/>
+                  <stop offset="100%" stop-color="#3e334d"/>
                 </linearGradient>
                 <linearGradient id="castleStone" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="100%" stop-color="#d5e0f5"/>
+                  <stop offset="100%" stop-color="#cedcf5"/>
                 </linearGradient>
                 <linearGradient id="castleRoof" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#64b5f6"/>
-                  <stop offset="100%" stop-color="#2858b0"/>
+                  <stop offset="0%" stop-color="#7cc4ff"/>
+                  <stop offset="100%" stop-color="#2453a8"/>
                 </linearGradient>
-                <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#367c44"/>
-                  <stop offset="100%" stop-color="#1e4f2a"/>
+                <linearGradient id="mainStreetWarm" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3c4c73"/>
+                  <stop offset="100%" stop-color="#1e2a47"/>
                 </linearGradient>
                 <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#265d38"/>
-                  <stop offset="100%" stop-color="#173b23"/>
+                  <stop offset="0%" stop-color="#1d4935"/>
+                  <stop offset="100%" stop-color="#112e22"/>
+                </linearGradient>
+                <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2a663b"/>
+                  <stop offset="100%" stop-color="#173d23"/>
                 </linearGradient>
               </defs>
 
               <!-- 夜空漸層 -->
               <rect width="1440" height="760" fill="url(#cleanSky)"/>
 
-              <!-- 閃爍的小星星與十字星芒 -->
+              <!-- 城堡後方暖金魔法光暈 -->
+              <circle cx="720" cy="495" r="340" fill="url(#castleAura)"/>
+
+              <!-- 閃爍的小星星 -->
               <g fill="#fff6c2">
-                <circle class="star-twinkle star-t1" cx="150" cy="115" r="2.6"/>
-                <circle class="star-twinkle star-t2" cx="290" cy="175" r="2.2"/>
-                <circle class="star-twinkle star-t3" cx="445" cy="95" r="2.8"/>
-                <circle class="star-twinkle star-t4" cx="620" cy="145" r="2.2"/>
-                <circle class="star-twinkle star-t5" cx="835" cy="105" r="2.6"/>
-                <circle class="star-twinkle star-t1" cx="1015" cy="160" r="2.4"/>
-                <circle class="star-twinkle star-t3" cx="1180" cy="100" r="2.8"/>
-                <circle class="star-twinkle star-t5" cx="1310" cy="170" r="2.3"/>
+                <circle class="star-twinkle star-t1" cx="110" cy="95" r="2.5"/>
+                <circle class="star-twinkle star-t2" cx="245" cy="155" r="2.1"/>
+                <circle class="star-twinkle star-t3" cx="385" cy="85" r="2.7"/>
+                <circle class="star-twinkle star-t4" cx="535" cy="135" r="2.1"/>
+                <circle class="star-twinkle star-t5" cx="645" cy="70" r="2.4"/>
+                <circle class="star-twinkle star-t2" cx="810" cy="75" r="2.5"/>
+                <circle class="star-twinkle star-t1" cx="955" cy="130" r="2.2"/>
+                <circle class="star-twinkle star-t3" cx="1115" cy="88" r="2.7"/>
+                <circle class="star-twinkle star-t4" cx="1265" cy="148" r="2.3"/>
+                <circle class="star-twinkle star-t5" cx="1370" cy="98" r="2.5"/>
               </g>
 
               <!-- 十字閃爍星光 -->
-              <g class="star-twinkle star-t2" transform="translate(215, 225)" fill="#ffd166">
+              <g class="star-twinkle star-t2" transform="translate(175, 195)" fill="#ffd166">
                 <polygon points="0,-11 2.8,-2.8 11,0 2.8,2.8 0,11 -2.8,2.8 -11,0 -2.8,-2.8"/>
               </g>
-              <g class="star-twinkle star-t4" transform="translate(720, 82)" fill="#fff3b0">
+              <g class="star-twinkle star-t4" transform="translate(720, 62)" fill="#fff3b0">
                 <polygon points="0,-13 3.2,-3.2 13,0 3.2,3.2 0,13 -3.2,3.2 -13,0 -3.2,-3.2"/>
               </g>
-              <g class="star-twinkle star-t1" transform="translate(1235, 220)" fill="#ffd166">
+              <g class="star-twinkle star-t1" transform="translate(1285, 192)" fill="#ffd166">
                 <polygon points="0,-11 2.8,-2.8 11,0 2.8,2.8 0,11 -2.8,2.8 -11,0 -2.8,-2.8"/>
+              </g>
+
+              <!-- 劃過夜空的流星 -->
+              <line class="shooting-star" x1="250" y1="70" x2="610" y2="210" stroke="#fff5c0" stroke-width="2.2" stroke-linecap="round"/>
+              <line class="shooting-star-2" x1="1190" y1="65" x2="860" y2="195" stroke="#a6dbff" stroke-width="2" stroke-linecap="round"/>
+
+              <!-- 柔和煙火綻放（城堡左右後方高空） -->
+              <g class="fw-burst" transform="translate(470, 225)" stroke="#ffd166" stroke-width="2" stroke-linecap="round">
+                <line x1="0" y1="-34" x2="0" y2="-14"/>
+                <line x1="0" y1="14" x2="0" y2="34"/>
+                <line x1="-34" y1="0" x2="-14" y2="0"/>
+                <line x1="14" y1="0" x2="34" y2="0"/>
+                <line x1="-24" y1="-24" x2="-10" y2="-10"/>
+                <line x1="10" y1="10" x2="24" y2="24"/>
+                <line x1="24" y1="-24" x2="10" y2="-10"/>
+                <line x1="-10" y1="10" x2="-24" y2="24"/>
+              </g>
+              <g class="fw-burst fw-burst-2" transform="translate(975, 215)" stroke="#7cc4ff" stroke-width="2" stroke-linecap="round">
+                <line x1="0" y1="-36" x2="0" y2="-15"/>
+                <line x1="0" y1="15" x2="0" y2="36"/>
+                <line x1="-36" y1="0" x2="-15" y2="0"/>
+                <line x1="15" y1="0" x2="36" y2="0"/>
+                <line x1="-25" y1="-25" x2="-11" y2="-11"/>
+                <line x1="11" y1="11" x2="25" y2="25"/>
+                <line x1="25" y1="-25" x2="11" y2="-11"/>
+                <line x1="-11" y1="11" x2="-25" y2="25"/>
+              </g>
+              <g class="fw-burst fw-burst-3" transform="translate(720, 165)" stroke="#ff9ebb" stroke-width="2" stroke-linecap="round">
+                <line x1="0" y1="-30" x2="0" y2="-12"/>
+                <line x1="0" y1="12" x2="0" y2="30"/>
+                <line x1="-30" y1="0" x2="-12" y2="0"/>
+                <line x1="12" y1="0" x2="30" y2="0"/>
+                <line x1="-21" y1="-21" x2="-9" y2="-9"/>
+                <line x1="9" y1="9" x2="21" y2="21"/>
+                <line x1="21" y1="-21" x2="9" y2="-9"/>
+                <line x1="-9" y1="9" x2="-21" y2="21"/>
               </g>
 
               <!-- 乾淨柔和的雲朵 -->
-              <g class="cloud-drift-slow" fill="rgba(255,255,255,0.16)">
-                <ellipse cx="350" cy="165" rx="54" ry="15"/>
-                <circle cx="332" cy="158" r="18"/>
-                <circle cx="364" cy="156" r="21"/>
+              <g class="cloud-drift-slow" fill="rgba(255,255,255,0.13)">
+                <ellipse cx="320" cy="150" rx="52" ry="14"/>
+                <circle cx="302" cy="144" r="17"/>
+                <circle cx="334" cy="142" r="20"/>
               </g>
-              <g class="cloud-drift-slow" fill="rgba(255,255,255,0.14)">
-                <ellipse cx="1095" cy="145" rx="58" ry="16"/>
-                <circle cx="1076" cy="138" r="19"/>
-                <circle cx="1110" cy="136" r="22"/>
+              <g class="cloud-drift-slow" fill="rgba(255,255,255,0.12)">
+                <ellipse cx="1125" cy="138" rx="56" ry="15"/>
+                <circle cx="1106" cy="132" r="18"/>
+                <circle cx="1140" cy="130" r="21"/>
               </g>
 
-              <!-- 背景遠山草坡（乾淨不雜亂） -->
-              <path d="M0,590 Q360,555 720,588 T1440,575 L1440,760 L0,760 Z" fill="url(#hillBack)"/>
+              <!-- 背景遠山草坡 -->
+              <path d="M0,590 Q360,552 720,586 T1440,572 L1440,760 L0,760 Z" fill="url(#hillBack)"/>
 
-              <!-- 豐富且層次分明的迪士尼城堡（位於中央偏下、與倒數卡片互不重疊） -->
-              <g transform="translate(720, 455)">
-                <!-- 左右側翼低矮城牆 -->
-                <rect x="-155" y="135" width="70" height="65" rx="3" fill="url(#castleStone)"/>
-                <rect x="85" y="135" width="70" height="65" rx="3" fill="url(#castleStone)"/>
+              <!-- ========== 左側園區地標群：明日世界太空山 + EPCOT 太空船地球 ========== -->
+              <!-- 1. 太空山 Space Mountain（白色流線穹頂） -->
+              <g transform="translate(395, 535)">
+                <path d="M-85,68 Q-55,-28 0,-42 Q55,-28 85,68 Z" fill="url(#spaceMtnGrad)"/>
+                <!-- 標誌性外部斜撐肋條 -->
+                <path d="M-66,68 L0,-44 L66,68" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round"/>
+                <path d="M-36,68 L0,-44 L36,68" fill="none" stroke="#dbe9ff" stroke-width="2.5"/>
+                <line x1="0" y1="-44" x2="0" y2="-62" stroke="#90caf9" stroke-width="2.5"/>
+                <circle cx="0" cy="-63" r="3" fill="#ffd166" class="spire-light"/>
+              </g>
 
-                <!-- 外側小尖塔 -->
-                <rect x="-148" y="96" width="22" height="40" fill="url(#castleStone)"/>
-                <polygon points="-152,96 -137,64 -122,96" fill="url(#castleRoof)"/>
-                <rect x="126" y="96" width="22" height="40" fill="url(#castleStone)"/>
-                <polygon points="122,96 137,64 152,96" fill="url(#castleRoof)"/>
+              <!-- 2. EPCOT 太空船地球 Spaceship Earth -->
+              <g transform="translate(225, 515)">
+                <!-- 底座支撐腳 -->
+                <line x1="-42" y1="62" x2="-58" y2="108" stroke="#29487d" stroke-width="7" stroke-linecap="round"/>
+                <line x1="42" y1="62" x2="58" y2="108" stroke="#29487d" stroke-width="7" stroke-linecap="round"/>
+                <line x1="0" y1="72" x2="0" y2="108" stroke="#1e3763" stroke-width="8" stroke-linecap="round"/>
+                <!-- 球體主體 -->
+                <circle cx="0" cy="0" r="76" fill="url(#epcotSphereGrad)"/>
+                <!-- 幾何刻面網格線條（清爽不雜亂） -->
+                <g stroke="rgba(255,255,255,0.42)" stroke-width="1.2" fill="none" class="epcot-glow">
+                  <ellipse cx="0" cy="0" rx="76" ry="24"/>
+                  <ellipse cx="0" cy="0" rx="76" ry="52"/>
+                  <ellipse cx="0" cy="0" rx="26" ry="76"/>
+                  <ellipse cx="0" cy="0" rx="54" ry="76"/>
+                  <line x1="-76" y1="0" x2="76" y2="0"/>
+                  <line x1="0" y1="-76" x2="0" y2="76"/>
+                </g>
+              </g>
+
+              <!-- ========== 右側園區地標群：好萊塢影城驚魂古塔 + 皮克斯太陽摩天輪 ========== -->
+              <!-- 3. 好萊塢影城驚魂古塔 Tower of Terror -->
+              <g transform="translate(1035, 480)">
+                <rect x="-34" y="18" width="68" height="115" rx="3" fill="url(#towerGrad)"/>
+                <rect x="-42" y="8" width="84" height="14" rx="2" fill="#947892"/>
+                <polygon points="-38,8 0,-16 38,8" fill="#594659"/>
+                <!-- 經典電梯井直立窗與微光 -->
+                <rect x="-12" y="34" width="24" height="58" rx="3" fill="#251d2e"/>
+                <rect x="-8" y="42" width="16" height="8" rx="2" fill="#ffd166" class="spire-light"/>
+                <rect x="-26" y="40" width="7" height="14" rx="2" fill="#ffd166" opacity="0.65"/>
+                <rect x="19" y="40" width="7" height="14" rx="2" fill="#ffd166" opacity="0.65"/>
+              </g>
+
+              <!-- 4. 加州冒險樂園皮克斯太陽摩天輪 Pixar Pal-A-Round -->
+              <g transform="translate(1215, 505)">
+                <!-- A字型支架 -->
+                <line x1="0" y1="0" x2="-62" y2="112" stroke="#243b66" stroke-width="7" stroke-linecap="round"/>
+                <line x1="0" y1="0" x2="62" y2="112" stroke="#243b66" stroke-width="7" stroke-linecap="round"/>
+                <!-- 旋轉輪盤 -->
+                <g class="ferris-spin">
+                  <circle cx="0" cy="0" r="82" fill="none" stroke="#90caf9" stroke-width="3.5"/>
+                  <circle cx="0" cy="0" r="56" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+                  <!-- 輻條 -->
+                  <g stroke="rgba(255,255,255,0.4)" stroke-width="1.6">
+                    <line x1="0" y1="-82" x2="0" y2="82"/>
+                    <line x1="-82" y1="0" x2="82" y2="0"/>
+                    <line x1="-58" y1="-58" x2="58" y2="58"/>
+                    <line x1="58" y1="-58" x2="-58" y2="58"/>
+                  </g>
+                  <!-- 8 個彩色發光座艙 -->
+                  <circle cx="0" cy="-82" r="6" fill="#ff6b6b"/>
+                  <circle cx="58" cy="-58" r="6" fill="#ffd166"/>
+                  <circle cx="82" cy="0" r="6" fill="#5cd65c"/>
+                  <circle cx="58" cy="58" r="6" fill="#5bc0ff"/>
+                  <circle cx="0" cy="82" r="6" fill="#c77dff"/>
+                  <circle cx="-58" cy="58" r="6" fill="#ff9f43"/>
+                  <circle cx="-82" cy="0" r="6" fill="#48dbfb"/>
+                  <circle cx="-58" cy="-58" r="6" fill="#ff9ff3"/>
+                </g>
+                <!-- 中央皮克斯太陽徽章（不隨輪盤自轉） -->
+                <circle cx="0" cy="0" r="22" fill="#ffd166" stroke="#ff9f43" stroke-width="3"/>
+                <circle cx="0" cy="0" r="13" fill="#fff3b0"/>
+              </g>
+
+              <!-- ========== 中景高架單軌列車軌道與滑行列車 ========== -->
+              <g opacity="0.92">
+                <rect x="0" y="576" width="1440" height="4" fill="#7aa6e8"/>
+                <rect x="140" y="580" width="6" height="45" fill="#557ec2"/>
+                <rect x="360" y="580" width="6" height="45" fill="#557ec2"/>
+                <rect x="580" y="580" width="6" height="45" fill="#557ec2"/>
+                <rect x="860" y="580" width="6" height="45" fill="#557ec2"/>
+                <rect x="1080" y="580" width="6" height="45" fill="#557ec2"/>
+                <rect x="1300" y="580" width="6" height="45" fill="#557ec2"/>
+
+                <g class="monorail-glide" transform="translate(0, 563)">
+                  <path d="M12,13 Q0,13 4,5 Q12,0 32,0 L238,0 Q258,0 266,5 Q270,13 258,13 Z" fill="#ffffff"/>
+                  <rect x="24" y="4" width="222" height="3.5" rx="1.5" fill="#ff4d4f"/>
+                  <g fill="#ffd166">
+                    <rect x="34" y="3" width="14" height="5" rx="2"/>
+                    <rect x="56" y="3" width="14" height="5" rx="2"/>
+                    <rect x="78" y="3" width="14" height="5" rx="2"/>
+                    <rect x="108" y="3" width="14" height="5" rx="2"/>
+                    <rect x="130" y="3" width="14" height="5" rx="2"/>
+                    <rect x="152" y="3" width="14" height="5" rx="2"/>
+                    <rect x="182" y="3" width="14" height="5" rx="2"/>
+                    <rect x="204" y="3" width="14" height="5" rx="2"/>
+                    <rect x="226" y="3" width="14" height="5" rx="2"/>
+                  </g>
+                </g>
+              </g>
+
+              <!-- ========== 中央主角：迪士尼奇幻城堡 ========== -->
+              <g transform="translate(720, 448)">
+                <rect x="-165" y="135" width="76" height="68" rx="3" fill="url(#castleStone)"/>
+                <rect x="89" y="135" width="76" height="68" rx="3" fill="url(#castleStone)"/>
+
+                <!-- 外側小尖塔與小旗 -->
+                <rect x="-156" y="92" width="22" height="44" fill="url(#castleStone)"/>
+                <polygon points="-160,92 -145,58 -130,92" fill="url(#castleRoof)"/>
+                <polygon class="flag-wave" points="-145,58 -132,62 -145,66" fill="#ffd166"/>
+
+                <rect x="134" y="92" width="22" height="44" fill="url(#castleStone)"/>
+                <polygon points="130,92 145,58 160,92" fill="url(#castleRoof)"/>
+                <polygon class="flag-wave" points="145,58 158,62 145,66" fill="#ffd166"/>
 
                 <!-- 中側雙塔 -->
-                <rect x="-102" y="72" width="34" height="128" fill="url(#castleStone)"/>
-                <polygon points="-106,72 -85,30 -64,72" fill="url(#castleRoof)"/>
-                <rect x="68" y="72" width="34" height="128" fill="url(#castleStone)"/>
-                <polygon points="64,72 85,30 106,72" fill="url(#castleRoof)"/>
+                <rect x="-106" y="68" width="36" height="135" fill="url(#castleStone)"/>
+                <polygon points="-110,68 -88,24 -66,68" fill="url(#castleRoof)"/>
+                <polygon class="flag-wave" points="-88,24 -73,28 -88,33" fill="#ff758f"/>
 
-                <!-- 主殿基座 -->
-                <rect x="-72" y="102" width="144" height="98" rx="4" fill="url(#castleStone)"/>
+                <rect x="70" y="68" width="36" height="135" fill="url(#castleStone)"/>
+                <polygon points="66,68 88,24 110,68" fill="url(#castleRoof)"/>
+                <polygon class="flag-wave" points="88,24 103,28 88,33" fill="#ff758f"/>
+
+                <!-- 主殿基座與城垛 -->
+                <rect x="-74" y="98" width="148" height="105" rx="4" fill="url(#castleStone)"/>
+                <rect x="-74" y="91" width="14" height="8" fill="#ffffff"/>
+                <rect x="-48" y="91" width="14" height="8" fill="#ffffff"/>
+                <rect x="34" y="91" width="14" height="8" fill="#ffffff"/>
+                <rect x="60" y="91" width="14" height="8" fill="#ffffff"/>
 
                 <!-- 中央高聳主塔 -->
-                <rect x="-32" y="28" width="64" height="172" fill="url(#castleStone)"/>
-                <polygon points="-38,28 0,-42 38,28" fill="url(#castleRoof)"/>
-                <line x1="0" y1="-42" x2="0" y2="-66" stroke="#ffd166" stroke-width="2.5"/>
-                <circle cx="0" cy="-66" r="4" fill="#ffd166" class="spire-light"/>
+                <rect x="-34" y="24" width="68" height="179" fill="url(#castleStone)"/>
+                <polygon points="-40,24 0,-48 40,24" fill="url(#castleRoof)"/>
+                <line x1="0" y1="-48" x2="0" y2="-74" stroke="#ffd166" stroke-width="2.6"/>
+                <polygon class="flag-wave" points="0,-74 18,-69 0,-63" fill="#ffd166"/>
+                <circle cx="0" cy="-76" r="4.5" fill="#fff3b0" class="spire-light"/>
 
-                <!-- 城堡窗戶與拱門細節 -->
-                <path d="M-16,200 L-16,158 Q0,142 16,158 L16,200 Z" fill="#27406e"/>
-                <rect x="-54" y="124" width="10" height="18" rx="5" fill="#ffd166" opacity="0.8"/>
-                <rect x="44" y="124" width="10" height="18" rx="5" fill="#ffd166" opacity="0.8"/>
-                <rect x="-90" y="96" width="9" height="16" rx="4.5" fill="#ffd166" opacity="0.75"/>
-                <rect x="81" y="96" width="9" height="16" rx="4.5" fill="#ffd166" opacity="0.75"/>
-                <circle cx="0" cy="64" r="7" fill="#ffd166" class="spire-light"/>
+                <!-- 拱門、金色時鐘徽章與暖光窗戶 -->
+                <path d="M-18,203 L-18,156 Q0,138 18,156 L18,203 Z" fill="#1e3561"/>
+                <path d="M-13,203 L-13,161 Q0,147 13,161 L13,203 Z" fill="#ffd166" opacity="0.32"/>
+                <circle cx="0" cy="64" r="11" fill="#234582" stroke="#ffd166" stroke-width="2.5"/>
+                <circle cx="0" cy="64" r="7.5" fill="#fff3b0" class="spire-light"/>
+                <rect x="-56" y="122" width="10" height="18" rx="5" fill="#ffd166" opacity="0.88"/>
+                <rect x="46" y="122" width="10" height="18" rx="5" fill="#ffd166" opacity="0.88"/>
+                <rect x="-93" y="94" width="9" height="16" rx="4.5" fill="#ffd166" opacity="0.82"/>
+                <rect x="84" y="94" width="9" height="16" rx="4.5" fill="#ffd166" opacity="0.82"/>
               </g>
 
-              <!-- 右側簡潔常青樹（位置獨立，不與城堡重疊） -->
-              <g class="clean-tree-sway" transform="translate(1155, 515)">
-                <rect x="-7" y="55" width="14" height="58" rx="4" fill="#4e342e"/>
-                <polygon points="0,-42 -42,25 42,25" fill="#2e7d4b"/>
-                <polygon points="0,-12 -48,62 48,62" fill="#23663c"/>
+              <!-- ========== 前景左右兩側：美國小鎮大街維多利亞建築與復古路燈 ========== -->
+              <!-- 左側小鎮街屋 -->
+              <g transform="translate(80, 588)">
+                <rect x="-65" y="0" width="68" height="65" rx="3" fill="url(#mainStreetWarm)"/>
+                <polygon points="-70,0 -31,-22 8,0" fill="#7c4d6b"/>
+                <rect x="-52" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.82"/>
+                <rect x="-26" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.82"/>
+                <!-- 復古路燈 -->
+                <line x1="36" y1="62" x2="36" y2="8" stroke="#182238" stroke-width="3.5"/>
+                <circle cx="36" cy="4" r="12" fill="rgba(255, 214, 102, 0.32)" class="lamp-glow"/>
+                <circle cx="36" cy="4" r="4.5" fill="#fff3b0"/>
               </g>
 
-              <!-- 左側簡潔常青樹 -->
-              <g class="clean-tree-sway" transform="translate(275, 520)">
-                <rect x="-6" y="48" width="12" height="52" rx="4" fill="#4e342e"/>
-                <polygon points="0,-32 -36,22 36,22" fill="#2e7d4b"/>
-                <polygon points="0,-4 -42,54 42,54" fill="#23663c"/>
+              <!-- 右側小鎮街屋 -->
+              <g transform="translate(1355, 588)">
+                <rect x="-5" y="0" width="70" height="65" rx="3" fill="url(#mainStreetWarm)"/>
+                <polygon points="-10,0 30,-22 70,0" fill="#466995"/>
+                <rect x="10" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.82"/>
+                <rect x="36" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.82"/>
+                <!-- 復古路燈 -->
+                <line x1="-34" y1="62" x2="-34" y2="8" stroke="#182238" stroke-width="3.5"/>
+                <circle cx="-34" cy="4" r="12" fill="rgba(255, 214, 102, 0.32)" class="lamp-glow"/>
+                <circle cx="-34" cy="4" r="4.5" fill="#fff3b0"/>
               </g>
 
               <!-- 前景草坡 -->
-              <path d="M0,645 Q360,618 720,644 T1440,632 L1440,760 L0,760 Z" fill="url(#hillFront)"/>
+              <path d="M0,646 Q360,620 720,645 T1440,633 L1440,760 L0,760 Z" fill="url(#hillFront)"/>
+
+              <!-- 漂浮的魔法金粉光點 -->
+              <g fill="#ffe699">
+                <circle class="pixie-dust pd-1" cx="530" cy="595" r="2.6"/>
+                <circle class="pixie-dust pd-2" cx="620" cy="610" r="2.1"/>
+                <circle class="pixie-dust pd-3" cx="825" cy="605" r="2.5"/>
+                <circle class="pixie-dust pd-4" cx="915" cy="590" r="2.2"/>
+                <circle class="pixie-dust pd-2" cx="310" cy="612" r="2.2"/>
+                <circle class="pixie-dust pd-3" cx="1135" cy="610" r="2.3"/>
+              </g>
             </svg>
           </div>
 
           <div class="vacation-content">
-            <div class="vac-badge" id="vacBadge">SUMMER VACATION COUNTDOWN</div>
+            <div class="vac-top-row">
+              <div class="vac-badge" id="vacBadge">☀️ SUMMER VACATION COUNTDOWN</div>
+            </div>
             <h2 class="vac-title" id="vacTitle">距離下一次迪士尼暑假之旅還有</h2>
-            <p class="vac-sub" id="vacSub">目標出發日：2027/07/01 · 可隨時在左下角 ⚙️ 設定切換假期主題</p>
+            <p class="vac-sub" id="vacSub">目標出發時刻：2027-07-01 09:00</p>
+
             <div class="countdown-boxes">
               <div class="cd-unit-box">
                 <div class="cd-num" id="cdDays">00</div>
@@ -1040,6 +1455,26 @@
                 <div class="cd-num" id="cdSecs">00</div>
                 <div class="cd-lbl">SECS</div>
               </div>
+            </div>
+
+            <!-- 快捷主題切換膠囊 -->
+            <div class="vac-quick-pills" id="vacQuickPills">
+              <button class="vac-chip active" data-preset="summer">☀️ 暑假之旅</button>
+              <button class="vac-chip" data-preset="newyear">🎆 跨年煙火</button>
+              <button class="vac-chip" data-preset="christmas">🎄 聖誕假期</button>
+              <button class="vac-chip" data-preset="custom">✨ 自訂日期</button>
+            </div>
+
+            <!-- 魔法旅程進度條與行前準備清單 -->
+            <div class="trip-progress-wrap">
+              <div class="trip-progress-head">
+                <span>✨ 魔法旅程籌備進度</span>
+                <span id="tripProgressPct" style="color: var(--gold);">75%</span>
+              </div>
+              <div class="trip-bar-track">
+                <div class="trip-bar-fill" id="tripBarFill" style="width: 75%;"></div>
+              </div>
+              <div class="checklist-row" id="vacChecklist"></div>
             </div>
           </div>
         </div>
@@ -1170,7 +1605,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "disney_resort_tv_ipad_layout_v5";
+    const STORAGE_KEY = "disney_resort_tv_ipad_layout_v7";
 
     const DEFAULT_DATA = {
       welcomeLabel: "WELCOME",
@@ -1184,7 +1619,13 @@
       terraceYt2: "",
       terraceYt3: "",
       terraceYt4: "",
-      fireworksTime: "21:00"
+      fireworksTime: "21:00",
+      checklist: [
+        { id: "hotel", label: "渡假村飯店預訂", done: true },
+        { id: "tickets", label: "園區門票與入園預約", done: true },
+        { id: "dining", label: "特色餐廳與煙火觀賞位", done: true },
+        { id: "magicband", label: "MagicBand+ 與行李打包", done: false }
+      ]
     };
 
     const PRESETS = {
@@ -1275,13 +1716,20 @@
     let currentTerraceIdx = 0;
     let currentParkKey = "mk";
     let lastSimTime = new Date();
+    let prevDigits = { d: "", h: "", m: "", s: "" };
 
     function loadState() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? { ...DEFAULT_DATA, ...JSON.parse(raw) } : { ...DEFAULT_DATA };
+        if (!raw) return structuredClone(DEFAULT_DATA);
+        const parsed = JSON.parse(raw);
+        return {
+          ...structuredClone(DEFAULT_DATA),
+          ...parsed,
+          checklist: Array.isArray(parsed.checklist) ? parsed.checklist : structuredClone(DEFAULT_DATA.checklist)
+        };
       } catch {
-        return { ...DEFAULT_DATA };
+        return structuredClone(DEFAULT_DATA);
       }
     }
 
@@ -1493,23 +1941,72 @@
       }
     }
 
+    function applyFlipDigit(elId, newVal, key) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      if (prevDigits[key] !== newVal) {
+        el.textContent = newVal;
+        el.classList.remove("flip-tick");
+        void el.offsetWidth;
+        el.classList.add("flip-tick");
+        prevDigits[key] = newVal;
+      }
+    }
+
     function updateTimers() {
       const presetInfo = PRESETS[state.holidayPreset] || PRESETS.summer;
       document.getElementById("vacBadge").textContent = presetInfo.badge;
       document.getElementById("vacTitle").textContent = state.vacTitle || presetInfo.title;
       document.getElementById("vacSub").textContent = `目標出發時刻：${(state.vacDate || "").replace("T", " ")}`;
 
+      document.querySelectorAll("#vacQuickPills .vac-chip").forEach(chip => {
+        chip.classList.toggle("active", chip.dataset.preset === state.holidayPreset);
+      });
+
       const target = new Date(state.vacDate);
       const now = new Date();
       const diff = isNaN(target.getTime()) ? 0 : Math.max(0, target - now);
 
-      document.getElementById("cdDays").textContent = String(Math.floor(diff / 86400000)).padStart(2, "0");
-      document.getElementById("cdHours").textContent = String(Math.floor((diff / 3600000) % 24)).padStart(2, "0");
-      document.getElementById("cdMins").textContent = String(Math.floor((diff / 60000) % 60)).padStart(2, "0");
-      document.getElementById("cdSecs").textContent = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
+      const d = String(Math.floor(diff / 86400000)).padStart(2, "0");
+      const h = String(Math.floor((diff / 3600000) % 24)).padStart(2, "0");
+      const m = String(Math.floor((diff / 60000) % 60)).padStart(2, "0");
+      const s = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
+
+      applyFlipDigit("cdDays", d, "d");
+      applyFlipDigit("cdHours", h, "h");
+      applyFlipDigit("cdMins", m, "m");
+      applyFlipDigit("cdSecs", s, "s");
 
       const fw = state.fireworksTime || "21:00";
       document.getElementById("vipFireworksHeadline").textContent = `今晚煙火秀：${fw} 準時登場`;
+    }
+
+    function renderChecklist() {
+      const list = state.checklist || [];
+      const doneCount = list.filter(item => item.done).length;
+      const pct = list.length ? Math.round((doneCount / list.length) * 100) : 0;
+
+      document.getElementById("tripProgressPct").textContent = `${pct}%（${doneCount}/${list.length}）`;
+      document.getElementById("tripBarFill").style.width = `${pct}%`;
+
+      const container = document.getElementById("vacChecklist");
+      container.innerHTML = list.map((item, idx) => `
+        <button type="button" class="check-pill ${item.done ? "done" : ""}" data-check-idx="${idx}">
+          <span>${item.done ? "✓" : "○"}</span>
+          <span>${item.label}</span>
+        </button>
+      `).join("");
+
+      container.querySelectorAll(".check-pill").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const i = Number(btn.dataset.checkIdx);
+          if (state.checklist[i]) {
+            state.checklist[i].done = !state.checklist[i].done;
+            saveState();
+            renderChecklist();
+          }
+        });
+      });
     }
 
     function fillSettingsForm() {
@@ -1527,6 +2024,20 @@
       document.getElementById("inpFireworksTime").value = state.fireworksTime;
     }
 
+    document.querySelectorAll("#vacQuickPills .vac-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        const key = chip.dataset.preset;
+        const p = PRESETS[key];
+        if (!p) return;
+        state.holidayPreset = key;
+        state.vacTitle = p.title;
+        state.vacDate = p.date;
+        saveState();
+        fillSettingsForm();
+        updateTimers();
+      });
+    });
+
     document.getElementById("inpHolidayPreset").addEventListener("change", (e) => {
       const p = PRESETS[e.target.value];
       if (p) {
@@ -1537,6 +2048,7 @@
 
     document.getElementById("btnSaveSettings").addEventListener("click", () => {
       state = {
+        ...state,
         welcomeLabel: document.getElementById("inpWelcomeLabel").value.trim() || "WELCOME",
         familyName: document.getElementById("inpFamilyName").value.trim() || "Smith Family",
         dateLocale: document.getElementById("inpDateLocale").value,
@@ -1562,11 +2074,12 @@
     });
 
     document.getElementById("btnResetSettings").addEventListener("click", () => {
-      state = { ...DEFAULT_DATA };
+      state = structuredClone(DEFAULT_DATA);
       saveState();
       fillSettingsForm();
       updateTopBar();
       updateTimers();
+      renderChecklist();
       renderResortMain();
       renderTerrace();
 
@@ -1600,6 +2113,7 @@
     fillSettingsForm();
     updateTopBar();
     updateTimers();
+    renderChecklist();
     renderResortMain();
     renderTerrace();
     renderParks(false);
