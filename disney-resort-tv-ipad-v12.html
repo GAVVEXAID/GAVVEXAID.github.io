@@ -3247,110 +3247,147 @@
 
                 <!-- 星際大戰飛船：千年鷹號 (Millennium Falcon) & 帝國鈦戰機 (TIE Fighter) -->
                 <!-- 1. 千年鷹號（由左向右飛越夜空，帶經典弧形藍色亞光速引擎尾焰與右側圓筒駕駛艙） -->
-                <g class="ship-skiff-fly"><g class="ship-bob" transform="scale(1.08)">
-                  <!-- 弧形藍色亞光速引擎推進尾焰 -->
-                  <path class="thruster" d="M-54,-18 C-78,-22 -118,-15 -148,-11 C-118,-7 -78,-6 -58,-4 Z" fill="url(#falconEngine)"/>
-                  <path class="thruster" d="M-58,4 C-78,6 -118,7 -148,11 C-118,15 -78,22 -54,18 Z" fill="url(#falconEngine)"/>
-                  <path class="thruster" d="M-60,-8 C-90,-9 -132,-4 -162,0 C-132,4 -90,9 -60,8 Z" fill="url(#falconEngine)"/>
-                  <!-- 船尾弧形引擎格柵發光條 -->
-                  <path d="M-52,-19 A58,34 0 0,0 -52,19" fill="none" stroke="#93e9ff" stroke-width="3.6" stroke-linecap="round"/>
-                  <path d="M-52,-19 A58,34 0 0,0 -52,19" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
-
-                  <!-- 千年鷹號圓盤主船體（3/4 俯視經典碟形） -->
-                  <ellipse cx="-6" cy="0" rx="54" ry="33" fill="url(#falconHull)" stroke="#5c6472" stroke-width="1.1"/>
-                  <!-- 船體裝甲分區線與舊化陰影 -->
-                  <path d="M-50,-14 L-12,-4 M-50,14 L-12,4 M-26,-29 L-8,-8 M-26,29 L-8,8 M10,-31 L6,-9 M10,31 L6,9" stroke="#646e7d" stroke-width="0.95" opacity="0.8"/>
-                  <ellipse cx="-6" cy="0" rx="34" ry="20" fill="none" stroke="#687282" stroke-width="0.9" stroke-dasharray="6 3"/>
-
-                  <!-- 前方雙叉型貨運夾鉗 (Forward Mandibles) -->
-                  <polygon points="24,-25 86,-13 86,-5 32,-9" fill="url(#falconHull)" stroke="#5c6472" stroke-width="1"/>
-                  <polygon points="24,25 86,13 86,5 32,9" fill="url(#falconHull)" stroke="#5c6472" stroke-width="1"/>
-                  <!-- 夾鉗中央凹槽陰影與紅色塗裝點綴 -->
-                  <polygon points="34,-8 82,-5 82,-3 34,-4" fill="#a83232" opacity="0.85"/>
-                  <polygon points="34,8 82,5 82,3 34,4" fill="#a83232" opacity="0.85"/>
-                  <circle cx="56" cy="-14" r="2.2" fill="#525b69"/>
-                  <circle cx="56" cy="14" r="2.2" fill="#525b69"/>
-                  <!-- 夾鉗前端雙探照燈 -->
-                  <circle cx="87" cy="-9" r="2" fill="#fff3b0" class="ship-light"/>
-                  <circle cx="87" cy="9" r="2" fill="#fff3b0" class="ship-light"/>
-
-                  <!-- 兩側圓形對接艙環 (Side Docking Rings) -->
-                  <g transform="translate(-4,-33)">
-                    <rect x="-8" y="-3" width="16" height="6" rx="2" fill="url(#falconShade)" stroke="#4f5663" stroke-width="0.9"/>
-                    <circle cx="0" cy="0" r="2.4" fill="#3a414d"/>
+                <g class="ship-skiff-fly">
+                  <g class="ship-bob" transform="scale(1.12)">
+                    <path class="thruster" d="M-54,-18 C-84,-22 -128,-14 -160,-10 C-128,-6 -84,-5 -58,-3 Z" fill="url(#falconEngine)"/>
+                    <path class="thruster" d="M-58,3 C-84,5 -128,6 -160,10 C-128,14 -84,22 -54,18 Z" fill="url(#falconEngine)"/>
+                    <path d="M-52,-19 A58,34 0 0,0 -52,19" fill="none" stroke="#9beeff" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M-52,-19 A58,34 0 0,0 -52,19" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M-54,0 A54,33 0 1,1 26,-28 L66,-14 L66,-5 L28,-3 L28,3 L66,5 L66,14 L26,28 A54,33 0 0,1 -54,0 Z" fill="url(#falconHull)" stroke="#525b69" stroke-width="1.2"/>
+                    <polygon points="32,-12 62,-12 62,-7 32,-6" fill="#7c8594"/>
+                    <polygon points="32,12 62,12 62,7 32,6" fill="#7c8594"/>
+                    <rect x="44" y="-13" width="9" height="3" fill="#c92a2a" opacity="0.85"/>
+                    <rect x="44" y="10" width="9" height="3" fill="#c92a2a" opacity="0.85"/>
+                    <g stroke="#5c6573" stroke-width="0.95" opacity="0.85">
+                      <line x1="-50" y1="-12" x2="-12" y2="-4"/>
+                      <line x1="-50" y1="12" x2="-12" y2="4"/>
+                      <line x1="-26" y1="-28" x2="-8" y2="-8"/>
+                      <line x1="-26" y1="28" x2="-8" y2="8"/>
+                      <line x1="8" y1="-31" x2="6" y2="-9"/>
+                      <line x1="8" y1="31" x2="6" y2="9"/>
+                    </g>
+                    <g fill="#3b424d" stroke="#8c96a6" stroke-width="0.7">
+                      <circle cx="-28" cy="-12" r="3.4"/><circle cx="-28" cy="12" r="3.4"/>
+                      <circle cx="-18" cy="-16" r="3.2"/><circle cx="-18" cy="16" r="3.2"/>
+                      <circle cx="-8" cy="-18" r="3.0"/><circle cx="-8" cy="18" r="3.0"/>
+                    </g>
+                    <circle cx="-4" cy="0" r="11" fill="#9aa3b2" stroke="#4f5866" stroke-width="1.1"/>
+                    <circle cx="-4" cy="0" r="5.5" fill="#dfe5ed" stroke="#5c6573" stroke-width="0.9"/>
+                    <ellipse cx="4" cy="-13" rx="7.5" ry="4.5" transform="rotate(-22 4 -13)" fill="#eef3fa" stroke="#5c6573" stroke-width="0.9"/>
+                    <line x1="4" y1="-13" x2="8" y2="-16" stroke="#4f5866" stroke-width="1.1"/>
+                    <path d="M2,23 L26,29 L26,35 L0,31 Z" fill="#aeb7c4" stroke="#525b69" stroke-width="1"/>
+                    <ellipse cx="29" cy="32" rx="6.5" ry="4.2" fill="#d8e0eb" stroke="#4f5866" stroke-width="1"/>
+                    <path d="M27,29.5 L33,31 L33,33.5 L27,34.5 Z" fill="#1e293b"/>
+                    <line x1="30" y1="29.8" x2="30" y2="34.2" stroke="#94a3b8" stroke-width="0.7"/>
                   </g>
-                  <g transform="translate(-4,33)">
-                    <rect x="-8" y="-3" width="16" height="6" rx="2" fill="url(#falconShade)" stroke="#4f5663" stroke-width="0.9"/>
-                    <circle cx="0" cy="0" r="2.4" fill="#3a414d"/>
-                  </g>
-
-                  <!-- 右側標誌性懸臂圓筒駕駛艙 (Starboard Cockpit Tube & Cone) -->
-                  <g transform="translate(22, 23) rotate(16)">
-                    <rect x="-12" y="-5" width="32" height="10" rx="3" fill="url(#falconHull)" stroke="#525b69" stroke-width="1"/>
-                    <line x1="4" y1="-5" x2="4" y2="5" stroke="#525b69" stroke-width="0.9"/>
-                    <!-- 錐形駕駛艙玻璃窗 -->
-                    <polygon points="20,-5 33,-2.5 33,2.5 20,5" fill="#233147" stroke="#9aa5b4" stroke-width="0.9"/>
-                    <line x1="20" y1="-2" x2="33" y2="-1" stroke="#b8d4f5" stroke-width="0.8"/>
-                    <line x1="20" y1="2" x2="33" y2="1" stroke="#b8d4f5" stroke-width="0.8"/>
-                  </g>
-
-                  <!-- 頂部雷達天線 (Sensor Dish) 與中央四聯裝雷射砲塔 -->
-                  <g transform="translate(-14, -14)">
-                    <ellipse cx="0" cy="0" rx="7.5" ry="4.5" transform="rotate(-24)" fill="#e2e8f0" stroke="#5c6472" stroke-width="0.9"/>
-                    <line x1="0" y1="0" x2="3" y2="-3" stroke="#475569" stroke-width="1"/>
-                  </g>
-                  <circle cx="-6" cy="0" r="8" fill="#9aa4b2" stroke="#4f5663" stroke-width="1"/>
-                  <circle cx="-6" cy="0" r="4" fill="#475569"/>
-                  <line x1="-6" y1="-2" x2="4" y2="-2" stroke="#dce3ec" stroke-width="1.2"/>
-                  <line x1="-6" y1="2" x2="4" y2="2" stroke="#dce3ec" stroke-width="1.2"/>
-                </g></g>
+                </g>
 
                 <!-- 2. 帝國鈦戰機（由右向左巡航，雙六角形太陽能翼板＋球形駕駛艙＋綠色雙離子推進光） -->
-                <g class="ship-cruiser-fly"><g transform="scale(-1.05,1.05)"><g class="ship-bob">
-                  <!-- 雙離子引擎微光尾焰 (Twin Ion Engines) -->
-                  <path class="thruster" d="M-16,-4 Q-36,-7 -58,-4 Q-36,-1 -16,-4Z" fill="url(#tieIonGrad)"/>
-                  <path class="thruster" d="M-16,4 Q-36,1 -58,4 Q-36,7 -16,4Z" fill="url(#tieIonGrad)"/>
-
-                  <!-- 遠側（左舷）六角形太陽能翼板（透視微縮增加立體感） -->
-                  <g transform="translate(-7, -8) scale(0.88)">
-                    <polygon points="-24,-40 16,-40 34,-12 34,12 16,40 -24,40 -36,12 -36,-12" fill="url(#tieWingPanel)" stroke="#7b8798" stroke-width="1.4"/>
-                    <line x1="-36" y1="0" x2="34" y2="0" stroke="#647082" stroke-width="1.2"/>
-                    <line x1="-24" y1="-40" x2="16" y2="40" stroke="#647082" stroke-width="1.1"/>
-                    <line x1="16" y1="-40" x2="-24" y2="40" stroke="#647082" stroke-width="1.1"/>
+                <g class="ship-cruiser-fly">
+                  <g class="ship-bob" transform="scale(1.05)">
+                    <path class="thruster" d="M12,-3 L34,-5 L28,0 L34,5 L12,3 Z" fill="url(#tieIonGrad)"/>
+                    <polygon points="-24,-24 8,-24 18,-10 8,4 -24,4 -34,-10" fill="url(#tieWingPanel)" stroke="#64748b" stroke-width="1.1" opacity="0.88"/>
+                    <line x1="-34" y1="-10" x2="18" y2="-10" stroke="#475569" stroke-width="0.9"/>
+                    <rect x="-16" y="-5" width="22" height="10" rx="2" fill="#64748b" stroke="#334155" stroke-width="0.9"/>
+                    <circle cx="-4" cy="0" r="12.5" fill="url(#tiePodGrad)" stroke="#334155" stroke-width="1.2"/>
+                    <circle cx="-11" cy="0" r="6.8" fill="#0f172a" stroke="#94a3b8" stroke-width="1"/>
+                    <circle cx="-11" cy="0" r="2.6" fill="none" stroke="#94a3b8" stroke-width="0.8"/>
+                    <path d="M-16,-4 L-6,4 M-16,4 L-6,-4 M-11,-6.5 L-11,6.5" stroke="#94a3b8" stroke-width="0.7"/>
+                    <circle cx="-14" cy="8.5" r="1.4" fill="#4ade80"/>
+                    <circle cx="-9" cy="9.5" r="1.4" fill="#4ade80"/>
+                    <polygon points="-18,-16 18,-16 29,2 18,20 -18,20 -29,2" fill="url(#tieWingPanel)" stroke="#94a3b8" stroke-width="1.3"/>
+                    <g stroke="#475569" stroke-width="1">
+                      <line x1="-29" y1="2" x2="29" y2="2"/>
+                      <line x1="-18" y1="-16" x2="18" y2="20"/>
+                      <line x1="18" y1="-16" x2="-18" y2="20"/>
+                    </g>
+                    <circle cx="0" cy="2" r="4.5" fill="#475569" stroke="#cbd5e1" stroke-width="1"/>
                   </g>
+                </g>
 
-                  <!-- 機翼連接桁架 (Wing Pylon) -->
-                  <rect x="-7" y="-22" width="14" height="44" rx="2" fill="#6b7585" stroke="#3f4754" stroke-width="1"/>
-
-                  <!-- 中央球形駕駛艙 (Spherical Cockpit Pod) -->
-                  <circle cx="2" cy="0" r="15.5" fill="url(#tiePodGrad)" stroke="#3f4754" stroke-width="1.2"/>
-                  <!-- 駕駛艙頂部艙蓋框線 -->
-                  <ellipse cx="1" cy="-11" rx="7" ry="2.6" fill="none" stroke="#475161" stroke-width="1"/>
-                  <!-- 標誌性八角輻射狀前觀察窗 (Octagonal Viewport) -->
-                  <g transform="translate(11, 0)">
-                    <ellipse cx="0" cy="0" rx="6.5" ry="9.5" fill="#111827" stroke="#b8c2d1" stroke-width="1.3"/>
-                    <circle cx="0" cy="0" r="3" fill="none" stroke="#9aa5b4" stroke-width="0.9"/>
-                    <line x1="-6" y1="0" x2="6" y2="0" stroke="#9aa5b4" stroke-width="0.8"/>
-                    <line x1="0" y1="-9" x2="0" y2="9" stroke="#9aa5b4" stroke-width="0.8"/>
-                    <line x1="-4.5" y1="-6.5" x2="4.5" y2="6.5" stroke="#9aa5b4" stroke-width="0.8"/>
-                    <line x1="-4.5" y1="6.5" x2="4.5" y2="-6.5" stroke="#9aa5b4" stroke-width="0.8"/>
+                <!-- 星際大戰經典角色群：尤達、路克、歐比王、莉亞、R2-D2、BB-8、C-3PO -->
+                <g class="starwars-parade-group">
+                  <g transform="translate(0, 0) scale(1.25)">
+                    <g class="char-bob">
+                      <path d="M-8,0 L-6,-14 L6,-14 L8,0 Z" fill="#d6c5a9" stroke="#8c7a5b" stroke-width="0.8"/>
+                      <path d="M-5,-14 L0,-6 L5,-14" fill="none" stroke="#8c7a5b" stroke-width="0.9"/>
+                      <ellipse cx="0" cy="-18" rx="5.2" ry="4.4" fill="#69a84f"/>
+                      <polygon points="-4.5,-19 -14,-21 -5,-16" fill="#69a84f"/>
+                      <polygon points="4.5,-19 14,-21 5,-16" fill="#69a84f"/>
+                      <line x1="7" y1="-8" x2="17" y2="-22" stroke="#51cf66" stroke-width="2.4" stroke-linecap="round" class="saber-glow" style="color:#51cf66"/>
+                      <line x1="6" y1="-6" x2="8" y2="-9" stroke="#495057" stroke-width="2"/>
+                    </g>
                   </g>
-                  <!-- 艙底雙雷射砲管 (Chin Laser Cannons) -->
-                  <line x1="10" y1="10" x2="21" y2="11" stroke="#cbd5e1" stroke-width="1.6" stroke-linecap="round"/>
-                  <circle cx="22" cy="11" r="1.4" fill="#4ade80" class="ship-light"/>
-
-                  <!-- 近側（右舷）六角形太陽能翼板 -->
-                  <g transform="translate(7, 8)">
-                    <polygon points="-24,-40 16,-40 34,-12 34,12 16,40 -24,40 -36,12 -36,-12" fill="url(#tieWingPanel)" stroke="#9aa5b4" stroke-width="1.6"/>
-                    <!-- 太陽能電池板銀灰色骨架輻條 -->
-                    <line x1="-36" y1="0" x2="34" y2="0" stroke="#8592a6" stroke-width="1.5"/>
-                    <line x1="-24" y1="-40" x2="16" y2="40" stroke="#8592a6" stroke-width="1.4"/>
-                    <line x1="16" y1="-40" x2="-24" y2="40" stroke="#8592a6" stroke-width="1.4"/>
-                    <!-- 中央六角輪轂蓋 -->
-                    <polygon points="-6,-7 6,-7 10,0 6,7 -6,7 -10,0" fill="#7c8798" stroke="#3f4754" stroke-width="1"/>
-                    <circle cx="0" cy="0" r="3" fill="#3a4352"/>
+                  <g transform="translate(56, 0) scale(1.32)">
+                    <g class="char-bob char-bob-2">
+                      <rect x="-5" y="-12" width="4" height="12" fill="#d9cbb8"/>
+                      <rect x="1" y="-12" width="4" height="12" fill="#d9cbb8"/>
+                      <path d="M-7,-12 L-6,-26 L6,-26 L7,-12 Z" fill="#e9decb" stroke="#9e8e76" stroke-width="0.8"/>
+                      <rect x="-6.5" y="-16" width="13" height="2.4" fill="#5c4033"/>
+                      <circle cx="0" cy="-31" r="4.8" fill="#ffe0bd"/>
+                      <path d="M-5,-32 Q0,-37 5,-32 Q4,-29 -4,-29 Z" fill="#e6b84c"/>
+                      <line x1="7" y1="-18" x2="18" y2="-38" stroke="#4dabf7" stroke-width="2.5" stroke-linecap="round" class="saber-glow" style="color:#4dabf7"/>
+                      <line x1="5.5" y1="-15" x2="7.5" y2="-19" stroke="#868e96" stroke-width="2.2"/>
+                    </g>
                   </g>
-                </g></g></g>
+                  <g transform="translate(114, 0) scale(1.32)">
+                    <g class="char-bob char-bob-3">
+                      <path d="M-9,0 L-7,-26 L7,-26 L9,0 Z" fill="#6e472b" stroke="#422817" stroke-width="0.9"/>
+                      <path d="M-4,-26 L-3,0 M4,-26 L3,0" stroke="#d8c8b4" stroke-width="1.2"/>
+                      <circle cx="0" cy="-31" r="4.8" fill="#ffe0bd"/>
+                      <path d="M-5,-32 Q0,-37 5,-32" fill="#b57c4c"/>
+                      <path d="M-3.5,-29 Q0,-26.5 3.5,-29" fill="#b57c4c"/>
+                      <line x1="8" y1="-18" x2="20" y2="-36" stroke="#339af0" stroke-width="2.5" stroke-linecap="round" class="saber-glow" style="color:#339af0"/>
+                    </g>
+                  </g>
+                  <g transform="translate(172, 0) scale(1.3)">
+                    <g class="char-bob">
+                      <path d="M-8,0 L-6,-25 L6,-25 L8,0 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.9"/>
+                      <rect x="-6" y="-17" width="12" height="2.4" fill="#cbd5e1"/>
+                      <circle cx="0" cy="-30" r="4.6" fill="#ffe0bd"/>
+                      <path d="M-4.5,-32 Q0,-36 4.5,-32" fill="#4a2c18"/>
+                      <circle cx="-5.6" cy="-30" r="3.1" fill="#4a2c18"/>
+                      <circle cx="5.6" cy="-30" r="3.1" fill="#4a2c18"/>
+                    </g>
+                  </g>
+                  <g transform="translate(226, 0) scale(1.28)">
+                    <g class="char-bob char-bob-2">
+                      <rect x="-8.5" y="-13" width="2.6" height="13" rx="1" fill="#e2e8f0" stroke="#64748b" stroke-width="0.7"/>
+                      <rect x="5.9" y="-13" width="2.6" height="13" rx="1" fill="#e2e8f0" stroke="#64748b" stroke-width="0.7"/>
+                      <rect x="-6" y="-15" width="12" height="12" rx="1.5" fill="#ffffff" stroke="#64748b" stroke-width="0.8"/>
+                      <rect x="-4" y="-12" width="8" height="2" fill="#228be6"/>
+                      <rect x="-4" y="-8" width="8" height="2" fill="#228be6"/>
+                      <path d="M-6,-15 A6,6 0 0,1 6,-15 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="0.8"/>
+                      <path d="M-4.5,-17 A5,4 0 0,1 4.5,-17" fill="none" stroke="#1c7ed6" stroke-width="2"/>
+                      <circle cx="0" cy="-18" r="1.4" fill="#1e293b"/>
+                      <circle cx="2.5" cy="-16.5" r="0.9" fill="#fa5252"/>
+                    </g>
+                  </g>
+                  <g transform="translate(274, 0) scale(1.28)">
+                    <g class="char-bob char-bob-3">
+                      <g class="bb8-roll">
+                        <circle cx="0" cy="-7.5" r="7.5" fill="#ffffff" stroke="#64748b" stroke-width="0.8"/>
+                        <circle cx="0" cy="-7.5" r="4.2" fill="none" stroke="#ff922b" stroke-width="2.1"/>
+                        <circle cx="0" cy="-7.5" r="1.8" fill="#cbd5e1"/>
+                      </g>
+                      <path d="M-4.8,-15 A4.8,4.5 0 0,1 4.8,-15 Z" fill="#ffffff" stroke="#64748b" stroke-width="0.8"/>
+                      <line x1="-4.2" y1="-16.2" x2="4.2" y2="-16.2" stroke="#ff922b" stroke-width="1.5"/>
+                      <circle cx="0" cy="-17.6" r="1.3" fill="#1e293b"/>
+                      <line x1="-1.5" y1="-19.5" x2="-1.5" y2="-23" stroke="#94a3b8" stroke-width="0.9"/>
+                    </g>
+                  </g>
+                  <g transform="translate(324, 0) scale(1.32)">
+                    <g class="char-bob">
+                      <rect x="-4.5" y="-13" width="3.4" height="13" rx="1.2" fill="url(#goldTrim)" stroke="#9c6b19" stroke-width="0.7"/>
+                      <rect x="1.1" y="-13" width="3.4" height="13" rx="1.2" fill="url(#goldTrim)" stroke="#9c6b19" stroke-width="0.7"/>
+                      <rect x="-4" y="-17" width="8" height="4" fill="#1e293b"/>
+                      <path d="M-3,-16 L3,-14 M3,-16 L-3,-14" stroke="#ffd166" stroke-width="0.7"/>
+                      <path d="M-6,-17 L-5,-26 L5,-26 L6,-17 Z" fill="url(#goldTrim)" stroke="#9c6b19" stroke-width="0.8"/>
+                      <circle cx="0" cy="-21.5" r="1.8" fill="#fff3bf" stroke="#9c6b19" stroke-width="0.6"/>
+                      <ellipse cx="0" cy="-31" rx="4.2" ry="5" fill="url(#goldTrim)" stroke="#9c6b19" stroke-width="0.8"/>
+                    </g>
+                  </g>
+                </g>
 
                 <!-- 【高空奇幻飛行組 (12位) — 精修層次服飾、飄逸動態與無眼藝術剪影】 -->
                 <!-- 1-3. 小飛俠彼得潘、溫蒂、約翰 -->
