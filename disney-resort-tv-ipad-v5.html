@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad 官方即時排隊穩定版 V10</title>
+  <title>Resort Wait Display - iPad 奇幻動態全景版 V11</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -629,6 +629,103 @@
       50% { transform: translateY(-24px) scale(1.25); opacity: 0.92; }
     }
 
+    /* 園區漂浮氣球群 */
+    .balloon-cluster {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: balloonSway 5.5s ease-in-out infinite alternate;
+    }
+    .balloon-cluster-2 {
+      animation-delay: 1.8s;
+      animation-duration: 6.2s;
+    }
+    @keyframes balloonSway {
+      0% { transform: rotate(-4deg) translateY(0px); }
+      100% { transform: rotate(4deg) translateY(-9px); }
+    }
+
+    /* 飛越城堡的奇幻飛艇／飛行船與魔法光軌 */
+    .airship-cruise {
+      animation: airshipFly 34s linear infinite;
+    }
+    @keyframes airshipFly {
+      0% { transform: translate(-220px, 165px); }
+      50% { transform: translate(720px, 148px); }
+      100% { transform: translate(1660px, 165px); }
+    }
+
+    /* 城堡護城河／湖面水波微光 */
+    .water-shimmer {
+      animation: waterRipple 4.2s ease-in-out infinite alternate;
+    }
+    .water-shimmer-2 {
+      animation-delay: 1.6s;
+    }
+    @keyframes waterRipple {
+      0% { opacity: 0.25; transform: scaleX(0.94); }
+      100% { opacity: 0.78; transform: scaleX(1.06); }
+    }
+
+    /* 噴泉水柱律動 */
+    .fountain-jet {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: fountainPulse 2.4s ease-in-out infinite alternate;
+    }
+    .fountain-jet-2 {
+      animation-delay: 0.8s;
+    }
+    @keyframes fountainPulse {
+      0% { transform: scaleY(0.82); opacity: 0.65; }
+      100% { transform: scaleY(1.12); opacity: 1; }
+    }
+
+    /* 城堡探照燈光束掃描 */
+    .searchlight-left {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: sweepLeft 7.5s ease-in-out infinite alternate;
+    }
+    .searchlight-right {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: sweepRight 7.5s ease-in-out infinite alternate;
+    }
+    @keyframes sweepLeft {
+      0% { transform: rotate(-16deg); opacity: 0.22; }
+      100% { transform: rotate(18deg); opacity: 0.42; }
+    }
+    @keyframes sweepRight {
+      0% { transform: rotate(16deg); opacity: 0.22; }
+      100% { transform: rotate(-18deg); opacity: 0.42; }
+    }
+
+    /* 環繞城堡的流星金粉光弧 */
+    .magic-arc-draw {
+      stroke-dasharray: 420;
+      stroke-dashoffset: 420;
+      animation: drawMagicArc 6.5s ease-in-out infinite;
+    }
+    @keyframes drawMagicArc {
+      0% { stroke-dashoffset: 420; opacity: 0; }
+      25% { opacity: 0.9; }
+      60% { stroke-dashoffset: 0; opacity: 0.85; }
+      85%, 100% { stroke-dashoffset: -420; opacity: 0; }
+    }
+
+    /* 小鎮大街復古蒸汽火車／接駁車緩行 */
+    .trolley-ride {
+      animation: trolleyMove 26s linear infinite;
+    }
+    @keyframes trolleyMove {
+      0% { transform: translate(-180px, 646px); }
+      100% { transform: translate(1620px, 646px); }
+    }
+
+    /* 煙火次波與多層綻放 */
+    .fw-burst-4 { animation-delay: 0.9s; }
+    .fw-burst-5 { animation-delay: 2.6s; }
+
     .vacation-content {
       position: relative;
       z-index: 2;
@@ -1121,15 +1218,25 @@
             <svg viewBox="0 0 1440 760" preserveAspectRatio="xMidYMax slice" style="width:100%;height:100%;display:block;">
               <defs>
                 <linearGradient id="cleanSky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#061026"/>
-                  <stop offset="48%" stop-color="#112b5e"/>
-                  <stop offset="100%" stop-color="#275cb3"/>
+                  <stop offset="0%" stop-color="#040b1c"/>
+                  <stop offset="35%" stop-color="#0d234d"/>
+                  <stop offset="72%" stop-color="#1b468f"/>
+                  <stop offset="100%" stop-color="#2e6bc4"/>
                 </linearGradient>
                 <radialGradient id="castleAura" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="rgba(255, 214, 112, 0.36)"/>
-                  <stop offset="55%" stop-color="rgba(100, 181, 246, 0.14)"/>
+                  <stop offset="0%" stop-color="rgba(255, 224, 130, 0.44)"/>
+                  <stop offset="48%" stop-color="rgba(124, 196, 255, 0.18)"/>
                   <stop offset="100%" stop-color="rgba(16, 42, 92, 0)"/>
                 </radialGradient>
+                <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="rgba(255, 248, 210, 0.55)"/>
+                  <stop offset="50%" stop-color="rgba(255, 232, 160, 0.14)"/>
+                  <stop offset="100%" stop-color="rgba(255, 232, 160, 0)"/>
+                </radialGradient>
+                <linearGradient id="beamGrad" x1="0" y1="1" x2="0" y2="0">
+                  <stop offset="0%" stop-color="rgba(255, 236, 179, 0.55)"/>
+                  <stop offset="100%" stop-color="rgba(255, 236, 179, 0)"/>
+                </linearGradient>
                 <radialGradient id="epcotSphereGrad" cx="38%" cy="32%" r="68%">
                   <stop offset="0%" stop-color="#e3f2fd"/>
                   <stop offset="55%" stop-color="#90caf9"/>
@@ -1140,134 +1247,185 @@
                   <stop offset="100%" stop-color="#9db8e6"/>
                 </linearGradient>
                 <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#7c637a"/>
-                  <stop offset="100%" stop-color="#3e334d"/>
+                  <stop offset="0%" stop-color="#876b85"/>
+                  <stop offset="100%" stop-color="#3a2f47"/>
                 </linearGradient>
                 <linearGradient id="castleStone" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="100%" stop-color="#cedcf5"/>
+                  <stop offset="65%" stop-color="#e6effc"/>
+                  <stop offset="100%" stop-color="#bfd2f2"/>
                 </linearGradient>
                 <linearGradient id="castleRoof" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#7cc4ff"/>
-                  <stop offset="100%" stop-color="#2453a8"/>
+                  <stop offset="0%" stop-color="#8ad0ff"/>
+                  <stop offset="100%" stop-color="#1f4c9e"/>
                 </linearGradient>
                 <linearGradient id="mainStreetWarm" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#3c4c73"/>
-                  <stop offset="100%" stop-color="#1e2a47"/>
+                  <stop offset="0%" stop-color="#445682"/>
+                  <stop offset="100%" stop-color="#1d2845"/>
                 </linearGradient>
                 <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#1d4935"/>
-                  <stop offset="100%" stop-color="#112e22"/>
+                  <stop offset="0%" stop-color="#1c4734"/>
+                  <stop offset="100%" stop-color="#0f291e"/>
+                </linearGradient>
+                <linearGradient id="lakeWater" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#163e7a"/>
+                  <stop offset="50%" stop-color="#1f539e"/>
+                  <stop offset="100%" stop-color="#0f2a54"/>
                 </linearGradient>
                 <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#2a663b"/>
-                  <stop offset="100%" stop-color="#173d23"/>
+                  <stop offset="0%" stop-color="#29633a"/>
+                  <stop offset="100%" stop-color="#14361f"/>
                 </linearGradient>
               </defs>
 
               <!-- 夜空漸層 -->
               <rect width="1440" height="760" fill="url(#cleanSky)"/>
 
-              <!-- 城堡後方暖金魔法光暈 -->
-              <circle cx="720" cy="495" r="340" fill="url(#castleAura)"/>
+              <!-- 右上角新月與柔和月暈 -->
+              <g transform="translate(1245, 96)">
+                <circle cx="0" cy="0" r="64" fill="url(#moonGlow)"/>
+                <path d="M-8,-22 A24,24 0 1,0 20,16 A19,19 0 1,1 -8,-22 Z" fill="#fff6cc"/>
+              </g>
 
-              <!-- 閃爍的小星星 -->
+              <!-- 城堡後方暖金魔法光暈 -->
+              <circle cx="720" cy="485" r="370" fill="url(#castleAura)"/>
+
+              <!-- 城堡兩側探照燈光束（慶典氛圍） -->
+              <polygon class="searchlight-left" points="565,585 450,150 535,150" fill="url(#beamGrad)"/>
+              <polygon class="searchlight-right" points="875,585 905,150 990,150" fill="url(#beamGrad)"/>
+
+              <!-- 閃爍的小星星群 -->
               <g fill="#fff6c2">
-                <circle class="star-twinkle star-t1" cx="110" cy="95" r="2.5"/>
-                <circle class="star-twinkle star-t2" cx="245" cy="155" r="2.1"/>
-                <circle class="star-twinkle star-t3" cx="385" cy="85" r="2.7"/>
-                <circle class="star-twinkle star-t4" cx="535" cy="135" r="2.1"/>
-                <circle class="star-twinkle star-t5" cx="645" cy="70" r="2.4"/>
-                <circle class="star-twinkle star-t2" cx="810" cy="75" r="2.5"/>
-                <circle class="star-twinkle star-t1" cx="955" cy="130" r="2.2"/>
-                <circle class="star-twinkle star-t3" cx="1115" cy="88" r="2.7"/>
-                <circle class="star-twinkle star-t4" cx="1265" cy="148" r="2.3"/>
-                <circle class="star-twinkle star-t5" cx="1370" cy="98" r="2.5"/>
+                <circle class="star-twinkle star-t1" cx="95" cy="88" r="2.4"/>
+                <circle class="star-twinkle star-t2" cx="215" cy="145" r="2.1"/>
+                <circle class="star-twinkle star-t3" cx="345" cy="75" r="2.6"/>
+                <circle class="star-twinkle star-t4" cx="485" cy="128" r="2.0"/>
+                <circle class="star-twinkle star-t5" cx="615" cy="65" r="2.5"/>
+                <circle class="star-twinkle star-t2" cx="795" cy="70" r="2.5"/>
+                <circle class="star-twinkle star-t1" cx="935" cy="122" r="2.2"/>
+                <circle class="star-twinkle star-t3" cx="1085" cy="82" r="2.6"/>
+                <circle class="star-twinkle star-t4" cx="1345" cy="142" r="2.3"/>
+                <circle class="star-twinkle star-t5" cx="1395" cy="84" r="2.4"/>
+                <circle class="star-twinkle star-t3" cx="155" cy="240" r="1.9"/>
+                <circle class="star-twinkle star-t1" cx="1310" cy="245" r="2.0"/>
               </g>
 
               <!-- 十字閃爍星光 -->
-              <g class="star-twinkle star-t2" transform="translate(175, 195)" fill="#ffd166">
+              <g class="star-twinkle star-t2" transform="translate(175, 185)" fill="#ffd166">
                 <polygon points="0,-11 2.8,-2.8 11,0 2.8,2.8 0,11 -2.8,2.8 -11,0 -2.8,-2.8"/>
               </g>
-              <g class="star-twinkle star-t4" transform="translate(720, 62)" fill="#fff3b0">
-                <polygon points="0,-13 3.2,-3.2 13,0 3.2,3.2 0,13 -3.2,3.2 -13,0 -3.2,-3.2"/>
+              <g class="star-twinkle star-t4" transform="translate(720, 56)" fill="#fff3b0">
+                <polygon points="0,-14 3.4,-3.4 14,0 3.4,3.4 0,14 -3.4,3.4 -14,0 -3.4,-3.4"/>
               </g>
-              <g class="star-twinkle star-t1" transform="translate(1285, 192)" fill="#ffd166">
-                <polygon points="0,-11 2.8,-2.8 11,0 2.8,2.8 0,11 -2.8,2.8 -11,0 -2.8,-2.8"/>
+              <g class="star-twinkle star-t1" transform="translate(1150, 178)" fill="#ffd166">
+                <polygon points="0,-10 2.6,-2.6 10,0 2.6,2.6 0,10 -2.6,2.6 -10,0 -2.6,-2.6"/>
               </g>
 
-              <!-- 劃過夜空的流星 -->
-              <line class="shooting-star" x1="250" y1="70" x2="610" y2="210" stroke="#fff5c0" stroke-width="2.2" stroke-linecap="round"/>
-              <line class="shooting-star-2" x1="1190" y1="65" x2="860" y2="195" stroke="#a6dbff" stroke-width="2" stroke-linecap="round"/>
+              <!-- 劃過夜空的雙流星 -->
+              <line class="shooting-star" x1="230" y1="65" x2="600" y2="205" stroke="#fff5c0" stroke-width="2.3" stroke-linecap="round"/>
+              <line class="shooting-star-2" x1="1180" y1="62" x2="840" y2="195" stroke="#a6dbff" stroke-width="2.1" stroke-linecap="round"/>
 
-              <!-- 柔和煙火綻放（城堡左右後方高空） -->
-              <g class="fw-burst" transform="translate(470, 225)" stroke="#ffd166" stroke-width="2" stroke-linecap="round">
-                <line x1="0" y1="-34" x2="0" y2="-14"/>
-                <line x1="0" y1="14" x2="0" y2="34"/>
-                <line x1="-34" y1="0" x2="-14" y2="0"/>
-                <line x1="14" y1="0" x2="34" y2="0"/>
-                <line x1="-24" y1="-24" x2="-10" y2="-10"/>
-                <line x1="10" y1="10" x2="24" y2="24"/>
-                <line x1="24" y1="-24" x2="10" y2="-10"/>
-                <line x1="-10" y1="10" x2="-24" y2="24"/>
+              <!-- 飛越夜空的奇幻飛艇（點綴夜間燈飾） -->
+              <g class="airship-cruise">
+                <ellipse cx="48" cy="16" rx="44" ry="15" fill="#2c4d8a" stroke="#8ad0ff" stroke-width="1.5"/>
+                <path d="M12,16 Q48,8 84,16 Q48,24 12,16 Z" fill="#ffd166" opacity="0.85"/>
+                <polygon points="6,11 -8,4 -4,16 -8,28 6,21" fill="#ff6b6b"/>
+                <rect x="34" y="30" width="28" height="7" rx="3" fill="#182848" stroke="#ffd166" stroke-width="1"/>
+                <circle cx="40" cy="33.5" r="1.4" fill="#fff3b0"/>
+                <circle cx="48" cy="33.5" r="1.4" fill="#fff3b0"/>
+                <circle cx="56" cy="33.5" r="1.4" fill="#fff3b0"/>
               </g>
-              <g class="fw-burst fw-burst-2" transform="translate(975, 215)" stroke="#7cc4ff" stroke-width="2" stroke-linecap="round">
-                <line x1="0" y1="-36" x2="0" y2="-15"/>
-                <line x1="0" y1="15" x2="0" y2="36"/>
-                <line x1="-36" y1="0" x2="-15" y2="0"/>
-                <line x1="15" y1="0" x2="36" y2="0"/>
-                <line x1="-25" y1="-25" x2="-11" y2="-11"/>
-                <line x1="11" y1="11" x2="25" y2="25"/>
-                <line x1="25" y1="-25" x2="11" y2="-11"/>
-                <line x1="-11" y1="11" x2="-25" y2="25"/>
+
+              <!-- 多層次慶典煙火綻放（5 組錯落綻放） -->
+              <!-- 煙火 1：金黃大麗花 -->
+              <g class="fw-burst" transform="translate(455, 215)" stroke="#ffd166" stroke-width="2.2" stroke-linecap="round">
+                <line x1="0" y1="-40" x2="0" y2="-14"/>
+                <line x1="0" y1="14" x2="0" y2="40"/>
+                <line x1="-40" y1="0" x2="-14" y2="0"/>
+                <line x1="14" y1="0" x2="40" y2="0"/>
+                <line x1="-28" y1="-28" x2="-10" y2="-10"/>
+                <line x1="10" y1="10" x2="28" y2="28"/>
+                <line x1="28" y1="-28" x2="10" y2="-10"/>
+                <line x1="-10" y1="10" x2="-28" y2="28"/>
+                <circle cx="0" cy="0" r="22" fill="none" stroke="#fff3b0" stroke-width="1.2" stroke-dasharray="3 6"/>
               </g>
-              <g class="fw-burst fw-burst-3" transform="translate(720, 165)" stroke="#ff9ebb" stroke-width="2" stroke-linecap="round">
-                <line x1="0" y1="-30" x2="0" y2="-12"/>
-                <line x1="0" y1="12" x2="0" y2="30"/>
-                <line x1="-30" y1="0" x2="-12" y2="0"/>
-                <line x1="12" y1="0" x2="30" y2="0"/>
-                <line x1="-21" y1="-21" x2="-9" y2="-9"/>
-                <line x1="9" y1="9" x2="21" y2="21"/>
-                <line x1="21" y1="-21" x2="9" y2="-9"/>
-                <line x1="-9" y1="9" x2="-21" y2="21"/>
+              <!-- 煙火 2：冰藍星爆 -->
+              <g class="fw-burst fw-burst-2" transform="translate(985, 205)" stroke="#7cc4ff" stroke-width="2.2" stroke-linecap="round">
+                <line x1="0" y1="-42" x2="0" y2="-15"/>
+                <line x1="0" y1="15" x2="0" y2="42"/>
+                <line x1="-42" y1="0" x2="-15" y2="0"/>
+                <line x1="15" y1="0" x2="42" y2="0"/>
+                <line x1="-30" y1="-30" x2="-11" y2="-11"/>
+                <line x1="11" y1="11" x2="30" y2="30"/>
+                <line x1="30" y1="-30" x2="11" y2="-11"/>
+                <line x1="-11" y1="11" x2="-30" y2="30"/>
+                <circle cx="0" cy="0" r="24" fill="none" stroke="#e0f2fe" stroke-width="1.2" stroke-dasharray="3 6"/>
+              </g>
+              <!-- 煙火 3：玫瑰粉高空煙火 -->
+              <g class="fw-burst fw-burst-3" transform="translate(720, 152)" stroke="#ff9ebb" stroke-width="2.2" stroke-linecap="round">
+                <line x1="0" y1="-36" x2="0" y2="-12"/>
+                <line x1="0" y1="12" x2="0" y2="36"/>
+                <line x1="-36" y1="0" x2="-12" y2="0"/>
+                <line x1="12" y1="0" x2="36" y2="0"/>
+                <line x1="-25" y1="-25" x2="-9" y2="-9"/>
+                <line x1="9" y1="9" x2="25" y2="25"/>
+                <line x1="25" y1="-25" x2="9" y2="-9"/>
+                <line x1="-9" y1="9" x2="-25" y2="25"/>
+              </g>
+              <!-- 煙火 4 & 5：左右遠景點綴煙火 -->
+              <g class="fw-burst fw-burst-4" transform="translate(310, 265)" stroke="#c77dff" stroke-width="1.8" stroke-linecap="round">
+                <line x1="0" y1="-26" x2="0" y2="-10"/>
+                <line x1="0" y1="10" x2="0" y2="26"/>
+                <line x1="-26" y1="0" x2="-10" y2="0"/>
+                <line x1="10" y1="0" x2="26" y2="0"/>
+                <line x1="-18" y1="-18" x2="-7" y2="-7"/>
+                <line x1="7" y1="7" x2="18" y2="18"/>
+                <line x1="18" y1="-18" x2="7" y2="-7"/>
+                <line x1="-7" y1="7" x2="-18" y2="18"/>
+              </g>
+              <g class="fw-burst fw-burst-5" transform="translate(1130, 260)" stroke="#5cd65c" stroke-width="1.8" stroke-linecap="round">
+                <line x1="0" y1="-26" x2="0" y2="-10"/>
+                <line x1="0" y1="10" x2="0" y2="26"/>
+                <line x1="-26" y1="0" x2="-10" y2="0"/>
+                <line x1="10" y1="0" x2="26" y2="0"/>
+                <line x1="-18" y1="-18" x2="-7" y2="-7"/>
+                <line x1="7" y1="7" x2="18" y2="18"/>
+                <line x1="18" y1="-18" x2="7" y2="-7"/>
+                <line x1="-7" y1="7" x2="-18" y2="18"/>
               </g>
 
               <!-- 乾淨柔和的雲朵 -->
-              <g class="cloud-drift-slow" fill="rgba(255,255,255,0.13)">
-                <ellipse cx="320" cy="150" rx="52" ry="14"/>
-                <circle cx="302" cy="144" r="17"/>
-                <circle cx="334" cy="142" r="20"/>
-              </g>
               <g class="cloud-drift-slow" fill="rgba(255,255,255,0.12)">
-                <ellipse cx="1125" cy="138" rx="56" ry="15"/>
-                <circle cx="1106" cy="132" r="18"/>
-                <circle cx="1140" cy="130" r="21"/>
+                <ellipse cx="320" cy="148" rx="54" ry="14"/>
+                <circle cx="302" cy="142" r="17"/>
+                <circle cx="334" cy="140" r="20"/>
+              </g>
+              <g class="cloud-drift-slow" fill="rgba(255,255,255,0.11)">
+                <ellipse cx="1095" cy="136" rx="58" ry="15"/>
+                <circle cx="1076" cy="130" r="18"/>
+                <circle cx="1110" cy="128" r="21"/>
               </g>
 
               <!-- 背景遠山草坡 -->
-              <path d="M0,590 Q360,552 720,586 T1440,572 L1440,760 L0,760 Z" fill="url(#hillBack)"/>
+              <path d="M0,586 Q360,548 720,582 T1440,568 L1440,760 L0,760 Z" fill="url(#hillBack)"/>
 
-              <!-- ========== 左側園區地標群：明日世界太空山 + EPCOT 太空船地球 ========== -->
-              <!-- 1. 太空山 Space Mountain（白色流線穹頂） -->
-              <g transform="translate(395, 535)">
+              <!-- ========== 左側園區地標群：EPCOT 太空船地球 + 明日世界太空山 ========== -->
+              <!-- 1. 太空山 Space Mountain -->
+              <g transform="translate(395, 532)">
                 <path d="M-85,68 Q-55,-28 0,-42 Q55,-28 85,68 Z" fill="url(#spaceMtnGrad)"/>
-                <!-- 標誌性外部斜撐肋條 -->
                 <path d="M-66,68 L0,-44 L66,68" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round"/>
                 <path d="M-36,68 L0,-44 L36,68" fill="none" stroke="#dbe9ff" stroke-width="2.5"/>
                 <line x1="0" y1="-44" x2="0" y2="-62" stroke="#90caf9" stroke-width="2.5"/>
-                <circle cx="0" cy="-63" r="3" fill="#ffd166" class="spire-light"/>
+                <circle cx="0" cy="-63" r="3.2" fill="#ffd166" class="spire-light"/>
               </g>
 
               <!-- 2. EPCOT 太空船地球 Spaceship Earth -->
-              <g transform="translate(225, 515)">
-                <!-- 底座支撐腳 -->
+              <g transform="translate(220, 512)">
                 <line x1="-42" y1="62" x2="-58" y2="108" stroke="#29487d" stroke-width="7" stroke-linecap="round"/>
                 <line x1="42" y1="62" x2="58" y2="108" stroke="#29487d" stroke-width="7" stroke-linecap="round"/>
                 <line x1="0" y1="72" x2="0" y2="108" stroke="#1e3763" stroke-width="8" stroke-linecap="round"/>
-                <!-- 球體主體 -->
                 <circle cx="0" cy="0" r="76" fill="url(#epcotSphereGrad)"/>
-                <!-- 幾何刻面網格線條（清爽不雜亂） -->
-                <g stroke="rgba(255,255,255,0.42)" stroke-width="1.2" fill="none" class="epcot-glow">
+                <g stroke="rgba(255,255,255,0.45)" stroke-width="1.2" fill="none" class="epcot-glow">
                   <ellipse cx="0" cy="0" rx="76" ry="24"/>
                   <ellipse cx="0" cy="0" rx="76" ry="52"/>
                   <ellipse cx="0" cy="0" rx="26" ry="76"/>
@@ -1277,36 +1435,31 @@
                 </g>
               </g>
 
-              <!-- ========== 右側園區地標群：好萊塢影城驚魂古塔 + 皮克斯太陽摩天輪 ========== -->
+              <!-- ========== 右側園區地標群：驚魂古塔 + 皮克斯太陽摩天輪 ========== -->
               <!-- 3. 好萊塢影城驚魂古塔 Tower of Terror -->
-              <g transform="translate(1035, 480)">
+              <g transform="translate(1035, 478)">
                 <rect x="-34" y="18" width="68" height="115" rx="3" fill="url(#towerGrad)"/>
                 <rect x="-42" y="8" width="84" height="14" rx="2" fill="#947892"/>
                 <polygon points="-38,8 0,-16 38,8" fill="#594659"/>
-                <!-- 經典電梯井直立窗與微光 -->
                 <rect x="-12" y="34" width="24" height="58" rx="3" fill="#251d2e"/>
                 <rect x="-8" y="42" width="16" height="8" rx="2" fill="#ffd166" class="spire-light"/>
                 <rect x="-26" y="40" width="7" height="14" rx="2" fill="#ffd166" opacity="0.65"/>
                 <rect x="19" y="40" width="7" height="14" rx="2" fill="#ffd166" opacity="0.65"/>
               </g>
 
-              <!-- 4. 加州冒險樂園皮克斯太陽摩天輪 Pixar Pal-A-Round -->
-              <g transform="translate(1215, 505)">
-                <!-- A字型支架 -->
+              <!-- 4. 皮克斯太陽摩天輪 Pixar Pal-A-Round -->
+              <g transform="translate(1218, 502)">
                 <line x1="0" y1="0" x2="-62" y2="112" stroke="#243b66" stroke-width="7" stroke-linecap="round"/>
                 <line x1="0" y1="0" x2="62" y2="112" stroke="#243b66" stroke-width="7" stroke-linecap="round"/>
-                <!-- 旋轉輪盤 -->
                 <g class="ferris-spin">
                   <circle cx="0" cy="0" r="82" fill="none" stroke="#90caf9" stroke-width="3.5"/>
                   <circle cx="0" cy="0" r="56" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
-                  <!-- 輻條 -->
                   <g stroke="rgba(255,255,255,0.4)" stroke-width="1.6">
                     <line x1="0" y1="-82" x2="0" y2="82"/>
                     <line x1="-82" y1="0" x2="82" y2="0"/>
                     <line x1="-58" y1="-58" x2="58" y2="58"/>
                     <line x1="58" y1="-58" x2="-58" y2="58"/>
                   </g>
-                  <!-- 8 個彩色發光座艙 -->
                   <circle cx="0" cy="-82" r="6" fill="#ff6b6b"/>
                   <circle cx="58" cy="-58" r="6" fill="#ffd166"/>
                   <circle cx="82" cy="0" r="6" fill="#5cd65c"/>
@@ -1316,13 +1469,12 @@
                   <circle cx="-82" cy="0" r="6" fill="#48dbfb"/>
                   <circle cx="-58" cy="-58" r="6" fill="#ff9ff3"/>
                 </g>
-                <!-- 中央皮克斯太陽徽章（不隨輪盤自轉） -->
                 <circle cx="0" cy="0" r="22" fill="#ffd166" stroke="#ff9f43" stroke-width="3"/>
                 <circle cx="0" cy="0" r="13" fill="#fff3b0"/>
               </g>
 
               <!-- ========== 中景高架單軌列車軌道與滑行列車 ========== -->
-              <g opacity="0.92">
+              <g opacity="0.94">
                 <rect x="0" y="576" width="1440" height="4" fill="#7aa6e8"/>
                 <rect x="140" y="580" width="6" height="45" fill="#557ec2"/>
                 <rect x="360" y="580" width="6" height="45" fill="#557ec2"/>
@@ -1348,8 +1500,26 @@
                 </g>
               </g>
 
+              <!-- ========== 護城河水景與噴泉律動 ========== -->
+              <path d="M470,618 Q720,602 970,618 L1015,655 L425,655 Z" fill="url(#lakeWater)" opacity="0.88"/>
+              <!-- 護城河水面金色波光 -->
+              <g fill="#ffd166">
+                <ellipse class="water-shimmer" cx="625" cy="628" rx="24" ry="2.2"/>
+                <ellipse class="water-shimmer water-shimmer-2" cx="815" cy="628" rx="24" ry="2.2"/>
+                <ellipse class="water-shimmer" cx="720" cy="636" rx="34" ry="2.6"/>
+              </g>
+              <!-- 護城河左右噴泉 -->
+              <g transform="translate(555, 622)">
+                <path class="fountain-jet" d="M-12,0 Q-6,-22 0,-28 Q6,-22 12,0 Z" fill="rgba(186, 230, 253, 0.72)"/>
+                <ellipse cx="0" cy="0" rx="15" ry="3.5" fill="rgba(255,255,255,0.6)"/>
+              </g>
+              <g transform="translate(885, 622)">
+                <path class="fountain-jet fountain-jet-2" d="M-12,0 Q-6,-22 0,-28 Q6,-22 12,0 Z" fill="rgba(186, 230, 253, 0.72)"/>
+                <ellipse cx="0" cy="0" rx="15" ry="3.5" fill="rgba(255,255,255,0.6)"/>
+              </g>
+
               <!-- ========== 中央主角：迪士尼奇幻城堡 ========== -->
-              <g transform="translate(720, 448)">
+              <g transform="translate(720, 444)">
                 <rect x="-165" y="135" width="76" height="68" rx="3" fill="url(#castleStone)"/>
                 <rect x="89" y="135" width="76" height="68" rx="3" fill="url(#castleStone)"/>
 
@@ -1383,55 +1553,90 @@
                 <polygon points="-40,24 0,-48 40,24" fill="url(#castleRoof)"/>
                 <line x1="0" y1="-48" x2="0" y2="-74" stroke="#ffd166" stroke-width="2.6"/>
                 <polygon class="flag-wave" points="0,-74 18,-69 0,-63" fill="#ffd166"/>
-                <circle cx="0" cy="-76" r="4.5" fill="#fff3b0" class="spire-light"/>
+                <circle cx="0" cy="-76" r="4.8" fill="#fff3b0" class="spire-light"/>
+
+                <!-- 環繞城堡的魔法流光弧線 -->
+                <path class="magic-arc-draw" d="M-190,115 Q0,-65 190,115" fill="none" stroke="#ffd166" stroke-width="2.6" stroke-linecap="round"/>
 
                 <!-- 拱門、金色時鐘徽章與暖光窗戶 -->
                 <path d="M-18,203 L-18,156 Q0,138 18,156 L18,203 Z" fill="#1e3561"/>
-                <path d="M-13,203 L-13,161 Q0,147 13,161 L13,203 Z" fill="#ffd166" opacity="0.32"/>
+                <path d="M-13,203 L-13,161 Q0,147 13,161 L13,203 Z" fill="#ffd166" opacity="0.38"/>
                 <circle cx="0" cy="64" r="11" fill="#234582" stroke="#ffd166" stroke-width="2.5"/>
                 <circle cx="0" cy="64" r="7.5" fill="#fff3b0" class="spire-light"/>
-                <rect x="-56" y="122" width="10" height="18" rx="5" fill="#ffd166" opacity="0.88"/>
-                <rect x="46" y="122" width="10" height="18" rx="5" fill="#ffd166" opacity="0.88"/>
-                <rect x="-93" y="94" width="9" height="16" rx="4.5" fill="#ffd166" opacity="0.82"/>
-                <rect x="84" y="94" width="9" height="16" rx="4.5" fill="#ffd166" opacity="0.82"/>
+                <rect x="-56" y="122" width="10" height="18" rx="5" fill="#ffd166" opacity="0.9"/>
+                <rect x="46" y="122" width="10" height="18" rx="5" fill="#ffd166" opacity="0.9"/>
+                <rect x="-93" y="94" width="9" height="16" rx="4.5" fill="#ffd166" opacity="0.85"/>
+                <rect x="84" y="94" width="9" height="16" rx="4.5" fill="#ffd166" opacity="0.85"/>
               </g>
 
-              <!-- ========== 前景左右兩側：美國小鎮大街維多利亞建築與復古路燈 ========== -->
-              <!-- 左側小鎮街屋 -->
-              <g transform="translate(80, 588)">
+              <!-- ========== 前景左右兩側：美國小鎮大街建築、復古路燈與米奇造型氣球束 ========== -->
+              <!-- 左側小鎮街屋與氣球束 -->
+              <g transform="translate(80, 586)">
                 <rect x="-65" y="0" width="68" height="65" rx="3" fill="url(#mainStreetWarm)"/>
                 <polygon points="-70,0 -31,-22 8,0" fill="#7c4d6b"/>
-                <rect x="-52" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.82"/>
-                <rect x="-26" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.82"/>
+                <rect x="-52" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.85"/>
+                <rect x="-26" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.85"/>
                 <!-- 復古路燈 -->
                 <line x1="36" y1="62" x2="36" y2="8" stroke="#182238" stroke-width="3.5"/>
-                <circle cx="36" cy="4" r="12" fill="rgba(255, 214, 102, 0.32)" class="lamp-glow"/>
+                <circle cx="36" cy="4" r="13" fill="rgba(255, 214, 102, 0.36)" class="lamp-glow"/>
                 <circle cx="36" cy="4" r="4.5" fill="#fff3b0"/>
+                <!-- 漂浮米奇氣球束 -->
+                <g class="balloon-cluster" transform="translate(88, 56)">
+                  <line x1="0" y1="0" x2="-10" y2="-38" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="8" y2="-44" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="0" y2="-52" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                  <circle cx="-10" cy="-42" r="7" fill="#ff6b6b" opacity="0.9"/>
+                  <circle cx="8" cy="-48" r="7" fill="#5bc0ff" opacity="0.9"/>
+                  <circle cx="0" cy="-56" r="8" fill="#ffd166" opacity="0.95"/>
+                </g>
               </g>
 
-              <!-- 右側小鎮街屋 -->
-              <g transform="translate(1355, 588)">
+              <!-- 右側小鎮街屋與氣球束 -->
+              <g transform="translate(1355, 586)">
                 <rect x="-5" y="0" width="70" height="65" rx="3" fill="url(#mainStreetWarm)"/>
                 <polygon points="-10,0 30,-22 70,0" fill="#466995"/>
-                <rect x="10" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.82"/>
-                <rect x="36" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.82"/>
+                <rect x="10" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.85"/>
+                <rect x="36" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.85"/>
                 <!-- 復古路燈 -->
                 <line x1="-34" y1="62" x2="-34" y2="8" stroke="#182238" stroke-width="3.5"/>
-                <circle cx="-34" cy="4" r="12" fill="rgba(255, 214, 102, 0.32)" class="lamp-glow"/>
+                <circle cx="-34" cy="4" r="13" fill="rgba(255, 214, 102, 0.36)" class="lamp-glow"/>
                 <circle cx="-34" cy="4" r="4.5" fill="#fff3b0"/>
+                <!-- 漂浮氣球束 -->
+                <g class="balloon-cluster balloon-cluster-2" transform="translate(-86, 56)">
+                  <line x1="0" y1="0" x2="-8" y2="-42" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="10" y2="-38" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="0" y2="-50" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                  <circle cx="-8" cy="-46" r="7" fill="#c77dff" opacity="0.9"/>
+                  <circle cx="10" cy="-42" r="7" fill="#5cd65c" opacity="0.9"/>
+                  <circle cx="0" cy="-54" r="8" fill="#ff9ebb" opacity="0.95"/>
+                </g>
               </g>
 
               <!-- 前景草坡 -->
               <path d="M0,646 Q360,620 720,645 T1440,633 L1440,760 L0,760 Z" fill="url(#hillFront)"/>
 
+              <!-- 小鎮大街復古觀光小火車／接駁車緩慢駛過 -->
+              <g class="trolley-ride">
+                <rect x="0" y="-16" width="66" height="16" rx="4" fill="#c92a2a" stroke="#ffd166" stroke-width="1.2"/>
+                <rect x="-3" y="-19" width="72" height="4" rx="2" fill="#ffd166"/>
+                <rect x="8" y="-13" width="10" height="7" rx="1.5" fill="#fff3b0"/>
+                <rect x="22" y="-13" width="10" height="7" rx="1.5" fill="#fff3b0"/>
+                <rect x="36" y="-13" width="10" height="7" rx="1.5" fill="#fff3b0"/>
+                <rect x="50" y="-13" width="10" height="7" rx="1.5" fill="#fff3b0"/>
+                <circle cx="14" cy="2" r="4" fill="#182238" stroke="#ffd166" stroke-width="1.2"/>
+                <circle cx="52" cy="2" r="4" fill="#182238" stroke="#ffd166" stroke-width="1.2"/>
+              </g>
+
               <!-- 漂浮的魔法金粉光點 -->
               <g fill="#ffe699">
-                <circle class="pixie-dust pd-1" cx="530" cy="595" r="2.6"/>
-                <circle class="pixie-dust pd-2" cx="620" cy="610" r="2.1"/>
-                <circle class="pixie-dust pd-3" cx="825" cy="605" r="2.5"/>
-                <circle class="pixie-dust pd-4" cx="915" cy="590" r="2.2"/>
-                <circle class="pixie-dust pd-2" cx="310" cy="612" r="2.2"/>
-                <circle class="pixie-dust pd-3" cx="1135" cy="610" r="2.3"/>
+                <circle class="pixie-dust pd-1" cx="515" cy="592" r="2.7"/>
+                <circle class="pixie-dust pd-2" cx="615" cy="608" r="2.2"/>
+                <circle class="pixie-dust pd-3" cx="828" cy="602" r="2.6"/>
+                <circle class="pixie-dust pd-4" cx="925" cy="588" r="2.3"/>
+                <circle class="pixie-dust pd-2" cx="295" cy="610" r="2.3"/>
+                <circle class="pixie-dust pd-3" cx="1145" cy="608" r="2.4"/>
+                <circle class="pixie-dust pd-1" cx="430" cy="620" r="2.1"/>
+                <circle class="pixie-dust pd-4" cx="1010" cy="622" r="2.1"/>
               </g>
             </svg>
           </div>
