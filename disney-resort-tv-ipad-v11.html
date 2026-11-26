@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - Star Wars &amp; Magic Castle Edition (60FPS)</title>
+  <title>Resort Wait Display - iPad &amp; 手機雙版自適應全屏版 V24（星際大戰＆迪士尼城堡精修版）</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -58,10 +58,9 @@
       height: 100dvh;
       padding-top: env(safe-area-inset-top, 0px);
       padding-bottom: env(safe-area-inset-bottom, 0px);
-      transform: translateZ(0);
     }
 
-    /* ================= 1. 頂部狀態列 ================= */
+    /* ================= 1. 最上方狀態列 ================= */
     .top-bar {
       position: relative;
       height: 64px;
@@ -78,18 +77,46 @@
       box-shadow: 0 6px 18px rgba(2, 8, 28, 0.55);
     }
 
+    .top-bar::before, .bottom-bar::before {
+      content: "";
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(1.4px 1.4px at 12% 30%, rgba(255,243,176,0.9), transparent 60%),
+        radial-gradient(1px 1px at 27% 68%, rgba(255,255,255,0.8), transparent 60%),
+        radial-gradient(1.6px 1.6px at 41% 24%, rgba(255,226,140,0.85), transparent 60%),
+        radial-gradient(1px 1px at 58% 72%, rgba(255,255,255,0.7), transparent 60%),
+        radial-gradient(1.4px 1.4px at 73% 34%, rgba(255,243,176,0.9), transparent 60%),
+        radial-gradient(1px 1px at 88% 62%, rgba(255,255,255,0.8), transparent 60%);
+      animation: barTwinkle 4.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes barTwinkle {
+      0% { opacity: 0.35; }
+      100% { opacity: 1; }
+    }
+
     .top-bar::after, .bottom-bar::after {
       content: "";
       position: absolute; left: 0; right: 0; height: 2px;
       background: linear-gradient(90deg, transparent 0%, var(--dz-gold-4) 12%, var(--dz-gold-2) 30%, var(--dz-gold-1) 50%, var(--dz-gold-2) 70%, var(--dz-gold-4) 88%, transparent 100%);
       background-size: 220% 100%;
-      animation: goldLine 8s linear infinite;
-      box-shadow: 0 0 8px rgba(255, 209, 102, 0.55);
+      animation: goldLine 7s linear infinite;
       pointer-events: none;
     }
-    .top-bar::after { bottom: 0; }
-    .bottom-bar::after { top: 0; }
-    @keyframes goldLine { 0% { background-position: 0% 0; } 100% { background-position: 220% 0; } }
+    .top-bar::after {
+      bottom: 0;
+      box-shadow: 0 0 10px rgba(255, 209, 102, 0.65), 0 -5px 0 -0.5px rgba(255, 209, 102, 0.42);
+    }
+    .bottom-bar::after {
+      top: 0;
+      box-shadow: 0 0 10px rgba(255, 209, 102, 0.65), 0 5px 0 -0.5px rgba(255, 209, 102, 0.42);
+    }
+
+    @keyframes goldLine {
+      0% { background-position: 0% 0; }
+      100% { background-position: 220% 0; }
+    }
 
     .bar-orn {
       position: absolute;
@@ -97,7 +124,8 @@
       width: 190px;
       height: 23px;
       transform: translateX(-50%);
-      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24'><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='%23a8691a'/><stop offset='.5' stop-color='%23fff3b0'/><stop offset='1' stop-color='%23a8691a'/></linearGradient></defs><path d='M6 12 H64 M136 12 H194' stroke='url(%23g)' stroke-width='1.6' fill='none'/><path d='M64 12 Q72 3 82 7 Q76 9 78 12 Q76 15 82 17 Q72 21 64 12 Z M136 12 Q128 3 118 7 Q124 9 122 12 Q124 15 118 17 Q128 21 136 12 Z' fill='%23ffd166'/><path d='M100 1 L106 12 L100 23 L94 12 Z' fill='url(%23g)'/><circle cx='100' cy='12' r='2.2' fill='%23ffffff'/></svg>") center / contain no-repeat;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24'><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='%23a8691a'/><stop offset='.5' stop-color='%23fff3b0'/><stop offset='1' stop-color='%23a8691a'/></linearGradient></defs><path d='M6 12 H64 M136 12 H194' stroke='url(%23g)' stroke-width='1.6' fill='none'/><path d='M64 12 Q72 3 82 7 Q76 9 78 12 Q76 15 82 17 Q72 21 64 12 Z M136 12 Q128 3 118 7 Q124 9 122 12 Q124 15 118 17 Q128 21 136 12 Z' fill='%23ffd166'/><path d='M100 1 L106 12 L100 23 L94 12 Z' fill='url(%23g)' stroke='%23fff8d0' stroke-width='.6'/><path d='M88 12 L100 7 L112 12 L100 17 Z' fill='%23fff3b0' opacity='.95'/><circle cx='100' cy='12' r='2.2' fill='%23ffffff'/><circle cx='6' cy='12' r='2.4' fill='%23ffd166'/><circle cx='194' cy='12' r='2.4' fill='%23ffd166'/></svg>") center / contain no-repeat;
+      filter: drop-shadow(0 0 6px rgba(255, 209, 102, 0.65));
       pointer-events: none;
       z-index: 3;
     }
@@ -113,21 +141,39 @@
       background:
         linear-gradient(180deg, rgba(14, 38, 92, 0.92), rgba(7, 22, 62, 0.92)) padding-box,
         linear-gradient(135deg, var(--dz-gold-1) 0%, var(--dz-gold-2) 32%, var(--dz-gold-4) 62%, var(--dz-gold-1) 100%) border-box;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.42),
+        0 0 16px rgba(255, 209, 102, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        inset 0 0 0 3px rgba(7, 22, 62, 0.95),
+        inset 0 0 0 4px rgba(255, 209, 102, 0.38);
+      line-height: 1.2;
+    }
+
+    .welcome-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .welcome-label {
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       color: var(--dz-gold-2);
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 209, 102, 0.55);
     }
+    .welcome-label::before { content: "✦ "; color: var(--dz-gold-1); }
+    .welcome-label::after { content: " ✦"; color: var(--dz-gold-1); }
 
     .family-name {
       font-size: 1.24rem;
       font-weight: 600;
       color: #fff8df;
       margin-top: 2px;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 0 rgba(120, 70, 0, 0.7), 0 0 14px rgba(255, 214, 120, 0.45);
     }
 
     .datetime-block {
@@ -135,7 +181,6 @@
       flex-direction: column;
       align-items: flex-end;
       justify-content: center;
-      line-height: 1.2;
       font-variant-numeric: tabular-nums;
     }
 
@@ -143,6 +188,7 @@
       font-size: 1.22rem;
       font-weight: 700;
       color: var(--dz-gold-1);
+      text-shadow: 0 0 12px rgba(255, 209, 102, 0.5);
     }
 
     .top-date {
@@ -171,6 +217,7 @@
       display: flex;
     }
 
+    /* --- RESORT --- */
     .yt-wrapper {
       position: relative;
       width: 100%;
@@ -189,8 +236,9 @@
       position: absolute;
       top: 14px;
       right: 18px;
-      background: rgba(15, 22, 36, 0.76);
+      background: rgba(15, 22, 36, 0.72);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 999px;
       padding: 6px 14px;
@@ -209,12 +257,75 @@
       border-radius: 50%;
       background: #ff4d4f;
       box-shadow: 0 0 8px #ff4d4f;
-      animation: pulse 1.8s infinite;
+      animation: pulse 1.6s infinite;
     }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.35; }
+    }
+
+    .fallback-resort-bg {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #1b4b9c 0%, #2d74d8 62%, #4a95ee 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px 40px 0;
+      overflow: hidden;
+    }
+
+    .fallback-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      z-index: 3;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .park-hours-headline {
+      font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+      font-weight: 500;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+      margin: 0;
+    }
+
+    .fallback-center-info {
+      align-self: center;
+      text-align: center;
+      z-index: 3;
+      margin-top: -10px;
+    }
+
+    .hours-group { margin-bottom: 18px; }
+    .hours-label {
+      font-size: clamp(1.2rem, 2.1vw, 1.6rem);
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .hours-val {
+      font-size: clamp(1.15rem, 2vw, 1.5rem);
+      font-weight: 400;
+      color: #f0f6ff;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.55);
+      display: inline-block;
+      min-width: 240px;
+    }
+
+    .fallback-tip {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(12, 24, 48, 0.48);
+      padding: 8px 16px;
+      border-radius: 999px;
+      display: inline-block;
     }
 
     /* --- TERRACE --- */
@@ -237,7 +348,7 @@
     }
 
     .terrace-title {
-      font-size: 1.32rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: var(--gold);
       margin: 0;
@@ -258,6 +369,7 @@
       font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
+      transition: all 0.15s ease;
     }
 
     .mini-pill-btn.active {
@@ -296,7 +408,6 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
-
     .parks-stage > * { flex-shrink: 0; }
 
     .parks-header {
@@ -316,7 +427,7 @@
 
     .parks-header h2 {
       margin: 0;
-      font-size: 1.38rem;
+      font-size: 1.42rem;
       font-weight: 700;
     }
 
@@ -360,14 +471,6 @@
       gap: 8px;
     }
 
-    .region-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: #a9c4f2;
-      text-transform: uppercase;
-    }
-
     .parks-tools { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
     .tool-group { display: flex; flex-wrap: wrap; gap: 6px; }
     .tool-chip {
@@ -388,15 +491,22 @@
     .tools-count { margin-left: auto; font-size: 0.78rem; color: #cfe0ff; font-variant-numeric: tabular-nums; }
     .ride-star { color: #ffd166; margin-right: 4px; }
 
+    .region-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #a9c4f2;
+      text-transform: uppercase;
+    }
+
     .rides-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 11px;
     }
-    @media (min-width: 1180px) { .rides-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
     .ride-card {
-      background: rgba(11, 20, 38, 0.78);
+      background: rgba(11, 20, 38, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 14px;
       padding: 13px 18px;
@@ -405,40 +515,24 @@
       align-items: center;
     }
 
-    .ride-name { font-size: 1.02rem; font-weight: 700; }
-    .ride-land { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
-    .ride-right { display: flex; align-items: center; gap: 10px; }
-
-    .ride-trend {
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 3px 7px;
-      border-radius: 6px;
-      font-variant-numeric: tabular-nums;
+    .ride-card.updated-flash {
+      border-color: rgba(255, 209, 102, 0.85);
+      box-shadow: 0 0 14px rgba(255, 209, 102, 0.22);
     }
+
+    .ride-name { font-size: 1.03rem; font-weight: 700; }
+    .ride-land { font-size: 0.79rem; color: var(--text-muted); margin-top: 3px; }
+    .ride-right { display: flex; align-items: center; gap: 10px; }
+    .ride-trend { font-size: 0.76rem; font-weight: 700; padding: 3px 7px; border-radius: 6px; font-variant-numeric: tabular-nums; }
     .trend-up { background: rgba(255, 107, 107, 0.18); color: #ff9494; }
     .trend-down { background: rgba(92, 214, 92, 0.18); color: #8ef08e; }
     .trend-flat { background: rgba(255, 255, 255, 0.1); color: #b8c4d9; }
-
-    .ride-wait {
-      font-size: 1.48rem;
-      font-weight: 800;
-      color: var(--gold);
-      font-variant-numeric: tabular-nums;
-      text-align: right;
-      min-width: 56px;
-    }
-    .ride-wait span {
-      display: block;
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
-    }
-    .ride-wait.is-closed { font-size: 1.02rem; color: #ff8787; }
+    .ride-wait { font-size: 1.5rem; font-weight: 800; color: var(--gold); font-variant-numeric: tabular-nums; text-align: right; min-width: 56px; }
+    .ride-wait span { display: block; font-size: 0.68rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; }
+    .ride-wait.is-closed { font-size: 1.05rem; color: #ff8787; }
     .ride-wait.is-na { color: #9fb2d6; }
 
-    /* ================= VACATION：城堡全景、星際大戰飛船與角色 60FPS 動畫 ================= */
+    /* --- VACATION --- */
     .vacation-stage {
       position: relative;
       width: 100%;
@@ -453,6 +547,30 @@
       overflow: hidden;
     }
 
+    :fullscreen,
+    :-webkit-full-screen,
+    .tv-shell:fullscreen,
+    .tv-shell:-webkit-full-screen {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #0e131c !important;
+      overflow: hidden !important;
+    }
+
+    #resortPanoramaSvg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      contain: strict;
+      transform: translateZ(0);
+    }
+
     .vacation-bg-layer {
       position: absolute;
       inset: 0;
@@ -461,56 +579,42 @@
       pointer-events: none;
       z-index: 1;
       overflow: hidden;
-      contain: strict;
-      transform: translate3d(0, 0, 0);
     }
 
-    #resortPanoramaSvg {
-      display: block;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      transform: translate3d(0, 0, 0);
-      backface-visibility: hidden;
-    }
-
-    /* 效能保護：非 VACATION 頁面暫停動畫，避免背景持續佔用 GPU */
     #page-vacation:not(.active) * {
       animation-play-state: paused !important;
     }
 
-    .gpu-anim {
-      will-change: transform;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-
+    /* 星空、煙火、地標與單軌列車動畫 */
     .star-twinkle {
       transform-box: fill-box;
       transform-origin: center;
-      animation: starTwinkle 3.2s ease-in-out infinite;
+      animation: starTwinkle 2.8s ease-in-out infinite;
     }
-    .star-t2 { animation-delay: -0.9s; }
-    .star-t3 { animation-delay: -1.7s; }
-    .star-t4 { animation-delay: -2.4s; }
+    .star-t1 { animation-delay: 0s; }
+    .star-t2 { animation-delay: 0.55s; }
+    .star-t3 { animation-delay: 1.1s; }
+    .star-t4 { animation-delay: 1.65s; }
+    .star-t5 { animation-delay: 2.2s; }
+
     @keyframes starTwinkle {
-      0%, 100% { transform: scale3d(0.75, 0.75, 1); opacity: 0.4; }
-      50% { transform: scale3d(1.22, 1.22, 1); opacity: 1; }
+      0%, 100% { transform: scale(0.75); opacity: 0.35; }
+      50% { transform: scale(1.25); opacity: 1; }
     }
 
     .shooting-star {
-      stroke-dasharray: 95 960;
-      stroke-dashoffset: 1055;
-      animation: shootStar 9.5s linear infinite;
+      stroke-dasharray: 95 950;
+      stroke-dashoffset: 1045;
+      animation: shootStar 8.5s linear infinite;
     }
     .shooting-star-2 {
       stroke-dasharray: 75 980;
       stroke-dashoffset: 1055;
-      animation: shootStar 12s linear infinite 4.5s;
+      animation: shootStar 11s linear infinite 4.2s;
     }
     @keyframes shootStar {
-      0% { stroke-dashoffset: 1055; opacity: 0; }
-      6% { opacity: 0.9; }
+      0% { stroke-dashoffset: 1045; opacity: 0; }
+      6% { opacity: 0.95; }
       18% { stroke-dashoffset: 0; opacity: 0; }
       100% { stroke-dashoffset: 0; opacity: 0; }
     }
@@ -518,233 +622,618 @@
     .fw-burst {
       transform-box: fill-box;
       transform-origin: center;
-      animation: fwBurst 5.6s ease-out infinite;
+      animation: fwBurst 5.2s ease-out infinite;
     }
-    .fw-burst-2 { animation-delay: 1.9s; }
-    .fw-burst-3 { animation-delay: 3.7s; }
+    .fw-burst-2 { animation-delay: 1.8s; }
+    .fw-burst-3 { animation-delay: 3.4s; }
+    .fw-burst-4 { animation-delay: 0.9s; }
+    .fw-burst-5 { animation-delay: 2.6s; }
     @keyframes fwBurst {
-      0% { transform: scale3d(0.15, 0.15, 1); opacity: 0; }
-      20% { transform: scale3d(0.95, 0.95, 1); opacity: 0.85; }
-      50% { transform: scale3d(1.18, 1.18, 1); opacity: 0.18; }
-      100% { transform: scale3d(1.25, 1.25, 1); opacity: 0; }
+      0% { transform: scale(0.15); opacity: 0; }
+      20% { transform: scale(0.95); opacity: 0.88; }
+      45% { transform: scale(1.18); opacity: 0.25; }
+      55%, 100% { transform: scale(1.25); opacity: 0; }
     }
 
-    .ferris-spin {
+    .dynamic-fw-burst {
       transform-box: fill-box;
       transform-origin: center;
-      animation: ferrisRotate 44s linear infinite;
+      animation: dynamicFwPop var(--fw-dur, 2.2s) cubic-bezier(0.16, 0.88, 0.32, 1) forwards;
     }
-    @keyframes ferrisRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    @keyframes dynamicFwPop {
+      0% { transform: scale(0.08); opacity: 0; }
+      18% { transform: scale(0.92); opacity: 1; }
+      65% { transform: scale(1.18); opacity: 0.72; }
+      100% { transform: scale(1.32); opacity: 0; }
     }
 
-    /* 單軌列車沿 y=576 高架滑行 */
+    .cloud-drift-slow {
+      animation: cloudDriftSlow 30s ease-in-out infinite alternate;
+    }
+    @keyframes cloudDriftSlow {
+      0% { transform: translateX(-18px); }
+      100% { transform: translateX(20px); }
+    }
+
+    .epcot-glow { animation: epcotPulse 4.6s ease-in-out infinite alternate; }
+    @keyframes epcotPulse { 0% { opacity: 0.45; } 100% { opacity: 0.9; } }
+
+    .dca-wheel-spin {
+      transform-box: view-box;
+      transform-origin: 0px -112px;
+      animation: dcaWheelSpin 48s linear infinite;
+      will-change: transform;
+    }
+    @keyframes dcaWheelSpin { to { transform: rotate(360deg); } }
+    .dca-gondola {
+      transform-box: view-box;
+      transform-origin: 0px 0px;
+      animation: dcaGondolaCounter 48s linear infinite;
+    }
+    @keyframes dcaGondolaCounter { to { transform: rotate(-360deg); } }
+
     .monorail-glide {
-      transform: translate3d(-340px, 563px, 0);
-      animation: monorailRun 22s linear infinite both;
+      transform: translate(-340px, 563px);
+      animation: monorailRun 18s linear infinite both;
     }
     @keyframes monorailRun {
       0% { transform: translate3d(-340px, 563px, 0); }
       100% { transform: translate3d(1780px, 563px, 0); }
     }
 
+    .spire-light {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: spireGlow 3.2s ease-in-out infinite alternate;
+    }
+    @keyframes spireGlow {
+      0% { opacity: 0.5; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1.08); }
+    }
+
     .flag-wave {
       transform-box: fill-box;
       transform-origin: left center;
-      animation: flagFlutter 2.2s ease-in-out infinite alternate;
+      animation: flagFlutter 2s ease-in-out infinite alternate;
     }
     @keyframes flagFlutter {
-      0% { transform: skewY(-5deg) scaleX(0.94); }
-      100% { transform: skewY(5deg) scaleX(1.03); }
+      0% { transform: skewY(-5deg) scaleX(0.92); }
+      100% { transform: skewY(5deg) scaleX(1.04); }
+    }
+
+    .lamp-glow { animation: lampBreathe 3.8s ease-in-out infinite alternate; }
+    @keyframes lampBreathe { 0% { opacity: 0.55; } 100% { opacity: 0.95; } }
+
+    .balloon-cluster {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: balloonSway 5.5s ease-in-out infinite alternate;
+    }
+    .balloon-cluster-2 { animation-delay: 1.8s; animation-duration: 6.2s; }
+    @keyframes balloonSway {
+      0% { transform: rotate(-4deg) translateY(0px); }
+      100% { transform: rotate(4deg) translateY(-9px); }
+    }
+
+    .airship-cruise {
+      transform: translate(-240px, 198px);
+      animation: airshipFly 42s linear infinite -14s both;
+    }
+    @keyframes airshipFly {
+      0% { transform: translate3d(-240px, 198px, 0); }
+      50% { transform: translate3d(720px, 184px, 0); }
+      100% { transform: translate3d(1680px, 198px, 0); }
+    }
+
+    .water-shimmer {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: waterRipple 4.2s ease-in-out infinite alternate;
+    }
+    .water-shimmer-2 { animation-delay: 1.6s; }
+    @keyframes waterRipple {
+      0% { opacity: 0.25; transform: scaleX(0.94); }
+      100% { opacity: 0.78; transform: scaleX(1.06); }
     }
 
     .fountain-jet {
       transform-box: fill-box;
       transform-origin: bottom center;
-      animation: fountainPulse 2.6s ease-in-out infinite alternate;
+      animation: fountainPulse 2.4s ease-in-out infinite alternate;
     }
-    .fountain-jet-2 { animation-delay: -1.1s; }
+    .fountain-jet-2 { animation-delay: 0.8s; }
     @keyframes fountainPulse {
-      0% { transform: scale3d(1, 0.85, 1); opacity: 0.65; }
-      100% { transform: scale3d(1, 1.1, 1); opacity: 0.95; }
+      0% { transform: scaleY(0.82); opacity: 0.65; }
+      100% { transform: scaleY(1.12); opacity: 1; }
+    }
+
+    .searchlight-left {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: sweepLeft 7.5s ease-in-out infinite alternate;
+    }
+    .searchlight-right {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: sweepRight 7.5s ease-in-out infinite alternate;
+    }
+    @keyframes sweepLeft {
+      0% { transform: rotate(-16deg); opacity: 0.22; }
+      100% { transform: rotate(18deg); opacity: 0.42; }
+    }
+    @keyframes sweepRight {
+      0% { transform: rotate(16deg); opacity: 0.22; }
+      100% { transform: rotate(-18deg); opacity: 0.42; }
+    }
+
+    .magic-arc-draw {
+      stroke-dasharray: 420;
+      stroke-dashoffset: 420;
+      animation: drawMagicArc 6.5s ease-in-out infinite;
+    }
+    @keyframes drawMagicArc {
+      0% { stroke-dashoffset: 420; opacity: 0; }
+      25% { opacity: 0.9; }
+      60% { stroke-dashoffset: 0; opacity: 0.85; }
+      85%, 100% { stroke-dashoffset: -420; opacity: 0; }
     }
 
     .trolley-ride {
-      transform: translate3d(-180px, 646px, 0);
-      animation: trolleyMove 30s linear infinite -7s both;
+      transform: translate(-180px, 646px);
+      animation: trolleyMove 30s linear infinite -8s both;
     }
     @keyframes trolleyMove {
       0% { transform: translate3d(-180px, 646px, 0); }
       100% { transform: translate3d(1620px, 646px, 0); }
     }
 
-    /* ================= 航道高度與時間軸錯開設計（防止重疊碰撞） ================= */
-    /* 1. 迪士尼奇幻飛艇（中層航道 y=214px，46s 週期，從右向左或左向右錯開） */
-    .airship-cruise {
-      transform: translate3d(-260px, 214px, 0);
-      animation: airshipFly 46s linear infinite -18s both;
+    .win-twinkle { animation: winTwinkle 3.6s ease-in-out infinite; }
+    .win-twinkle:nth-of-type(2n) { animation-delay: -1.1s; animation-duration: 4.4s; }
+    .win-twinkle:nth-of-type(3n) { animation-delay: -2.3s; animation-duration: 5.2s; }
+    @keyframes winTwinkle { 0%, 100% { opacity: 0.95; } 45% { opacity: 0.4; } 60% { opacity: 0.85; } }
+
+    .hm-flicker { animation: hmFlicker 4.2s steps(1, end) infinite; }
+    @keyframes hmFlicker { 0% { opacity: 0.95; } 8% { opacity: 0.35; } 12% { opacity: 0.9; } 46% { opacity: 0.95; } 50% { opacity: 0.25; } 54% { opacity: 0.85; } 100% { opacity: 0.95; } }
+
+    .tot-bolt { opacity: 0; animation: totBolt 7.5s ease-out infinite; }
+    @keyframes totBolt { 0%, 86% { opacity: 0; } 87% { opacity: 1; } 89% { opacity: 0.1; } 91% { opacity: 0.9; } 100% { opacity: 0; } }
+    .tot-shaft { animation: totShaft 7.5s ease-in-out infinite; }
+    @keyframes totShaft { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.5; } }
+
+    .neon-flicker { animation: neonFlicker 3.4s linear infinite; }
+    @keyframes neonFlicker { 0%, 18%, 22%, 62%, 66%, 100% { opacity: 1; } 20%, 64% { opacity: 0.6; } }
+
+    .float-island { animation: floatIsland 7s ease-in-out infinite alternate; }
+    @keyframes floatIsland { 0% { transform: translateY(0); } 100% { transform: translateY(-9px); } }
+    .waterfall { stroke-dasharray: 5 4; animation: waterfallFlow 1.4s linear infinite; }
+    @keyframes waterfallFlow { to { stroke-dashoffset: -18; } }
+    .everest-track { animation: everestTrack 4s linear infinite; }
+    @keyframes everestTrack { to { stroke-dashoffset: -24; } }
+
+    .node-halo { transform-box: fill-box; transform-origin: center; animation: nodeHalo 2.8s ease-in-out infinite; }
+    @keyframes nodeHalo { 0%, 100% { opacity: 0.25; transform: scale(0.7); } 40% { opacity: 1; transform: scale(1.25); } }
+    .node-core { animation: nodeCore 2.8s ease-in-out infinite; }
+    @keyframes nodeCore { 0%, 100% { opacity: 0.55; } 40% { opacity: 1; } }
+    .node-star { transform-box: fill-box; transform-origin: center; opacity: 0; animation: nodeStar 2.8s ease-in-out infinite; }
+    @keyframes nodeStar { 0%, 28%, 62%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); } 40% { opacity: 0.95; transform: scale(1) rotate(45deg); } }
+
+    /* ================= 角色出場間隔與循環拉長（錯開不重疊） ================= */
+    .peter-pan-flight {
+      transform: translate(-380px, 114px) rotate(-5deg);
+      animation: peterPanFly 44s linear infinite -4s both;
     }
-    @keyframes airshipFly {
-      0% { transform: translate3d(-260px, 214px, 0); }
-      50% { transform: translate3d(680px, 202px, 0); }
-      100% { transform: translate3d(1720px, 214px, 0); }
+    @keyframes peterPanFly {
+      0% { transform: translate3d(-380px, 114px, 0) rotate(-5deg); }
+      45% { transform: translate3d(680px, 82px, 0) rotate(-2deg); }
+      100% { transform: translate3d(1820px, 108px, 0) rotate(-4deg); }
     }
 
-    /* 2. 千年鷹號（高空偏左航道 y=112px，42s 週期，相位錯開，與 y=214px 飛艇垂直與水平雙錯開） */
-    .falcon-fly {
-      transform: translate3d(-360px, 112px, 0);
-      animation: falconRun 42s linear infinite -4s both;
+    .dumbo-flight {
+      transform: translate(1780px, 248px);
+      animation: dumboFly 48s linear infinite -20s both;
     }
-    @keyframes falconRun {
-      0%   { transform: translate3d(-360px, 118px, 0) rotate(-3deg); }
-      50%  { transform: translate3d(720px, 96px, 0) rotate(1.5deg); }
-      100% { transform: translate3d(1820px, 114px, 0) rotate(-2deg); }
+    @keyframes dumboFly {
+      0% { transform: translate3d(1780px, 248px, 0); }
+      50% { transform: translate3d(720px, 224px, 0); }
+      100% { transform: translate3d(-380px, 250px, 0); }
     }
-
-    /* 3. 帝國鈦戰機（最高空巡航航道 y=72px，72s 週期） */
-    .tie-fly {
-      transform: translate3d(1850px, 72px, 0);
-      animation: tieRun 72s linear infinite -26s both;
-    }
-    @keyframes tieRun {
-      0%   { transform: translate3d(1850px, 72px, 0) rotate(1deg); }
-      100% { transform: translate3d(-480px, 88px, 0) rotate(-1deg); }
-    }
-
-    .ship-bob {
-      animation: shipBob 3.6s ease-in-out infinite alternate;
-    }
-    @keyframes shipBob {
-      0% { transform: translate3d(0, -4px, 0); }
-      100% { transform: translate3d(0, 5px, 0); }
-    }
-
-    .thruster {
+    .dumbo-ear {
       transform-box: fill-box;
       transform-origin: right center;
-      animation: thrust 0.24s ease-in-out infinite alternate;
+      animation: earFlap 0.7s ease-in-out infinite alternate;
     }
-    @keyframes thrust {
-      0% { transform: scale3d(0.84, 1, 1); opacity: 0.82; }
-      100% { transform: scale3d(1.12, 1, 1); opacity: 1; }
-    }
-
-    /* ================= 星際大戰經典角色：拉長出現間隔與出場順序，避免畫面擁擠 ================= */
-    /* 角色 1: 尤達大師 (Yoda) — 慢速懸浮/漫步於左側中景 y=612px，64s 週期 */
-    .sw-yoda-patrol {
-      transform: translate3d(-160px, 614px, 0);
-      animation: swWalkRight64 64s linear infinite -6s both;
+    @keyframes earFlap {
+      0% { transform: rotate(-16deg) scaleY(0.86); }
+      100% { transform: rotate(20deg) scaleY(1.08); }
     }
 
-    /* 角色 2: R2-D2 — 錯開 16 秒進場，y=624px，68s 週期 */
-    .sw-r2-patrol {
-      transform: translate3d(-180px, 624px, 0);
-      animation: swWalkRight68 68s linear infinite -22s both;
+    .tinkerbell-orbit {
+      transform: translate(555px, 415px);
+      animation: tinkFlutter 26s ease-in-out infinite both;
     }
-
-    /* 角色 3: C-3PO — 錯開 36 秒進場，y=612px，72s 週期 */
-    .sw-3po-patrol {
-      transform: translate3d(-180px, 612px, 0);
-      animation: swWalkRight72 72s linear infinite -42s both;
+    @keyframes tinkFlutter {
+      0% { transform: translate3d(555px, 415px, 0); }
+      25% { transform: translate3d(665px, 345px, 0); }
+      50% { transform: translate3d(865px, 375px, 0); }
+      75% { transform: translate3d(775px, 455px, 0); }
+      100% { transform: translate3d(555px, 415px, 0); }
     }
-
-    /* 角色 4: BB-8 — 滾動前進，y=632px，60s 週期，相位錯開 */
-    .sw-bb8-patrol {
-      transform: translate3d(-160px, 632px, 0);
-      animation: swWalkRight60 60s linear infinite -54s both;
-    }
-
-    /* 角色 5: 歐比王 (Obi-Wan Kenobi) — 由右向左緩行，y=610px，76s 週期 */
-    .sw-obiwan-patrol {
-      transform: translate3d(1620px, 610px, 0);
-      animation: swWalkLeft76 76s linear infinite -12s both;
-    }
-
-    /* 角色 6: 路克天行者 (Luke Skywalker) — 錯開 28 秒由右向左，y=614px，70s 週期 */
-    .sw-luke-patrol {
-      transform: translate3d(1620px, 614px, 0);
-      animation: swWalkLeft70 70s linear infinite -36s both;
-    }
-
-    /* 角色 7: 莉亞公主 (Princess Leia) — 錯開 52 秒由右向左，y=616px，74s 週期 */
-    .sw-leia-patrol {
-      transform: translate3d(1620px, 616px, 0);
-      animation: swWalkLeft74 74s linear infinite -58s both;
-    }
-
-    @keyframes swWalkRight64 {
-      0%   { transform: translate3d(-180px, 614px, 0); }
-      100% { transform: translate3d(1640px, 614px, 0); }
-    }
-    @keyframes swWalkRight68 {
-      0%   { transform: translate3d(-180px, 624px, 0); }
-      100% { transform: translate3d(1640px, 624px, 0); }
-    }
-    @keyframes swWalkRight72 {
-      0%   { transform: translate3d(-180px, 612px, 0); }
-      100% { transform: translate3d(1640px, 612px, 0); }
-    }
-    @keyframes swWalkRight60 {
-      0%   { transform: translate3d(-180px, 632px, 0); }
-      100% { transform: translate3d(1640px, 632px, 0); }
-    }
-    @keyframes swWalkLeft76 {
-      0%   { transform: translate3d(1640px, 610px, 0); }
-      100% { transform: translate3d(-200px, 610px, 0); }
-    }
-    @keyframes swWalkLeft70 {
-      0%   { transform: translate3d(1640px, 614px, 0); }
-      100% { transform: translate3d(-200px, 614px, 0); }
-    }
-    @keyframes swWalkLeft74 {
-      0%   { transform: translate3d(1640px, 616px, 0); }
-      100% { transform: translate3d(-200px, 616px, 0); }
-    }
-
-    .sw-bob {
-      transform-box: fill-box;
-      transform-origin: bottom center;
-      animation: swStepBob 0.85s ease-in-out infinite alternate;
-    }
-    @keyframes swStepBob {
-      0%   { transform: translate3d(0, 0, 0) rotate(-2deg); }
-      100% { transform: translate3d(0, -4px, 0) rotate(2deg); }
-    }
-
-    .bb8-roll {
+    .tink-wing {
       transform-box: fill-box;
       transform-origin: center;
-      animation: bb8Spin 2.4s linear infinite;
+      animation: wingBuzz 0.18s ease-in-out infinite alternate;
     }
-    @keyframes bb8Spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+    @keyframes wingBuzz {
+      0% { transform: scaleX(0.55); }
+      100% { transform: scaleX(1.12); }
     }
 
-    .saber-glow {
-      animation: saberPulse 2.4s ease-in-out infinite alternate;
+    .aladdin-carpet {
+      transform: translate(-380px, 292px) rotate(2deg);
+      animation: carpetGlide 52s linear infinite -32s both;
     }
-    @keyframes saberPulse {
-      0%   { opacity: 0.78; }
+    @keyframes carpetGlide {
+      0% { transform: translate3d(-380px, 292px, 0) rotate(2deg); }
+      50% { transform: translate3d(720px, 272px, 0) rotate(-1.5deg); }
+      100% { transform: translate3d(1820px, 290px, 0) rotate(2deg); }
+    }
+
+    .buzz-soar {
+      transform: translate(1780px, 336px) rotate(8deg);
+      animation: buzzFly 46s linear infinite -12s both;
+    }
+    @keyframes buzzFly {
+      0% { transform: translate3d(1780px, 336px, 0) rotate(8deg); }
+      50% { transform: translate3d(740px, 304px, 0) rotate(3deg); }
+      100% { transform: translate3d(-380px, 330px, 0) rotate(7deg); }
+    }
+
+    .eve-walle-drift {
+      transform: translate(-380px, 368px);
+      animation: eveDrift 50s linear infinite -38s both;
+    }
+    @keyframes eveDrift {
+      0% { transform: translate3d(-380px, 368px, 0); }
+      50% { transform: translate3d(700px, 348px, 0); }
+      100% { transform: translate3d(1820px, 370px, 0); }
+    }
+
+    .up-house-float {
+      transform: translate(1780px, 168px);
+      animation: upHouseDrift 58s linear infinite -26s both;
+    }
+    @keyframes upHouseDrift {
+      0% { transform: translate3d(1780px, 168px, 0); }
+      50% { transform: translate3d(760px, 146px, 0); }
+      100% { transform: translate3d(-340px, 165px, 0); }
+    }
+
+    .baymax-fly {
+      transform: translate(-380px, 232px) rotate(-5deg);
+      animation: baymaxHeroFly 49s linear infinite -16s both;
+    }
+    @keyframes baymaxHeroFly {
+      0% { transform: translate3d(-380px, 232px, 0) rotate(-5deg); }
+      48% { transform: translate3d(720px, 204px, 0) rotate(-2deg); }
+      100% { transform: translate3d(1820px, 228px, 0) rotate(-4deg); }
+    }
+
+    /* ================= 星際大戰飛船：錯開高度與時序，避免與迪士尼飛船/角色重疊 ================= */
+    .ship-skiff-fly {
+      transform: translate(-420px, 78px);
+      animation: shipSkiff 64s linear infinite -24s both;
+    }
+    @keyframes shipSkiff {
+      0%   { transform: translate3d(-420px, 78px, 0) rotate(-2deg); }
+      50%  { transform: translate3d(720px, 66px, 0) rotate(1deg); }
+      100% { transform: translate3d(1900px, 76px, 0) rotate(-1.5deg); }
+    }
+
+    .ship-cruiser-fly {
+      transform: translate(1950px, 138px);
+      animation: shipCruiser 86s linear infinite -52s both;
+    }
+    @keyframes shipCruiser {
+      0%   { transform: translate3d(1950px, 138px, 0) rotate(1deg); }
+      100% { transform: translate3d(-560px, 148px, 0) rotate(-1deg); }
+    }
+
+    .ship-bob { animation: shipBob 4.2s ease-in-out infinite alternate; }
+    @keyframes shipBob { 0% { transform: translateY(-3px); } 100% { transform: translateY(4px); } }
+    .thruster { transform-box: fill-box; transform-origin: right center; animation: thrust 0.24s ease-in-out infinite alternate; }
+    @keyframes thrust { 0% { transform: scaleX(0.84); opacity: 0.8; } 100% { transform: scaleX(1.1); opacity: 1; } }
+    .ship-light { animation: shipBlink 1.8s steps(1, end) infinite; }
+    .ship-light:nth-of-type(2n) { animation-delay: -0.9s; }
+
+    /* ================= 地面迪士尼＆星際大戰角色序列（拉長循環與錯開間隔） ================= */
+    .parade-group-1 {
+      transform: translate(-760px, 644px);
+      animation: paradeWalkRight 72s linear infinite -18s both;
+    }
+    @keyframes paradeWalkRight {
+      0% { transform: translate3d(-760px, 644px, 0); }
+      100% { transform: translate3d(1820px, 644px, 0); }
+    }
+
+    .parade-group-2 {
+      transform: translate(1820px, 654px);
+      animation: paradeWalkLeft 78s linear infinite -46s both;
+    }
+    @keyframes paradeWalkLeft {
+      0% { transform: translate3d(1820px, 654px, 0); }
+      100% { transform: translate3d(-860px, 654px, 0); }
+    }
+
+    .sw-ground-squad-right {
+      transform: translate(-860px, 648px);
+      animation: swSquadRight 84s linear infinite -8s both;
+    }
+    @keyframes swSquadRight {
+      0% { transform: translate3d(-860px, 648px, 0); }
+      100% { transform: translate3d(1920px, 648px, 0); }
+    }
+
+    .sw-ground-squad-left {
+      transform: translate(1920px, 656px);
+      animation: swSquadLeft 90s linear infinite -48s both;
+    }
+    @keyframes swSquadLeft {
+      0% { transform: translate3d(1920px, 656px, 0); }
+      100% { transform: translate3d(-960px, 656px, 0); }
+    }
+
+    .droid-roll {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: droidSpinRoll 2.2s linear infinite;
+    }
+    @keyframes droidSpinRoll {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .lightsaber-glow {
+      animation: sabrePulse 2.4s ease-in-out infinite alternate;
+    }
+    @keyframes sabrePulse {
+      0% { opacity: 0.72; }
       100% { opacity: 1; }
     }
 
-    /* 倒數前景面板 */
+    .fly-bob { transform-box: fill-box; transform-origin: center; animation: flyBob 3.4s ease-in-out infinite alternate; }
+    .fly-bob-1 { animation-duration: 3.9s; animation-delay: -0.9s; }
+    .fly-bob-2 { animation-duration: 3.1s; animation-delay: -1.5s; }
+    .fly-bob-3 { animation-duration: 4.3s; animation-delay: -2.2s; }
+    @keyframes flyBob {
+      0%   { transform: translateY(-6px) rotate(-3deg); }
+      50%  { transform: translateY(0px) rotate(0.5deg); }
+      100% { transform: translateY(7px) rotate(3deg); }
+    }
+
+    .char-bob {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: charWalkBob2 0.85s ease-in-out infinite !important;
+    }
+    .char-bob-2 { animation-delay: -0.28s !important; }
+    .char-bob-3 { animation-delay: -0.56s !important; }
+    @keyframes charWalkBob2 {
+      0%   { transform: translateY(0) rotate(-3.5deg) scale(1.04, 0.94); }
+      25%  { transform: translateY(-5px) rotate(-1deg) scale(0.99, 1.04); }
+      50%  { transform: translateY(0) rotate(3.5deg) scale(1.04, 0.94); }
+      75%  { transform: translateY(-5px) rotate(1deg) scale(0.99, 1.04); }
+      100% { transform: translateY(0) rotate(-3.5deg) scale(1.04, 0.94); }
+    }
+
+    .tigger-bounce {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: tiggerSpring2 1.1s cubic-bezier(0.3, 0.8, 0.4, 1) infinite !important;
+    }
+    @keyframes tiggerSpring2 {
+      0%   { transform: translateY(0) scale(1.08, 0.86); }
+      35%  { transform: translateY(-18px) scale(0.93, 1.1); }
+      70%  { transform: translateY(0) scale(1.08, 0.86); }
+      100% { transform: translateY(0) scale(1.08, 0.86); }
+    }
+
+    .char-idle-bob {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: charIdleBreath 4.6s ease-in-out infinite !important;
+    }
+    .char-idle-bob-2 { animation-delay: -1.4s !important; }
+    .char-idle-bob-3 { animation-delay: -2.8s !important; }
+    @keyframes charIdleBreath {
+      0%   { transform: translateY(0) rotate(-2deg) scale(1.02, 0.98); }
+      50%  { transform: translateY(-3.5px) rotate(2deg) scale(0.99, 1.02); }
+      100% { transform: translateY(0) rotate(-2deg) scale(1.02, 0.98); }
+    }
+
+    .zootopia-patrol {
+      transform: translate(1018px, 616px);
+      animation: zootopiaStroll 38s ease-in-out infinite alternate both;
+    }
+    @keyframes zootopiaStroll {
+      0% { transform: translate3d(1018px, 616px, 0); }
+      50% { transform: translate3d(925px, 622px, 0); }
+      100% { transform: translate3d(1135px, 614px, 0); }
+    }
+
+    .baymax-ground-stroll {
+      transform: translate(1178px, 616px);
+      animation: baymaxStroll 36s ease-in-out infinite alternate both;
+    }
+    @keyframes baymaxStroll {
+      0% { transform: translate3d(1178px, 616px, 0); }
+      50% { transform: translate3d(1235px, 614px, 0); }
+      100% { transform: translate3d(1088px, 620px, 0); }
+    }
+
+    .stitch-stroll {
+      transform: translate(235px, 616px);
+      animation: stitchPatrol 35s ease-in-out infinite alternate both;
+    }
+    @keyframes stitchPatrol {
+      0% { transform: translate3d(235px, 616px, 0); }
+      50% { transform: translate3d(345px, 622px, 0); }
+      100% { transform: translate3d(165px, 616px, 0); }
+    }
+
+    .chipdale-stroll {
+      transform: translate(388px, 624px);
+      animation: chipdalePatrol 40s ease-in-out infinite alternate both;
+    }
+    @keyframes chipdalePatrol {
+      0% { transform: translate3d(388px, 624px, 0); }
+      50% { transform: translate3d(485px, 628px, 0); }
+      100% { transform: translate3d(310px, 622px, 0); }
+    }
+
+    .monsters-wave {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: monstersBounce 4.2s ease-in-out infinite alternate;
+    }
+    @keyframes monstersBounce {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-4.5px) scale(1.02); }
+    }
+
+    .mike-jump {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: mikeHappyHop2 1.8s cubic-bezier(0.34, 1.4, 0.64, 1) infinite !important;
+    }
+    @keyframes mikeHappyHop2 {
+      0%, 100% { transform: translateY(0) scale(1.06, 0.92); }
+      45%      { transform: translateY(-12px) scale(0.94, 1.07) rotate(-3deg); }
+    }
+
+    .cheshire-float {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: cheshireGlow 5.6s ease-in-out infinite alternate;
+    }
+    @keyframes cheshireGlow {
+      0% { transform: translateY(0px) rotate(-3deg); opacity: 0.86; }
+      100% { transform: translateY(-5px) rotate(3deg); opacity: 1; }
+    }
+
+    .elsa-arm-cast {
+      transform-box: fill-box;
+      transform-origin: 0% 50%;
+      animation: elsaArmWave 4.4s ease-in-out infinite alternate;
+    }
+    @keyframes elsaArmWave {
+      0% { transform: rotate(10deg); }
+      100% { transform: rotate(-20deg); }
+    }
+
+    .elsa-ice-blast {
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: elsaIceShoot 4.8s ease-in-out infinite;
+    }
+    @keyframes elsaIceShoot {
+      0%, 20% { stroke-dashoffset: 48; opacity: 0; }
+      50% { stroke-dashoffset: 0; opacity: 0.95; }
+      85% { stroke-dashoffset: -48; opacity: 0.5; }
+      100% { stroke-dashoffset: -48; opacity: 0; }
+    }
+
+    .elsa-snow-swirl {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: elsaSnowBurst 4.8s ease-out infinite;
+    }
+    .elsa-snow-swirl-2 { animation-delay: 2.4s; }
+    @keyframes elsaSnowBurst {
+      0%, 25% { transform: translate(0px, 0px) scale(0.3) rotate(0deg); opacity: 0; }
+      60% { transform: translate(12px, -10px) scale(1.1) rotate(120deg); opacity: 0.95; }
+      100% { transform: translate(24px, -22px) scale(0.6) rotate(240deg); opacity: 0; }
+    }
+
+    .simba-roar {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: simbaHead 7.5s ease-in-out infinite alternate;
+    }
+    @keyframes simbaHead {
+      0% { transform: rotate(-3deg); }
+      100% { transform: rotate(5deg); }
+    }
+
+    .mcqueen-zip {
+      transform: translate(-260px, 654px);
+      animation: mcqueenRace 28s linear infinite -10s both;
+    }
+    @keyframes mcqueenRace {
+      0% { transform: translate3d(-260px, 654px, 0); }
+      100% { transform: translate3d(1720px, 654px, 0); }
+    }
+
+    .hidden-mickey-sparkle {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: hmGlow 5.5s ease-in-out infinite alternate;
+    }
+    @keyframes hmGlow {
+      0% { opacity: 0.28; transform: scale(0.95); }
+      100% { opacity: 0.88; transform: scale(1.06); }
+    }
+
     .vacation-content {
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
+      background: transparent;
+      border: none;
+      box-shadow: none;
       padding: 10px 20px 14px;
       max-width: 820px;
       width: 95%;
-      transform: translate3d(0, 0, 0);
+      contain: layout style;
+      transform: translateZ(0);
+    }
+
+    .vacation-content .vac-badge,
+    .vacation-content .vac-chip {
+      background: rgba(9, 18, 38, 0.84);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+    }
+    .vacation-content .vac-chip.active {
+      background: var(--gold);
+      color: #141414;
+      text-shadow: none;
+    }
+    .vacation-content .vac-title {
+      text-shadow: 0 3px 14px rgba(4, 10, 26, 0.92), 0 0 24px rgba(4, 10, 26, 0.85);
+    }
+    .vacation-content .vac-sub {
+      text-shadow: 0 2px 10px rgba(4, 10, 26, 0.95);
+      font-weight: 600;
+    }
+    .vacation-content .trip-progress-wrap {
+      background: rgba(8, 15, 32, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .vac-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
     }
 
     .vac-badge {
-      background: rgba(9, 18, 38, 0.84);
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 209, 102, 0.2);
       border: 1px solid rgba(255, 209, 102, 0.55);
       color: var(--gold);
       padding: 5px 15px;
@@ -752,21 +1241,18 @@
       font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.1em;
-      margin-bottom: 6px;
     }
 
     .vac-title {
       font-size: clamp(1.5rem, 2.9vw, 2.25rem);
       font-weight: 800;
       margin: 0 0 4px;
-      text-shadow: 0 3px 14px rgba(4, 10, 26, 0.92);
     }
 
     .vac-sub {
       color: #dbe8ff;
       font-size: 0.88rem;
       margin: 0 0 14px;
-      text-shadow: 0 2px 10px rgba(4, 10, 26, 0.95);
     }
 
     .countdown-boxes {
@@ -774,6 +1260,7 @@
       gap: 13px;
       flex-wrap: wrap;
       justify-content: center;
+      perspective: 700px;
     }
 
     .cd-unit-box {
@@ -782,7 +1269,11 @@
         linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 46%),
         linear-gradient(180deg, #1a2a4a 0%, #0f1a33 50%, #0a1123 50.5%, #14213c 100%);
       border: 1px solid rgba(255, 218, 130, 0.38);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -10px 18px rgba(0, 0, 0, 0.25);
       border-radius: 15px;
       padding: 13px 20px 11px;
       min-width: 102px;
@@ -797,6 +1288,7 @@
       top: 50%;
       height: 1px;
       background: rgba(0, 0, 0, 0.55);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
       pointer-events: none;
     }
 
@@ -807,6 +1299,53 @@
       font-variant-numeric: tabular-nums;
       line-height: 1;
       display: inline-block;
+    }
+
+    @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+      .cd-num {
+        background: linear-gradient(180deg, #fff6d3 0%, #ffd166 52%, #f2a93b 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+    }
+
+    .cd-num.smooth-glide {
+      animation: linearGlideDigit 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes linearGlideDigit {
+      0% { transform: translate3d(0, 4px, 0); opacity: 0.55; }
+      100% { transform: translate3d(0, 0, 0); opacity: 1; }
+    }
+
+    .cd-linear-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .cd-linear-bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(91, 192, 255, 0.85), rgba(255, 209, 102, 0.95));
+      transform-origin: left center;
+      transform: scale3d(1, 1, 1);
+    }
+
+    .cd-linear-bar.sec-sweep {
+      animation: secBarSweep 1s linear infinite;
+    }
+
+    @keyframes secBarSweep {
+      0% { transform: scale3d(1, 1, 1); }
+      100% { transform: scale3d(0, 1, 1); }
     }
 
     .cd-lbl {
@@ -826,7 +1365,7 @@
     }
 
     .vac-chip {
-      background: rgba(9, 18, 38, 0.84);
+      background: rgba(255, 255, 255, 0.09);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: #e6f0ff;
       border-radius: 999px;
@@ -847,8 +1386,8 @@
       width: 100%;
       max-width: 580px;
       margin-top: 12px;
-      background: rgba(8, 15, 32, 0.84);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(7, 13, 27, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 14px;
       padding: 10px 14px;
       text-align: left;
@@ -878,10 +1417,14 @@
       width: 68%;
       background: linear-gradient(90deg, #5bc0ff 0%, #ffd166 100%);
       border-radius: 999px;
-      transition: width 0.35s ease;
     }
 
-    .checklist-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .checklist-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
     .check-pill {
       display: inline-flex;
       align-items: center;
@@ -894,6 +1437,7 @@
       color: #dce7fa;
       cursor: pointer;
     }
+
     .check-pill.done {
       background: rgba(92, 214, 92, 0.18);
       border-color: rgba(92, 214, 92, 0.48);
@@ -901,7 +1445,39 @@
       text-decoration: line-through;
     }
 
-    /* --- VIP --- */
+    /* 驚喜覆蓋層 */
+    .surprise-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      visibility: hidden;
+      opacity: 0;
+      background: radial-gradient(ellipse at 50% 46%, rgba(52, 24, 104, 0.78) 0%, rgba(6, 8, 28, 0.92) 72%);
+      cursor: pointer;
+    }
+    .surprise-overlay.show { visibility: visible; opacity: 1; transition: opacity 0.5s ease; }
+    .surprise-overlay.show.closing { opacity: 0; transition: opacity 0.7s ease; pointer-events: none; }
+    #svCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .sv-center { position: relative; z-index: 2; text-align: center; padding: 0 5vw; max-width: 100%; }
+    .sv-eyebrow { font-size: clamp(0.72rem, 1.6vw, 1rem); font-weight: 800; letter-spacing: 0.42em; color: #ffe7a3; margin-bottom: 10px; }
+    .sv-title { margin: 0; font-weight: 900; line-height: 1.06; color: #fff0b3; font-size: clamp(2rem, 7vw, 4.6rem); }
+    .sv-sub { margin: 12px 0 0; font-size: clamp(0.95rem, 2.2vw, 1.35rem); font-weight: 700; color: #fff; }
+    .sv-btn {
+      margin-top: 20px;
+      border: 1px solid rgba(255, 244, 200, 0.85);
+      background: linear-gradient(180deg, #ffe08a 0%, #ffb938 100%);
+      color: #3a2400;
+      font-weight: 800;
+      padding: 10px 26px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    /* --- VIP & SETTINGS --- */
     .vip-stage {
       width: 100%;
       height: 100%;
@@ -916,13 +1492,12 @@
 
     .vip-card {
       max-width: 680px;
-      background: rgba(14, 19, 36, 0.82);
+      background: rgba(14, 19, 36, 0.78);
       border: 1px solid rgba(199, 125, 255, 0.45);
       border-radius: 22px;
       padding: 32px 36px;
     }
 
-    /* --- SETTINGS --- */
     .settings-stage {
       width: 100%;
       height: 100%;
@@ -1007,7 +1582,7 @@
     .intro-check { display: flex; gap: 8px; align-items: center; font-size: 0.9rem; color: #dbe6ff; cursor: pointer; }
     .intro-check input { width: 18px; height: 18px; accent-color: #ffd166; }
 
-    /* ================= 3. 底部導覽列 ================= */
+    /* ================= 3. 最下方膠囊導覽列 ================= */
     .bottom-bar {
       position: relative;
       height: 68px;
@@ -1025,13 +1600,11 @@
     }
 
     .nav-left-icons, .nav-pills { position: relative; z-index: 1; display: flex; align-items: center; }
-    .nav-left-icons { gap: 12px; }
-    .nav-pills { justify-content: space-around; flex: 1; max-width: 860px; gap: 10px; }
-
+    .nav-left-icons { gap: 14px; }
     .icon-btn {
-      background: rgba(10, 30, 76, 0.7);
-      border: 1.5px solid rgba(255, 209, 102, 0.35);
       color: var(--dz-gold-2);
+      border: 1.5px solid rgba(255, 209, 102, 0.35);
+      background: rgba(10, 30, 76, 0.7);
       width: 42px;
       height: 42px;
       border-radius: 12px;
@@ -1045,9 +1618,18 @@
       background: linear-gradient(180deg, var(--dz-gold-1), var(--dz-gold-2) 60%, var(--dz-gold-3));
       border-color: var(--dz-gold-1);
     }
-    .icon-btn svg { width: 22px; height: 22px; fill: currentColor; }
+    .icon-btn svg { width: 24px; height: 24px; fill: currentColor; }
 
-    .pill-btn {
+    .nav-pills {
+      justify-content: space-around;
+      flex: 1;
+      max-width: 860px;
+      gap: 10px;
+    }
+
+    .pill-btn, .pill-btn[data-page] {
+      position: relative;
+      overflow: hidden;
       color: var(--dz-gold-2);
       border: 2px solid transparent;
       border-radius: 12px;
@@ -1061,242 +1643,280 @@
       cursor: pointer;
       white-space: nowrap;
     }
-    .pill-btn.active {
+
+    .pill-btn.active, .pill-btn[data-page].active {
       color: #231500;
       background:
         linear-gradient(180deg, var(--dz-gold-1) 0%, var(--dz-gold-2) 55%, var(--dz-gold-3) 100%) padding-box,
         linear-gradient(135deg, #ffffff 0%, var(--dz-gold-2) 40%, var(--dz-gold-4) 100%) border-box;
     }
+    .pill-btn[data-page="vip"]::before { content: "✦ "; }
+    .pill-btn[data-page="vip"]::after { content: " ✦"; }
 
-    /* ================= 開場動畫（精修迪士尼城堡輪廓與流暢轉場） ================= */
-    .film {
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: #02040f;
-      display: none;
-      overflow: hidden;
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
+    /* ================= 開場動畫（迪士尼城堡精修版） ================= */
+    .film { position: fixed; inset: 0; z-index: 99999; background: #02040f; display: none; overflow: hidden; opacity: 1; }
     .film.show { display: block; }
-    .film.fade-out { opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
-    .film-sky { position: absolute; inset: 0; background: linear-gradient(180deg, #030926 0%, #0d1b64 58%, #1a2d8f 100%); }
-    .film-layer { position: absolute; inset: 0; opacity: 0; overflow: hidden; will-change: transform, opacity; }
+    .film.fade-out { opacity: 0; transition: opacity 1.1s ease; pointer-events: none; }
+    .film-sky { position: absolute; inset: 0; background: linear-gradient(180deg, #02061c 0%, #0b1858 55%, #1d358c 100%); }
+    .film-layer { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
     .film-layer svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-
+    #fiCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .film-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 8, 0.55) 100%); }
     .film-skip {
-      position: absolute;
-      top: max(16px, env(safe-area-inset-top));
-      right: 18px;
-      z-index: 5;
-      background: rgba(10, 22, 60, 0.72);
-      color: #ffe9a0;
-      border: 1px solid rgba(255, 209, 102, 0.6);
-      border-radius: 999px;
-      padding: 7px 16px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
+      position: absolute; top: max(16px, env(safe-area-inset-top)); right: 18px; z-index: 5;
+      background: rgba(10, 22, 60, 0.65); color: #ffe9a0; border: 1px solid rgba(255, 209, 102, 0.6);
+      border-radius: 999px; padding: 7px 16px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
     }
+    .fi-twk { animation: fiTwinkle 3.2s ease-in-out infinite; }
+    @keyframes fiTwinkle { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
 
-    .film.playing .film-act1 { animation: fiAct1 3.6s ease-in-out 0.2s both; }
-    @keyframes fiAct1 { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+    .film.playing .film-act1 { animation: fiAct1 3.9s ease-in-out 0.3s both; }
+    @keyframes fiAct1 { 0% { opacity: 0; transform: scale(1); } 18% { opacity: 1; } 78% { opacity: 1; } 100% { opacity: 0; transform: scale(1.25); } }
+    .fi-hero { left: 50%; top: 30%; width: 15vmin; height: 15vmin; margin: -7.5vmin 0 0 -7.5vmin; position: absolute; transform-origin: center; animation: fiHero 2.6s ease-in-out 0.9s infinite; }
+    @keyframes fiHero { 0%, 100% { opacity: 0.55; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.1) rotate(8deg); } }
 
-    .film.playing .film-act2 { animation: fiAct2 4.2s ease-in-out 3.2s both; }
+    .film.playing .film-act2 { animation: fiAct2 4.6s ease-in-out 3.2s both; }
     @keyframes fiAct2 { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+    .fi-aerial-svg { transform-origin: 50% 0; }
+    .film.playing .fi-aerial-svg { animation: fiPan 4.8s linear 3.2s both; }
+    @keyframes fiPan { 0% { transform: translateY(2%) scale(1.22); } 100% { transform: translateY(-28%) scale(1.05); } }
 
-    .film.playing .film-act3 { animation: fiAct3 6.5s ease-in-out 6.8s both; }
-    @keyframes fiAct3 { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 1; } }
+    .film.playing .film-act3 { animation: fiAct3 6.6s ease-in-out 6.8s both; }
+    @keyframes fiAct3 { 0% { opacity: 0; } 14% { opacity: 1; } 100% { opacity: 1; } }
+    .fi-castle-cam { transform-origin: 800px 260px; }
+    .film.playing .fi-castle-cam { animation: fiCastleCam 6.2s cubic-bezier(0.55, 0.05, 0.25, 1) 6.9s both; }
+    @keyframes fiCastleCam { 0% { transform: translateY(220px) scale(1.65); } 100% { transform: translateY(0) scale(1); } }
+    .fi-flag { transform-box: fill-box; transform-origin: left center; animation: fiFlag 1.3s ease-in-out infinite alternate; }
+    @keyframes fiFlag { 0% { transform: skewY(-6deg) scaleX(1); } 100% { transform: skewY(7deg) scaleX(0.9); } }
 
-    .fi-castle-cam { transform-origin: 800px 210px; will-change: transform; }
-    .film.playing .fi-castle-cam { animation: fiCastleCam 5.8s cubic-bezier(0.35, 0.05, 0.25, 1) 7.0s both; }
-    @keyframes fiCastleCam {
-      0%   { transform: translate3d(0, 190px, 0) scale(1.42); }
-      100% { transform: translate3d(0, 0, 0) scale(1); }
-    }
-
-    .film.playing .film-act4 { animation: fiIn 0.6s ease 11.4s both; }
+    .film.playing .film-act4 { animation: fiIn 0.5s ease 11.6s both; }
     @keyframes fiIn { to { opacity: 1; } }
-
     .fi-comet-path { stroke-dasharray: 1900; stroke-dashoffset: 1900; }
-    .film.playing .fi-comet-path { animation: fiDraw 2.2s ease-out 11.6s forwards; }
+    .film.playing .fi-comet-path { animation: fiDraw 2.4s ease-out 11.8s forwards, fiFadeLine 1.6s ease 14.4s forwards; }
     @keyframes fiDraw { to { stroke-dashoffset: 0; } }
-
-    .fi-title { position: absolute; left: 0; right: 0; top: 68%; text-align: center; padding: 0 5vw; }
-    .fi-eyebrow { font-size: clamp(0.75rem, 1.8vw, 1.05rem); font-weight: 700; letter-spacing: 0.45em; color: #dbe6ff; opacity: 0; }
+    @keyframes fiFadeLine { to { opacity: 0; } }
+    .fi-comet-head { opacity: 0; }
+    .film.playing .fi-comet-head { animation: fiCometHead 2.4s ease-out 11.8s both; filter: drop-shadow(0 0 10px #fff3b0); }
+    @keyframes fiCometHead { 0% { opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { opacity: 0; } }
+    .film.playing .fi-castle-svg { animation: fiLift 1.8s ease-in-out 12.4s both; }
+    @keyframes fiLift { to { transform: translateY(-9%) scale(0.94); } }
+    .fi-title { position: absolute; left: 0; right: 0; top: 67%; text-align: center; padding: 0 5vw; }
+    .fi-eyebrow { font-size: clamp(0.72rem, 1.9vw, 1.1rem); font-weight: 700; letter-spacing: 0.5em; color: #dbe6ff; opacity: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
     .fi-main {
-      font-family: "Snell Roundhand", "Segoe Script", "Brush Script MT", cursive;
-      font-size: clamp(2.5rem, 9vw, 5.8rem);
-      line-height: 1.1;
-      margin: 0.1em 0;
-      background: linear-gradient(180deg, #ffffff 0%, #fff0b3 42%, #ffc94d 78%, #e89a2e 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      opacity: 0;
+      font-family: "Snell Roundhand", "Segoe Script", "Brush Script MT", "Apple Chancery", "Lucida Handwriting", cursive;
+      font-size: clamp(2.6rem, 10vw, 6.4rem); line-height: 1.1; margin: 0.1em 0;
+      background: linear-gradient(180deg, #ffffff 0%, #fff0b3 40%, #ffc94d 75%, #e89a2e 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+      filter: drop-shadow(0 0 18px rgba(255, 200, 90, 0.65)) drop-shadow(0 3px 0 rgba(90, 50, 0, 0.5));
+      opacity: 0; letter-spacing: 0.02em;
     }
-    .fi-sub { font-size: clamp(0.8rem, 2vw, 1.1rem); letter-spacing: 0.16em; color: #ffe9a0; opacity: 0; }
-    .film.playing .fi-eyebrow { animation: fiUp 1s ease 12.2s both; }
-    .film.playing .fi-main { animation: fiUp 1.4s ease 12.8s both; }
-    .film.playing .fi-sub { animation: fiUp 1s ease 14.0s both; }
-    @keyframes fiUp {
-      0% { opacity: 0; transform: translate3d(0, 14px, 0); }
-      100% { opacity: 1; transform: translate3d(0, 0, 0); }
-    }
+    .fi-sub { font-size: clamp(0.8rem, 2vw, 1.15rem); letter-spacing: 0.18em; color: #ffe9a0; opacity: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    .film.playing .fi-eyebrow { animation: fiUp 1.2s ease 12.5s both; }
+    .film.playing .fi-main { animation: fiTitleIn 2s cubic-bezier(0.2, 0.8, 0.2, 1) 13.1s both; }
+    .film.playing .fi-sub { animation: fiUp 1.2s ease 14.6s both; }
+    @keyframes fiUp { 0% { opacity: 0; transform: translateY(14px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes fiTitleIn { 0% { opacity: 0; transform: scale(1.18); filter: blur(10px) drop-shadow(0 0 18px rgba(255,200,90,.65)); } 100% { opacity: 1; transform: scale(1); } }
 
     @media (max-width: 767px) {
+      .settings-wrap, .rides-grid { grid-template-columns: 1fr; }
       .top-bar { height: 52px; min-height: 52px; padding: 0 14px; }
+      .welcome-label { font-size: 0.66rem; }
       .family-name { font-size: 1.02rem; }
       .top-time { font-size: 1.02rem; }
       .top-date { font-size: 0.72rem; }
       .bottom-bar { height: 58px; min-height: 58px; padding: 0 10px; gap: 6px; }
+      .nav-left-icons { gap: 4px; flex-shrink: 0; }
+      .icon-btn { width: 34px; height: 34px; }
+      .icon-btn svg { width: 20px; height: 20px; }
       .nav-pills { justify-content: flex-start; overflow-x: auto; gap: 6px; }
-      .pill-btn { padding: 6px 11px; font-size: 0.76rem; border-radius: 8px; }
-      .settings-wrap, .rides-grid { grid-template-columns: 1fr; }
-      .cd-unit-box { min-width: 70px; padding: 9px 6px 8px; }
+      .pill-btn { padding: 6px 11px; font-size: 0.76rem; flex-shrink: 0; }
+      .cd-unit-box { min-width: 68px; flex: 1; max-width: 82px; padding: 9px 6px 8px; border-radius: 11px; }
       .cd-num { font-size: 1.62rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ========== 電影感開場動畫（含貼近迪士尼城堡輪廓之哥德尖塔與藍瓦圓頂群） ========== -->
+  <!-- ========== 開場動畫：迪士尼城堡精修版 ========== -->
   <div class="film" id="introFilm" aria-hidden="true">
     <div class="film-sky"></div>
     <div class="film-layer film-act1">
-      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-        <circle cx="320" cy="140" r="2" fill="#fff" class="star-twinkle"/>
-        <circle cx="640" cy="95" r="2.2" fill="#ffd166" class="star-twinkle star-t2"/>
-        <circle cx="980" cy="150" r="1.8" fill="#fff" class="star-twinkle star-t3"/>
-        <circle cx="1280" cy="110" r="2.4" fill="#fff3b0" class="star-twinkle star-t4"/>
-        <circle cx="480" cy="240" r="1.6" fill="#cfe2ff" class="star-twinkle"/>
-        <circle cx="1120" cy="230" r="1.9" fill="#fff" class="star-twinkle star-t2"/>
-        <g transform="translate(800, 295)">
-          <circle r="4" fill="#ffffff"/>
-          <path d="M0,-34 Q0,0 34,0 Q0,0 0,34 Q0,0 -34,0 Q0,0 0,-34Z" fill="#fff4c2"/>
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" class="fi-stars-svg">
+        <circle cx="240" cy="140" r="1.8" fill="#fff" class="fi-twk"/>
+        <circle cx="520" cy="95" r="2.2" fill="#fff3b0" class="fi-twk" style="animation-delay:-1.1s"/>
+        <circle cx="880" cy="130" r="1.6" fill="#fff" class="fi-twk" style="animation-delay:-2.1s"/>
+        <circle cx="1190" cy="105" r="2.1" fill="#fff3b0" class="fi-twk" style="animation-delay:-0.7s"/>
+        <circle cx="1390" cy="210" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-1.6s"/>
+        <circle cx="360" cy="260" r="1.4" fill="#fff" class="fi-twk" style="animation-delay:-2.4s"/>
+        <circle cx="1040" cy="250" r="1.7" fill="#fff" class="fi-twk" style="animation-delay:-0.4s"/>
+      </svg>
+      <svg class="fi-hero" viewBox="0 0 100 100">
+        <g transform="translate(50,50)">
+          <circle r="3.4" fill="#fff"/>
+          <path d="M0,-32 Q0,0 32,0 Q0,0 0,32 Q0,0 -32,0 Q0,0 0,-32Z" fill="#fff6c9"/>
         </g>
       </svg>
     </div>
 
     <div class="film-layer film-act2">
-      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <svg viewBox="0 0 1600 1300" preserveAspectRatio="xMidYMin slice" class="fi-aerial-svg">
         <defs>
           <linearGradient id="fiAeSky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#071142"/><stop offset=".6" stop-color="#223688"/><stop offset="1" stop-color="#5d4696"/>
+            <stop offset="0" stop-color="#071248"/>
+            <stop offset="0.55" stop-color="#1e3a8a"/>
+            <stop offset="1" stop-color="#4e69c9"/>
           </linearGradient>
         </defs>
-        <rect width="1600" height="900" fill="url(#fiAeSky)"/>
-        <polygon points="0,560 280,450 560,530 840,430 1160,520 1420,445 1600,520 1600,900 0,900" fill="#1e2d6e"/>
-        <polygon points="0,680 340,590 700,670 1060,585 1380,665 1600,610 1600,900 0,900" fill="#132252"/>
-        <path d="M1320,620 C1050,670 940,740 680,790 C440,835 240,865 60,900" fill="none" stroke="#8ab4f8" stroke-width="26" stroke-linecap="round" opacity="0.45"/>
+        <rect width="1600" height="1300" fill="url(#fiAeSky)"/>
+        <polygon points="0,580 280,470 580,550 860,440 1200,530 1600,450 1600,900 0,900" fill="#182c66"/>
+        <polygon points="0,720 340,630 720,710 1120,620 1600,700 1600,1300 0,1300" fill="#123959"/>
+        <path d="M1380,680 C1120,740 1220,850 920,900 C680,940 760,1040 500,1110 C320,1155 240,1220 160,1300" fill="none" stroke="#78a6f0" stroke-width="34" stroke-linecap="round" opacity="0.5"/>
       </svg>
     </div>
 
-    <!-- Act 3：貼近迪士尼城堡（睡美人/奇幻城堡多層次藍瓦尖頂、拱門城樓、金飾窗櫺與護城河） -->
+    <!-- Act 3：精緻迪士尼城堡（藍瓦尖頂＋粉紫/象牙白石塔＋金色拱門＋護城河倒影＋煙火） -->
     <div class="film-layer film-act3">
       <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" class="fi-castle-svg">
         <defs>
           <linearGradient id="fiDusk" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#050b33"/><stop offset=".48" stop-color="#1b2d84"/><stop offset=".8" stop-color="#6c4598"/><stop offset="1" stop-color="#c979a4"/>
+            <stop offset="0" stop-color="#050b34"/>
+            <stop offset="0.48" stop-color="#172f7a"/>
+            <stop offset="0.78" stop-color="#4d67c4"/>
+            <stop offset="1" stop-color="#96a8eb"/>
           </linearGradient>
-          <linearGradient id="fiStone" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#ffffff"/><stop offset="65%" stop-color="#e8f0fc"/><stop offset="100%" stop-color="#b9cee8"/>
+          <radialGradient id="fiGlow" cx="50%" cy="55%" r="50%">
+            <stop offset="0" stop-color="#ffe08a" stop-opacity="0.52"/>
+            <stop offset="1" stop-color="#ffe08a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="fiCastleWall" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff"/>
+            <stop offset="0.65" stop-color="#e8f0fc"/>
+            <stop offset="1" stop-color="#c3d4f0"/>
           </linearGradient>
-          <linearGradient id="fiRoofBlue" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#7cc8ff"/><stop offset="55%" stop-color="#2c63bd"/><stop offset="100%" stop-color="#163573"/>
+          <linearGradient id="fiCastlePinkWall" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffd6e7"/>
+            <stop offset="1" stop-color="#d8a8c8"/>
           </linearGradient>
-          <linearGradient id="fiLakeGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#2b458c"/><stop offset="1" stop-color="#070d2e"/>
+          <linearGradient id="fiCastleRoofBlue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#7cc6ff"/>
+            <stop offset="0.6" stop-color="#2862b8"/>
+            <stop offset="1" stop-color="#153775"/>
           </linearGradient>
-          <clipPath id="fiLakeClip2"><rect x="0" y="660" width="1600" height="240"/></clipPath>
+          <linearGradient id="fiLake" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2c5ba8"/>
+            <stop offset="0.35" stop-color="#193b78"/>
+            <stop offset="1" stop-color="#081533"/>
+          </linearGradient>
+          <clipPath id="fiLakeClip"><rect x="0" y="664" width="1600" height="236"/></clipPath>
         </defs>
+
         <rect width="1600" height="900" fill="url(#fiDusk)"/>
 
+        <!-- 夜空煙火 -->
+        <g transform="translate(430, 175)" stroke="#ffd166" stroke-width="2.4" stroke-linecap="round">
+          <line x1="0" y1="-44" x2="0" y2="-14"/><line x1="0" y1="14" x2="0" y2="44"/>
+          <line x1="-44" y1="0" x2="-14" y2="0"/><line x1="14" y1="0" x2="44" y2="0"/>
+          <line x1="-31" y1="-31" x2="-10" y2="-10"/><line x1="10" y1="10" x2="31" y2="31"/>
+          <line x1="31" y1="-31" x2="10" y2="-10"/><line x1="-10" y1="10" x2="-31" y2="31"/>
+          <circle cx="0" cy="0" r="24" fill="none" stroke="#fff3b0" stroke-width="1.3" stroke-dasharray="3 6"/>
+        </g>
+        <g transform="translate(1170, 165)" stroke="#7cc4ff" stroke-width="2.4" stroke-linecap="round">
+          <line x1="0" y1="-46" x2="0" y2="-15"/><line x1="0" y1="15" x2="0" y2="46"/>
+          <line x1="-46" y1="0" x2="-15" y2="0"/><line x1="15" y1="0" x2="46" y2="0"/>
+          <line x1="-32" y1="-32" x2="-11" y2="-11"/><line x1="11" y1="11" x2="32" y2="32"/>
+          <line x1="32" y1="-32" x2="11" y2="-11"/><line x1="-11" y1="11" x2="-32" y2="32"/>
+          <circle cx="0" cy="0" r="26" fill="none" stroke="#e0f2fe" stroke-width="1.3" stroke-dasharray="3 6"/>
+        </g>
+
         <g class="fi-castle-cam">
-          <g id="fiDisneyCastle" transform="translate(800, 660)">
-            <!-- 左右側翼圓頂與小尖塔 -->
-            <rect x="-250" y="-82" width="46" height="82" fill="url(#fiStone)"/>
-            <path d="M-254,-82 Q-227,-126 -200,-82 Z" fill="url(#fiRoofBlue)"/>
-            <line x1="-227" y1="-112" x2="-227" y2="-130" stroke="#ffd166" stroke-width="2"/>
+          <ellipse cx="800" cy="540" rx="460" ry="250" fill="url(#fiGlow)"/>
 
-            <rect x="204" y="-82" width="46" height="82" fill="url(#fiStone)"/>
-            <path d="M200,-82 Q227,-126 254,-82 Z" fill="url(#fiRoofBlue)"/>
-            <line x1="227" y1="-112" x2="227" y2="-130" stroke="#ffd166" stroke-width="2"/>
+          <g id="fiCastle">
+            <!-- 左右側翼樓與粉藍拱廊 -->
+            <rect x="490" y="555" width="105" height="109" rx="4" fill="url(#fiCastleWall)"/>
+            <rect x="1005" y="555" width="105" height="109" rx="4" fill="url(#fiCastleWall)"/>
+            <rect x="490" y="545" width="105" height="10" fill="url(#fiCastlePinkWall)"/>
+            <rect x="1005" y="545" width="105" height="10" fill="url(#fiCastlePinkWall)"/>
 
-            <!-- 中外圍堡壘牆與拱門 -->
-            <rect x="-195" y="-116" width="390" height="116" rx="4" fill="url(#fiStone)"/>
-            <rect x="-195" y="-124" width="14" height="10" fill="url(#fiStone)"/>
-            <rect x="-172" y="-124" width="14" height="10" fill="url(#fiStone)"/>
-            <rect x="-149" y="-124" width="14" height="10" fill="url(#fiStone)"/>
-            <rect x="135" y="-124" width="14" height="10" fill="url(#fiStone)"/>
-            <rect x="158" y="-124" width="14" height="10" fill="url(#fiStone)"/>
-            <rect x="181" y="-124" width="14" height="10" fill="url(#fiStone)"/>
+            <!-- 外側角樓與藍瓦尖頂 -->
+            <rect x="515" y="485" width="34" height="179" fill="url(#fiCastleWall)"/>
+            <path d="M510,485 Q532,425 554,485 Z" fill="url(#fiCastleRoofBlue)"/>
+            <circle cx="532" cy="422" r="3.5" fill="#ffd166"/>
 
-            <!-- 次級尖塔群（左右各兩座優雅高塔） -->
-            <rect x="-166" y="-215" width="34" height="215" fill="url(#fiStone)"/>
-            <path d="M-172,-215 Q-149,-295 -126,-215 Z" fill="url(#fiRoofBlue)"/>
-            <circle cx="-149" cy="-286" r="3" fill="#ffd166"/>
+            <rect x="1051" y="485" width="34" height="179" fill="url(#fiCastleWall)"/>
+            <path d="M1046,485 Q1068,425 1090,485 Z" fill="url(#fiCastleRoofBlue)"/>
+            <circle cx="1068" cy="422" r="3.5" fill="#ffd166"/>
 
-            <rect x="132" y="-215" width="34" height="215" fill="url(#fiStone)"/>
-            <path d="M126,-215 Q149,-295 172,-215 Z" fill="url(#fiRoofBlue)"/>
-            <circle cx="149" cy="-286" r="3" fill="#ffd166"/>
+            <!-- 中層左右雙塔 -->
+            <rect x="605" y="425" width="52" height="239" fill="url(#fiCastleWall)"/>
+            <path d="M598,425 Q631,325 664,425 Z" fill="url(#fiCastleRoofBlue)"/>
+            <polygon class="fi-flag" points="631,325 648,330 631,335" fill="#ffd166"/>
 
-            <rect x="-104" y="-275" width="38" height="275" fill="url(#fiStone)"/>
-            <path d="M-110,-275 Q-85,-372 -60,-275 Z" fill="url(#fiRoofBlue)"/>
-            <circle cx="-85" cy="-358" r="3.4" fill="#ffd166"/>
+            <rect x="943" y="425" width="52" height="239" fill="url(#fiCastleWall)"/>
+            <path d="M936,425 Q969,325 1002,425 Z" fill="url(#fiCastleRoofBlue)"/>
+            <polygon class="fi-flag" points="969,325 986,330 969,335" fill="#ffd166"/>
 
-            <rect x="66" y="-275" width="38" height="275" fill="url(#fiStone)"/>
-            <path d="M60,-275 Q85,-372 110,-275 Z" fill="url(#fiRoofBlue)"/>
-            <circle cx="85" cy="-358" r="3.4" fill="#ffd166"/>
+            <!-- 中央主殿 -->
+            <rect x="665" y="455" width="270" height="209" rx="6" fill="url(#fiCastleWall)"/>
+            <rect x="665" y="445" width="270" height="12" fill="url(#fiCastlePinkWall)"/>
 
-            <!-- 中央主殿與最高哥德式尖塔 -->
-            <rect x="-64" y="-230" width="128" height="230" fill="url(#fiStone)"/>
-            <rect x="-32" y="-415" width="64" height="415" fill="url(#fiStone)"/>
-            <!-- 主塔哥德式尖頂（凹曲線屋頂輪廓，更貼近迪士尼城堡） -->
-            <path d="M-40,-415 Q-12,-470 0,-565 Q12,-470 40,-415 Z" fill="url(#fiRoofBlue)" stroke="#ffd166" stroke-width="1.2"/>
-            <line x1="0" y1="-565" x2="0" y2="-592" stroke="#ffd166" stroke-width="2.5"/>
-            <polygon class="fi-flag" points="0,-592 20,-586 0,-580" fill="#ffd166"/>
-            <circle cx="0" cy="-594" r="4.5" fill="#fff3b0"/>
+            <!-- 城堡拱門與金色光輝 -->
+            <path d="M760,664 L760,592 Q800,545 840,592 L840,664 Z" fill="#1f3d7a"/>
+            <path d="M772,664 L772,598 Q800,562 828,598 L828,664 Z" fill="#ffd98a" opacity="0.55"/>
 
-            <!-- 城堡中央拱門與暖金窗櫺 -->
-            <path d="M-24,0 L-24,-62 Q0,-92 24,-62 L24,0 Z" fill="#1b3263"/>
-            <path d="M-17,0 L-17,-58 Q0,-80 17,-58 L17,0 Z" fill="#ffd166" opacity="0.45"/>
-            <circle cx="0" cy="-355" r="12" fill="#21407a" stroke="#ffd166" stroke-width="2.2"/>
-            <circle cx="0" cy="-355" r="7.5" fill="#fff3b0"/>
+            <!-- 次主塔（左右各一座高塔） -->
+            <rect x="706" y="295" width="44" height="165" fill="url(#fiCastleWall)"/>
+            <path d="M698,295 Q728,175 758,295 Z" fill="url(#fiCastleRoofBlue)"/>
+            <line x1="728" y1="175" x2="728" y2="152" stroke="#ffd166" stroke-width="2.4"/>
+            <circle cx="728" cy="149" r="3.6" fill="#fff3b0"/>
 
-            <g fill="#ffe08a" opacity="0.92">
-              <rect x="-153" y="-180" width="8" height="16" rx="4"/>
-              <rect x="-153" y="-140" width="8" height="16" rx="4"/>
-              <rect x="145" y="-180" width="8" height="16" rx="4"/>
-              <rect x="145" y="-140" width="8" height="16" rx="4"/>
-              <rect x="-89" y="-235" width="8" height="18" rx="4"/>
-              <rect x="-89" y="-185" width="8" height="18" rx="4"/>
-              <rect x="81" y="-235" width="8" height="18" rx="4"/>
-              <rect x="81" y="-185" width="8" height="18" rx="4"/>
-              <rect x="-4" y="-310" width="8" height="20" rx="4"/>
-              <rect x="-4" y="-260" width="8" height="20" rx="4"/>
-              <rect x="-4" y="-210" width="8" height="20" rx="4"/>
+            <rect x="850" y="295" width="44" height="165" fill="url(#fiCastleWall)"/>
+            <path d="M842,295 Q872,175 902,295 Z" fill="url(#fiCastleRoofBlue)"/>
+            <line x1="872" y1="175" x2="872" y2="152" stroke="#ffd166" stroke-width="2.4"/>
+            <circle cx="872" cy="149" r="3.6" fill="#fff3b0"/>
+
+            <!-- 最高中央尖塔（迪士尼城堡標誌性修長藍瓦穹頂尖塔） -->
+            <rect x="774" y="210" width="52" height="250" fill="url(#fiCastleWall)"/>
+            <path d="M764,210 Q800,55 836,210 Z" fill="url(#fiCastleRoofBlue)"/>
+            <path d="M776,210 Q800,115 824,210 Z" fill="#4f94f0" opacity="0.45"/>
+            <line x1="800" y1="55" x2="800" y2="20" stroke="#ffd166" stroke-width="3"/>
+            <polygon class="fi-flag" points="800,22 824,28 800,35" fill="#ffd166"/>
+            <circle cx="800" cy="17" r="5.2" fill="#fff3b0"/>
+
+            <!-- 玫瑰窗與暖金拱窗 -->
+            <circle cx="800" cy="268" r="14" fill="#234582" stroke="#ffd166" stroke-width="2.5"/>
+            <circle cx="800" cy="268" r="9" fill="#ffe699"/>
+            <g fill="#ffe08a">
+              <path d="M796,345 v-12 a4,4 0 0 1 8,0 v12 z"/>
+              <path d="M796,390 v-12 a4,4 0 0 1 8,0 v12 z"/>
+              <path d="M724,350 v-11 a4,4 0 0 1 8,0 v11 z"/>
+              <path d="M868,350 v-11 a4,4 0 0 1 8,0 v11 z"/>
+              <path d="M695,515 v-12 a4,4 0 0 1 8,0 v12 z"/>
+              <path d="M735,515 v-12 a4,4 0 0 1 8,0 v12 z"/>
+              <path d="M857,515 v-12 a4,4 0 0 1 8,0 v12 z"/>
+              <path d="M897,515 v-12 a4,4 0 0 1 8,0 v12 z"/>
             </g>
           </g>
         </g>
 
-        <rect x="0" y="660" width="1600" height="240" fill="url(#fiLakeGrad)"/>
-        <g clip-path="url(#fiLakeClip2)" opacity="0.22">
-          <use href="#fiDisneyCastle" transform="translate(0, 1320) scale(1, -1)"/>
+        <rect x="0" y="664" width="1600" height="236" fill="url(#fiLake)"/>
+        <g clip-path="url(#fiLakeClip)" opacity="0.22">
+          <use href="#fiCastle" transform="translate(0,1328) scale(1,-1)"/>
         </g>
       </svg>
+      <canvas id="fiCanvas"></canvas>
     </div>
 
     <div class="film-layer film-act4">
-      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+      <svg class="fi-comet" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
         <defs>
           <linearGradient id="fiCometG" x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0" stop-color="#fff3b0" stop-opacity="0"/><stop offset="1" stop-color="#ffffff"/>
+            <stop offset="0" stop-color="#fff3b0" stop-opacity="0"/>
+            <stop offset="1" stop-color="#ffffff"/>
           </linearGradient>
         </defs>
-        <path class="fi-comet-path" d="M240,510 C430,135 1170,105 1360,470" fill="none" stroke="url(#fiCometG)" stroke-width="6" stroke-linecap="round"/>
+        <path class="fi-comet-path" d="M260,520 C420,150 1180,110 1360,470" fill="none" stroke="url(#fiCometG)" stroke-width="6" stroke-linecap="round"/>
+        <circle class="fi-comet-head" id="fiCometHead" r="9" fill="#fff" cx="260" cy="520"/>
       </svg>
       <div class="fi-title">
         <div class="fi-eyebrow" id="fiEyebrow">SMITH FAMILY PRESENTS</div>
@@ -1304,12 +1924,23 @@
         <div class="fi-sub">Where every moment becomes a memory ✦</div>
       </div>
     </div>
-
+    <div class="film-vignette"></div>
     <button type="button" class="film-skip" id="filmSkip">跳過 ›</button>
   </div>
 
+  <script>
+    try {
+      var _l = window.localStorage;
+      if (!_l.getItem("disney_intro_seen_v1") || _l.getItem("disney_intro_always_v1") === "1") {
+        document.getElementById("introFilm").classList.add("show");
+      }
+    } catch (e) {
+      document.getElementById("introFilm").classList.add("show");
+    }
+  </script>
+
   <div class="tv-shell">
-    <!-- ========== 1. 頂部狀態列 ========== -->
+    <!-- ========== 1. 最上方狀態列 ========== -->
     <header class="top-bar">
       <div class="welcome-block">
         <div class="welcome-label" id="topWelcomeLabel">WELCOME</div>
@@ -1318,7 +1949,7 @@
 
       <div class="datetime-block">
         <div class="top-time" id="topTime">1:40 PM</div>
-        <div class="top-date" id="topDate">Friday, Nov 27, 2026</div>
+        <div class="top-date" id="topDate">Tuesday, Nov 24, 2026</div>
       </div>
       <span class="bar-orn bar-orn-top" aria-hidden="true"></span>
     </header>
@@ -1396,32 +2027,49 @@
       <section class="page-view" id="page-vacation">
         <div class="vacation-stage">
           <div class="vacation-bg-layer" aria-hidden="true">
-            <svg id="resortPanoramaSvg" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMax slice">
+            <svg id="resortPanoramaSvg" overflow="hidden" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMax slice">
               <defs>
                 <linearGradient id="cleanSky" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#040b1c"/>
-                  <stop offset="38%" stop-color="#0d234d"/>
-                  <stop offset="75%" stop-color="#1b468f"/>
+                  <stop offset="35%" stop-color="#0d234d"/>
+                  <stop offset="72%" stop-color="#1b468f"/>
                   <stop offset="100%" stop-color="#2e6bc4"/>
                 </linearGradient>
                 <radialGradient id="castleAura" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="rgba(255, 224, 130, 0.42)"/>
-                  <stop offset="55%" stop-color="rgba(124, 196, 255, 0.14)"/>
+                  <stop offset="0%" stop-color="rgba(255, 224, 130, 0.44)"/>
+                  <stop offset="48%" stop-color="rgba(124, 196, 255, 0.18)"/>
                   <stop offset="100%" stop-color="rgba(16, 42, 92, 0)"/>
                 </radialGradient>
                 <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="rgba(255, 248, 210, 0.52)"/>
+                  <stop offset="0%" stop-color="rgba(255, 248, 210, 0.55)"/>
+                  <stop offset="50%" stop-color="rgba(255, 232, 160, 0.14)"/>
                   <stop offset="100%" stop-color="rgba(255, 232, 160, 0)"/>
                 </radialGradient>
+                <linearGradient id="beamGrad" x1="0" y1="1" x2="0" y2="0">
+                  <stop offset="0%" stop-color="rgba(255, 236, 179, 0.55)"/>
+                  <stop offset="100%" stop-color="rgba(255, 236, 179, 0)"/>
+                </linearGradient>
+                <radialGradient id="epcotSphereGrad" cx="38%" cy="32%" r="68%">
+                  <stop offset="0%" stop-color="#e3f2fd"/>
+                  <stop offset="55%" stop-color="#90caf9"/>
+                  <stop offset="100%" stop-color="#3b6cb7"/>
+                </radialGradient>
+                <linearGradient id="spaceMtnGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f4f8ff"/>
+                  <stop offset="100%" stop-color="#9db8e6"/>
+                </linearGradient>
                 <linearGradient id="castleStone" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="65%" stop-color="#e8f0fc"/>
-                  <stop offset="100%" stop-color="#bad0f0"/>
+                  <stop offset="65%" stop-color="#e6effc"/>
+                  <stop offset="100%" stop-color="#bfd2f2"/>
                 </linearGradient>
                 <linearGradient id="castleRoof" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#8ad0ff"/>
-                  <stop offset="55%" stop-color="#2f67c4"/>
-                  <stop offset="100%" stop-color="#173878"/>
+                  <stop offset="100%" stop-color="#1f4c9e"/>
+                </linearGradient>
+                <linearGradient id="mainStreetWarm" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#445682"/>
+                  <stop offset="100%" stop-color="#1d2845"/>
                 </linearGradient>
                 <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#1c4734"/>
@@ -1429,7 +2077,7 @@
                 </linearGradient>
                 <linearGradient id="lakeWater" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#163e7a"/>
-                  <stop offset="55%" stop-color="#1f539e"/>
+                  <stop offset="50%" stop-color="#1f539e"/>
                   <stop offset="100%" stop-color="#0f2a54"/>
                 </linearGradient>
                 <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
@@ -1437,268 +2085,322 @@
                   <stop offset="100%" stop-color="#14361f"/>
                 </linearGradient>
 
-                <!-- 精緻飛船漸層（千年鷹號 & 帝國鈦戰機） -->
-                <linearGradient id="falconHullTop" x1="0" y1="0" x2="0" y2="1">
+                <!-- 精緻飛船漸層（千年鷹號 YT-1300 ＆ 帝國鈦戰機） -->
+                <linearGradient id="falconHull" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#f1f5f9"/>
-                  <stop offset="50%" stop-color="#cbd5e1"/>
-                  <stop offset="100%" stop-color="#94a3b8"/>
+                  <stop offset="48%" stop-color="#cbd5e1"/>
+                  <stop offset="82%" stop-color="#94a3b8"/>
+                  <stop offset="100%" stop-color="#64748b"/>
                 </linearGradient>
-                <linearGradient id="falconHullSide" x1="0" y1="0" x2="1" y2="0">
+                <linearGradient id="falconPlateDark" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stop-color="#64748b"/>
-                  <stop offset="50%" stop-color="#94a3b8"/>
-                  <stop offset="100%" stop-color="#cbd5e1"/>
+                  <stop offset="100%" stop-color="#475569"/>
                 </linearGradient>
                 <linearGradient id="falconEngine" x1="1" y1="0" x2="0" y2="0">
                   <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="28%" stop-color="#7ce4ff"/>
-                  <stop offset="72%" stop-color="#2589ff" stop-opacity="0.72"/>
+                  <stop offset="25%" stop-color="#7dd3fc"/>
+                  <stop offset="70%" stop-color="#2563eb" stop-opacity="0.78"/>
                   <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0"/>
                 </linearGradient>
                 <linearGradient id="tieWingPanel" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#273347"/>
+                  <stop offset="0%" stop-color="#273244"/>
                   <stop offset="50%" stop-color="#111827"/>
                   <stop offset="100%" stop-color="#1e293b"/>
                 </linearGradient>
-                <radialGradient id="tiePodGrad" cx="36%" cy="30%" r="72%">
+                <radialGradient id="tiePodGrad" cx="38%" cy="32%" r="72%">
                   <stop offset="0%" stop-color="#e2e8f0"/>
-                  <stop offset="55%" stop-color="#94a3b8"/>
+                  <stop offset="60%" stop-color="#94a3b8"/>
                   <stop offset="100%" stop-color="#475569"/>
                 </radialGradient>
                 <linearGradient id="tieIonGrad" x1="1" y1="0" x2="0" y2="0">
                   <stop offset="0%" stop-color="#ecfdf5"/>
-                  <stop offset="40%" stop-color="#4ade80"/>
-                  <stop offset="100%" stop-color="#16a34a" stop-opacity="0"/>
+                  <stop offset="45%" stop-color="#34d399"/>
+                  <stop offset="100%" stop-color="#059669" stop-opacity="0"/>
                 </linearGradient>
 
-                <!-- 星際大戰角色漸層 -->
-                <linearGradient id="yodaSkin" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#a3e635"/>
-                  <stop offset="65%" stop-color="#65a30d"/>
-                  <stop offset="100%" stop-color="#3f6212"/>
-                </linearGradient>
+                <!-- 角色漸層 -->
+                <radialGradient id="skinWarm" cx="36%" cy="28%" r="72%">
+                  <stop offset="0%" stop-color="#fff4e4"/>
+                  <stop offset="55%" stop-color="#ffdcb8"/>
+                  <stop offset="88%" stop-color="#e5ae7c"/>
+                  <stop offset="100%" stop-color="#cc8e58"/>
+                </radialGradient>
+                <radialGradient id="yodaGreen" cx="36%" cy="28%" r="72%">
+                  <stop offset="0%" stop-color="#b7e4a8"/>
+                  <stop offset="55%" stop-color="#74b868"/>
+                  <stop offset="100%" stop-color="#427a38"/>
+                </radialGradient>
                 <linearGradient id="jediRobe" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#78553a"/>
-                  <stop offset="55%" stop-color="#543824"/>
-                  <stop offset="100%" stop-color="#362214"/>
-                </linearGradient>
-                <linearGradient id="lukeSuit" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#334155"/>
-                  <stop offset="100%" stop-color="#0f172a"/>
-                </linearGradient>
-                <linearGradient id="c3poGold" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#fef08a"/>
-                  <stop offset="50%" stop-color="#eab308"/>
-                  <stop offset="100%" stop-color="#a16207"/>
-                </linearGradient>
-                <linearGradient id="bb8Orange" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#fdba74"/>
-                  <stop offset="55%" stop-color="#ea580c"/>
-                  <stop offset="100%" stop-color="#9a3412"/>
+                  <stop offset="0%" stop-color="#d2b48c"/>
+                  <stop offset="55%" stop-color="#a67c52"/>
+                  <stop offset="100%" stop-color="#6f4e37"/>
                 </linearGradient>
                 <linearGradient id="leiaGown" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="65%" stop-color="#e2e8f0"/>
+                  <stop offset="60%" stop-color="#e2e8f0"/>
                   <stop offset="100%" stop-color="#cbd5e1"/>
+                </linearGradient>
+                <linearGradient id="threepioGold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#fff3bf"/>
+                  <stop offset="50%" stop-color="#f59f00"/>
+                  <stop offset="100%" stop-color="#b45309"/>
+                </linearGradient>
+                <linearGradient id="bb8Orange" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ff922b"/>
+                  <stop offset="100%" stop-color="#d9480f"/>
+                </linearGradient>
+                <linearGradient id="mickeyRed" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#ff8787"/>
+                  <stop offset="50%" stop-color="#fa5252"/>
+                  <stop offset="100%" stop-color="#961c1c"/>
+                </linearGradient>
+                <linearGradient id="charBlack" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#343a40"/>
+                  <stop offset="60%" stop-color="#182238"/>
+                  <stop offset="100%" stop-color="#0b101d"/>
+                </linearGradient>
+                <linearGradient id="poohGold" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#ffec99"/>
+                  <stop offset="55%" stop-color="#fcc419"/>
+                  <stop offset="100%" stop-color="#d97706"/>
+                </linearGradient>
+                <radialGradient id="baymaxBody" cx="34%" cy="26%" r="75%">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="70%" stop-color="#f1f3f5"/>
+                  <stop offset="100%" stop-color="#adb5bd"/>
+                </radialGradient>
+                <linearGradient id="elsaDress" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#d0ebff"/>
+                  <stop offset="55%" stop-color="#4dabf7"/>
+                  <stop offset="100%" stop-color="#1864ab"/>
+                </linearGradient>
+                <linearGradient id="goldTrim" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#fff3bf"/>
+                  <stop offset="50%" stop-color="#ffd166"/>
+                  <stop offset="100%" stop-color="#e67700"/>
                 </linearGradient>
               </defs>
 
-              <!-- 夜空底色 -->
+              <!-- 夜空漸層 -->
               <rect width="1440" height="760" fill="url(#cleanSky)"/>
 
               <!-- 右上角新月 -->
               <g transform="translate(1245, 96)">
-                <circle cx="0" cy="0" r="60" fill="url(#moonGlow)"/>
+                <circle cx="0" cy="0" r="64" fill="url(#moonGlow)"/>
                 <path d="M-8,-22 A24,24 0 1,0 20,16 A19,19 0 1,1 -8,-22 Z" fill="#fff6cc"/>
               </g>
 
-              <!-- 城堡後方暖金魔法光暈 -->
-              <circle cx="720" cy="480" r="350" fill="url(#castleAura)"/>
+              <!-- 城堡後方光暈與探照燈 -->
+              <circle cx="720" cy="485" r="370" fill="url(#castleAura)"/>
+              <polygon class="searchlight-left" points="565,585 450,165 535,165" fill="url(#beamGrad)"/>
+              <polygon class="searchlight-right" points="875,585 905,165 990,165" fill="url(#beamGrad)"/>
 
-              <!-- 閃爍星辰 -->
+              <!-- 閃爍星星 -->
               <g fill="#fff6c2">
-                <circle class="star-twinkle" cx="110" cy="88" r="2.3"/>
-                <circle class="star-twinkle star-t2" cx="250" cy="145" r="2.0"/>
-                <circle class="star-twinkle star-t3" cx="420" cy="76" r="2.5"/>
-                <circle class="star-twinkle star-t4" cx="580" cy="120" r="2.0"/>
-                <circle class="star-twinkle star-t2" cx="880" cy="84" r="2.3"/>
-                <circle class="star-twinkle star-t3" cx="1060" cy="128" r="2.1"/>
-                <circle class="star-twinkle star-t4" cx="1370" cy="145" r="2.2"/>
+                <circle class="star-twinkle star-t1" cx="95" cy="88" r="2.4"/>
+                <circle class="star-twinkle star-t2" cx="215" cy="145" r="2.1"/>
+                <circle class="star-twinkle star-t3" cx="345" cy="75" r="2.6"/>
+                <circle class="star-twinkle star-t4" cx="485" cy="128" r="2.0"/>
+                <circle class="star-twinkle star-t5" cx="615" cy="65" r="2.5"/>
+                <circle class="star-twinkle star-t2" cx="795" cy="70" r="2.5"/>
+                <circle class="star-twinkle star-t1" cx="935" cy="122" r="2.2"/>
+                <circle class="star-twinkle star-t3" cx="1085" cy="82" r="2.6"/>
+                <circle class="star-twinkle star-t4" cx="1345" cy="142" r="2.3"/>
+                <circle class="star-twinkle star-t5" cx="1395" cy="84" r="2.4"/>
               </g>
 
-              <!-- 雙流星 -->
-              <line class="shooting-star" x1="210" y1="68" x2="580" y2="205" stroke="#fff5c0" stroke-width="2.2" stroke-linecap="round"/>
-              <line class="shooting-star-2" x1="1190" y1="64" x2="840" y2="195" stroke="#a6dbff" stroke-width="2.0" stroke-linecap="round"/>
+              <!-- 流星 -->
+              <line class="shooting-star" x1="230" y1="52" x2="580" y2="165" stroke="#fff5c0" stroke-width="2.2" stroke-linecap="round"/>
+              <line class="shooting-star-2" x1="1180" y1="50" x2="840" y2="155" stroke="#a6dbff" stroke-width="2.0" stroke-linecap="round"/>
 
-              <!-- 煙火綻放 -->
-              <g transform="translate(455, 215)" stroke="#ffd166" stroke-width="2.1" stroke-linecap="round">
-                <g class="fw-burst gpu-anim">
-                  <line x1="0" y1="-38" x2="0" y2="-14"/><line x1="0" y1="14" x2="0" y2="38"/>
-                  <line x1="-38" y1="0" x2="-14" y2="0"/><line x1="14" y1="0" x2="38" y2="0"/>
-                  <line x1="-26" y1="-26" x2="-10" y2="-10"/><line x1="10" y1="10" x2="26" y2="26"/>
-                  <line x1="26" y1="-26" x2="10" y2="-10"/><line x1="-10" y1="10" x2="-26" y2="26"/>
-                </g>
-              </g>
-              <g transform="translate(985, 205)" stroke="#7cc4ff" stroke-width="2.1" stroke-linecap="round">
-                <g class="fw-burst fw-burst-2 gpu-anim">
-                  <line x1="0" y1="-40" x2="0" y2="-15"/><line x1="0" y1="15" x2="0" y2="40"/>
-                  <line x1="-40" y1="0" x2="-15" y2="0"/><line x1="15" y1="0" x2="40" y2="0"/>
-                  <line x1="-28" y1="-28" x2="-10" y2="-10"/><line x1="10" y1="10" x2="28" y2="28"/>
-                  <line x1="28" y1="-28" x2="10" y2="-10"/><line x1="-10" y1="10" x2="-28" y2="28"/>
-                </g>
-              </g>
-              <g transform="translate(720, 148)" stroke="#ff9ebb" stroke-width="2.1" stroke-linecap="round">
-                <g class="fw-burst fw-burst-3 gpu-anim">
-                  <line x1="0" y1="-34" x2="0" y2="-12"/><line x1="0" y1="12" x2="0" y2="34"/>
-                  <line x1="-34" y1="0" x2="-12" y2="0"/><line x1="12" y1="0" x2="34" y2="0"/>
-                  <line x1="-24" y1="-24" x2="-9" y2="-9"/><line x1="9" y1="9" x2="24" y2="24"/>
-                  <line x1="24" y1="-24" x2="9" y2="-9"/><line x1="-9" y1="9" x2="-24" y2="24"/>
-                </g>
-              </g>
+              <!-- ==================== 高空星際大戰飛船層（y=78 與 y=138，與 y=198 迪士尼飛艇及 y=232~368 飛行角色完全錯開） ==================== -->
+              <!-- 1. 千年鷹號 YT-1300（精細裝甲接縫、雷達盤、四聯裝砲塔、駕駛艙與亞光速尾焰） -->
+              <g class="ship-skiff-fly">
+                <g class="ship-bob" transform="scale(1.12)">
+                  <!-- 亞光速藍色引擎尾焰 -->
+                  <path class="thruster" d="M-54,-17 C-82,-22 -128,-14 -162,-10 C-128,-6 -82,-5 -58,-3 Z" fill="url(#falconEngine)"/>
+                  <path class="thruster" d="M-58,3 C-82,5 -128,6 -162,10 C-128,14 -82,22 -54,17 Z" fill="url(#falconEngine)"/>
+                  <path class="thruster" d="M-60,-7.5 C-96,-8.5 -144,-3.5 -176,0 C-144,3.5 -96,8.5 -60,7.5 Z" fill="url(#falconEngine)"/>
+                  <!-- 船尾發光引擎排 -->
+                  <path d="M-52,-18.5 A58,33 0 0,0 -52,18.5" fill="none" stroke="#bae6fd" stroke-width="3.6" stroke-linecap="round"/>
+                  <path d="M-52,-18.5 A58,33 0 0,0 -52,18.5" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
 
-              <!-- ==================== 空中載具（航道高度與時間相位完全錯開，零重疊） ==================== -->
+                  <!-- 主圓盤船體 -->
+                  <ellipse cx="-6" cy="0" rx="54" ry="33" fill="url(#falconHull)" stroke="#475569" stroke-width="1.15"/>
+                  <!-- 船體裝甲板塊與深色戰損色塊 -->
+                  <path d="M-38,-18 L-14,-18 L-10,-8 L-34,-8 Z" fill="url(#falconPlateDark)" opacity="0.55"/>
+                  <path d="M-36,10 L-12,10 L-16,22 L-40,22 Z" fill="url(#falconPlateDark)" opacity="0.5"/>
+                  <path d="M4,-22 L22,-18 L18,-7 L2,-9 Z" fill="#e2e8f0" opacity="0.65"/>
+                  <!-- 放射狀裝甲接縫線 -->
+                  <path d="M-52,-12 L-16,-4 M-52,12 L-16,4 M-32,-27 L-10,-8 M-32,27 L-10,8 M4,-32 L4,-10 M4,32 L4,10 M24,-24 L14,-7 M24,24 L14,7" stroke="#475569" stroke-width="0.9" opacity="0.78"/>
+                  <ellipse cx="-6" cy="0" rx="34" ry="20" fill="none" stroke="#64748b" stroke-width="0.85" stroke-dasharray="5 3"/>
 
-              <!-- A. 帝國鈦戰機（最高空航道 y≈72px，72s 週期） -->
-              <g class="tie-fly gpu-anim">
-                <g transform="scale(-1.05, 1.05)">
-                  <g class="ship-bob gpu-anim">
-                    <path class="thruster gpu-anim" d="M-16,-4 Q-38,-7 -60,-4 Q-38,-1 -16,-4Z" fill="url(#tieIonGrad)"/>
-                    <path class="thruster gpu-anim" d="M-16,4 Q-38,1 -60,4 Q-38,7 -16,4Z" fill="url(#tieIonGrad)"/>
-                    <!-- 遠側六角翼 -->
-                    <g transform="translate(-7, -8) scale(0.88)">
-                      <polygon points="-24,-40 16,-40 34,-12 34,12 16,40 -24,40 -36,12 -36,-12" fill="url(#tieWingPanel)" stroke="#7b8798" stroke-width="1.4"/>
-                      <line x1="-36" y1="0" x2="34" y2="0" stroke="#647082" stroke-width="1.2"/>
-                      <line x1="-24" y1="-40" x2="16" y2="40" stroke="#647082" stroke-width="1.1"/>
-                      <line x1="16" y1="-40" x2="-24" y2="40" stroke="#647082" stroke-width="1.1"/>
-                    </g>
-                    <rect x="-7" y="-22" width="14" height="44" rx="2" fill="#6b7585" stroke="#3f4754" stroke-width="1"/>
-                    <circle cx="2" cy="0" r="15.5" fill="url(#tiePodGrad)" stroke="#3f4754" stroke-width="1.2"/>
-                    <g transform="translate(11, 0)">
-                      <ellipse cx="0" cy="0" rx="6.5" ry="9.5" fill="#111827" stroke="#b8c2d1" stroke-width="1.3"/>
-                      <circle cx="0" cy="0" r="3" fill="none" stroke="#9aa5b4" stroke-width="0.9"/>
-                      <line x1="-6" y1="0" x2="6" y2="0" stroke="#9aa5b4" stroke-width="0.8"/>
-                      <line x1="0" y1="-9" x2="0" y2="9" stroke="#9aa5b4" stroke-width="0.8"/>
-                    </g>
-                    <!-- 近側六角翼 -->
-                    <g transform="translate(7, 8)">
-                      <polygon points="-24,-40 16,-40 34,-12 34,12 16,40 -24,40 -36,12 -36,-12" fill="url(#tieWingPanel)" stroke="#9aa5b4" stroke-width="1.6"/>
-                      <line x1="-36" y1="0" x2="34" y2="0" stroke="#8592a6" stroke-width="1.5"/>
-                      <line x1="-24" y1="-40" x2="16" y2="40" stroke="#8592a6" stroke-width="1.4"/>
-                      <line x1="16" y1="-40" x2="-24" y2="40" stroke="#8592a6" stroke-width="1.4"/>
-                      <polygon points="-6,-7 6,-7 10,0 6,7 -6,7 -10,0" fill="#7c8798" stroke="#3f4754" stroke-width="1"/>
-                    </g>
+                  <!-- 前方雙叉貨運夾鉗 -->
+                  <polygon points="24,-25 90,-13.5 90,-5.5 32,-9.5" fill="url(#falconHull)" stroke="#475569" stroke-width="1.05"/>
+                  <polygon points="24,25 90,13.5 90,5.5 32,9.5" fill="url(#falconHull)" stroke="#475569" stroke-width="1.05"/>
+                  <!-- 夾鉗內部骨架凹槽與紅色塗裝 -->
+                  <polygon points="34,-8 86,-5.5 86,-3 34,-4" fill="#b91c1c" opacity="0.88"/>
+                  <polygon points="34,8 86,5.5 86,3 34,4" fill="#b91c1c" opacity="0.88"/>
+                  <line x1="46" y1="-20" x2="46" y2="-10" stroke="#475569" stroke-width="0.9"/>
+                  <line x1="66" y1="-16" x2="66" y2="-8" stroke="#475569" stroke-width="0.9"/>
+                  <line x1="46" y1="20" x2="46" y2="10" stroke="#475569" stroke-width="0.9"/>
+                  <line x1="66" y1="16" x2="66" y2="8" stroke="#475569" stroke-width="0.9"/>
+                  <circle cx="91" cy="-9.5" r="2.1" fill="#fff3b0" class="ship-light"/>
+                  <circle cx="91" cy="9.5" r="2.1" fill="#fff3b0" class="ship-light"/>
+
+                  <!-- 左右對接艙環 -->
+                  <g transform="translate(-4,-33)">
+                    <rect x="-8.5" y="-3.2" width="17" height="6.4" rx="2" fill="#94a3b8" stroke="#475569" stroke-width="0.9"/>
+                    <circle cx="0" cy="0" r="2.6" fill="#334155"/>
                   </g>
-                </g>
-              </g>
-
-              <!-- B. 精緻版千年鷹號 (Millennium Falcon)（中上航道 y≈112px，42s 週期，與飛艇垂直錯開 100px） -->
-              <g class="falcon-fly gpu-anim">
-                <g class="ship-bob gpu-anim" transform="scale(1.14)">
-                  <!-- 弧形藍色亞光速推進器尾焰 -->
-                  <path class="thruster gpu-anim" d="M-54,-19 C-82,-24 -128,-16 -160,-11 C-128,-7 -82,-6 -58,-4 Z" fill="url(#falconEngine)"/>
-                  <path class="thruster gpu-anim" d="M-58,4 C-82,6 -128,7 -160,11 C-128,16 -82,24 -54,19 Z" fill="url(#falconEngine)"/>
-                  <path class="thruster gpu-anim" d="M-60,-8 C-94,-10 -142,-4 -174,0 C-142,4 -94,10 -60,8 Z" fill="url(#falconEngine)"/>
-                  <!-- 船尾藍色發光格柵 -->
-                  <path d="M-52,-19 A58,34 0 0,0 -52,19" fill="none" stroke="#8ce6ff" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M-52,-19 A58,34 0 0,0 -52,19" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-
-                  <!-- 經典碟形主船體 -->
-                  <ellipse cx="-6" cy="0" rx="56" ry="34" fill="url(#falconHullTop)" stroke="#475569" stroke-width="1.2"/>
-                  <!-- 船體裝甲分塊、散熱槽與舊化細節 -->
-                  <ellipse cx="-6" cy="0" rx="40" ry="23" fill="none" stroke="#64748b" stroke-width="1" stroke-dasharray="7 3"/>
-                  <ellipse cx="-6" cy="0" rx="22" ry="13" fill="url(#falconHullSide)" stroke="#475569" stroke-width="0.9"/>
-                  <path d="M-52,-13 L-14,-4 M-52,13 L-14,4 M-28,-30 L-10,-8 M-28,30 L-10,8 M12,-32 L8,-9 M12,32 L8,9" stroke="#64748b" stroke-width="1" opacity="0.85"/>
-                  <!-- 船體表面微細節塊 -->
-                  <rect x="-34" y="-8" width="9" height="4" rx="1" fill="#64748b" opacity="0.7"/>
-                  <rect x="-34" y="4" width="9" height="4" rx="1" fill="#64748b" opacity="0.7"/>
-                  <rect x="8" y="-16" width="11" height="4" rx="1" fill="#64748b" opacity="0.7"/>
-                  <rect x="8" y="12" width="11" height="4" rx="1" fill="#64748b" opacity="0.7"/>
-
-                  <!-- 前方雙叉貨運夾鉗（含深槽陰影與紅色塗裝條紋） -->
-                  <polygon points="24,-26 90,-13 90,-5 32,-9" fill="url(#falconHullTop)" stroke="#475569" stroke-width="1.1"/>
-                  <polygon points="24,26 90,13 90,5 32,9" fill="url(#falconHullTop)" stroke="#475569" stroke-width="1.1"/>
-                  <polygon points="36,-8 86,-5 86,-3 36,-4" fill="#b91c1c"/>
-                  <polygon points="36,8 86,5 86,3 36,4" fill="#b91c1c"/>
-                  <circle cx="58" cy="-14.5" r="2.4" fill="#475569"/>
-                  <circle cx="58" cy="14.5" r="2.4" fill="#475569"/>
-                  <circle cx="91" cy="-9" r="2.2" fill="#fef08a"/>
-                  <circle cx="91" cy="9" r="2.2" fill="#fef08a"/>
-
-                  <!-- 兩側圓形對接艙環 -->
-                  <g transform="translate(-4,-34)">
-                    <rect x="-9" y="-3.5" width="18" height="7" rx="2" fill="url(#falconHullSide)" stroke="#334155" stroke-width="1"/>
-                    <circle cx="0" cy="0" r="2.5" fill="#1e293b"/>
-                  </g>
-                  <g transform="translate(-4,34)">
-                    <rect x="-9" y="-3.5" width="18" height="7" rx="2" fill="url(#falconHullSide)" stroke="#334155" stroke-width="1"/>
-                    <circle cx="0" cy="0" r="2.5" fill="#1e293b"/>
+                  <g transform="translate(-4,33)">
+                    <rect x="-8.5" y="-3.2" width="17" height="6.4" rx="2" fill="#94a3b8" stroke="#475569" stroke-width="0.9"/>
+                    <circle cx="0" cy="0" r="2.6" fill="#334155"/>
                   </g>
 
-                  <!-- 右側標誌性懸臂圓筒駕駛艙與錐形窗框 -->
-                  <g transform="translate(22, 24) rotate(16)">
-                    <rect x="-12" y="-5.2" width="33" height="10.4" rx="3" fill="url(#falconHullTop)" stroke="#475569" stroke-width="1.1"/>
-                    <line x1="2" y1="-5.2" x2="2" y2="5.2" stroke="#475569" stroke-width="1"/>
-                    <line x1="10" y1="-5.2" x2="10" y2="5.2" stroke="#475569" stroke-width="1"/>
-                    <polygon points="21,-5.2 35,-2.6 35,2.6 21,5.2" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
-                    <line x1="21" y1="-2" x2="35" y2="-1" stroke="#bae6fd" stroke-width="0.9"/>
-                    <line x1="21" y1="2" x2="35" y2="1" stroke="#bae6fd" stroke-width="0.9"/>
+                  <!-- 右側標誌性圓筒駕駛艙 -->
+                  <g transform="translate(22, 23.5) rotate(16)">
+                    <rect x="-13" y="-5.2" width="33" height="10.4" rx="3" fill="url(#falconHull)" stroke="#475569" stroke-width="1"/>
+                    <line x1="2" y1="-5.2" x2="2" y2="5.2" stroke="#475569" stroke-width="0.9"/>
+                    <line x1="11" y1="-5.2" x2="11" y2="5.2" stroke="#475569" stroke-width="0.9"/>
+                    <polygon points="20,-5.2 35,-2.6 35,2.6 20,5.2" fill="#1e293b" stroke="#cbd5e1" stroke-width="0.9"/>
+                    <line x1="20" y1="-2" x2="35" y2="-1" stroke="#bae6fd" stroke-width="0.85"/>
+                    <line x1="20" y1="2" x2="35" y2="1" stroke="#bae6fd" stroke-width="0.85"/>
                   </g>
 
-                  <!-- 頂部雷達圓盤天線與四聯裝雷射砲塔 -->
-                  <g transform="translate(-15, -15)">
-                    <ellipse cx="0" cy="0" rx="8" ry="4.8" transform="rotate(-24)" fill="#f8fafc" stroke="#475569" stroke-width="1"/>
+                  <!-- 頂部雷達盤與四聯裝雷射砲塔 -->
+                  <g transform="translate(-15, -14)">
+                    <ellipse cx="0" cy="0" rx="8" ry="4.8" transform="rotate(-24)" fill="#f8fafc" stroke="#475569" stroke-width="0.95"/>
+                    <ellipse cx="0" cy="0" rx="4.5" ry="2.5" transform="rotate(-24)" fill="none" stroke="#94a3b8" stroke-width="0.7"/>
                     <line x1="0" y1="0" x2="3.5" y2="-3.5" stroke="#334155" stroke-width="1.1"/>
                   </g>
-                  <circle cx="-6" cy="0" r="8.5" fill="#cbd5e1" stroke="#475569" stroke-width="1.1"/>
+                  <circle cx="-6" cy="0" r="8.5" fill="#cbd5e1" stroke="#475569" stroke-width="1"/>
                   <circle cx="-6" cy="0" r="4.2" fill="#475569"/>
                   <line x1="-6" y1="-2.2" x2="5" y2="-2.2" stroke="#f1f5f9" stroke-width="1.3"/>
                   <line x1="-6" y1="2.2" x2="5" y2="2.2" stroke="#f1f5f9" stroke-width="1.3"/>
                 </g>
               </g>
 
-              <!-- C. 迪士尼奇幻飛艇（中層航道 y≈214px，46s 週期，與千年鷹號完全錯開） -->
-              <g class="airship-cruise gpu-anim">
-                <g class="ship-bob gpu-anim">
-                  <ellipse cx="48" cy="16" rx="46" ry="16" fill="#2c4d8a" stroke="#8ad0ff" stroke-width="1.5"/>
-                  <path d="M12,16 Q48,8 84,16 Q48,24 12,16 Z" fill="#ffd166" opacity="0.88"/>
-                  <polygon points="6,11 -10,4 -5,16 -10,28 6,21" fill="#ff6b6b"/>
-                  <rect x="34" y="31" width="28" height="7" rx="3" fill="#182848" stroke="#ffd166" stroke-width="1"/>
-                  <circle cx="40" cy="34.5" r="1.4" fill="#fff3b0"/>
-                  <circle cx="48" cy="34.5" r="1.4" fill="#fff3b0"/>
-                  <circle cx="56" cy="34.5" r="1.4" fill="#fff3b0"/>
+              <!-- 2. 帝國鈦戰機 TIE Fighter（精細六角翼板骨架、八角座艙窗、雙離子引擎） -->
+              <g class="ship-cruiser-fly">
+                <g transform="scale(-1.05,1.05)">
+                  <g class="ship-bob">
+                    <path class="thruster" d="M-16,-4.2 Q-38,-7.5 -62,-4.2 Q-38,-1 -16,-4.2Z" fill="url(#tieIonGrad)"/>
+                    <path class="thruster" d="M-16,4.2 Q-38,1 -62,4.2 Q-38,7.5 -16,4.2Z" fill="url(#tieIonGrad)"/>
+
+                    <!-- 左舷翼板 -->
+                    <g transform="translate(-7, -8) scale(0.88)">
+                      <polygon points="-24,-40 16,-40 34,-12 34,12 16,40 -24,40 -36,12 -36,-12" fill="url(#tieWingPanel)" stroke="#94a3b8" stroke-width="1.4"/>
+                      <line x1="-36" y1="0" x2="34" y2="0" stroke="#64748b" stroke-width="1.2"/>
+                      <line x1="-24" y1="-40" x2="16" y2="40" stroke="#64748b" stroke-width="1.1"/>
+                      <line x1="16" y1="-40" x2="-24" y2="40" stroke="#64748b" stroke-width="1.1"/>
+                    </g>
+
+                    <rect x="-7" y="-22" width="14" height="44" rx="2" fill="#64748b" stroke="#334155" stroke-width="1"/>
+                    <circle cx="2" cy="0" r="15.5" fill="url(#tiePodGrad)" stroke="#334155" stroke-width="1.2"/>
+
+                    <!-- 八角駕駛艙觀察窗 -->
+                    <g transform="translate(11, 0)">
+                      <ellipse cx="0" cy="0" rx="6.5" ry="9.5" fill="#0f172a" stroke="#cbd5e1" stroke-width="1.3"/>
+                      <circle cx="0" cy="0" r="3" fill="none" stroke="#94a3b8" stroke-width="0.9"/>
+                      <line x1="-6" y1="0" x2="6" y2="0" stroke="#94a3b8" stroke-width="0.8"/>
+                      <line x1="0" y1="-9" x2="0" y2="9" stroke="#94a3b8" stroke-width="0.8"/>
+                      <line x1="-4.5" y1="-6.5" x2="4.5" y2="6.5" stroke="#94a3b8" stroke-width="0.8"/>
+                      <line x1="-4.5" y1="6.5" x2="4.5" y2="-6.5" stroke="#94a3b8" stroke-width="0.8"/>
+                    </g>
+
+                    <line x1="10" y1="10" x2="21" y2="11" stroke="#e2e8f0" stroke-width="1.6" stroke-linecap="round"/>
+                    <circle cx="22" cy="11" r="1.5" fill="#4ade80" class="ship-light"/>
+
+                    <!-- 右舷主翼板 -->
+                    <g transform="translate(7, 8)">
+                      <polygon points="-24,-40 16,-40 34,-12 34,12 16,40 -24,40 -36,12 -36,-12" fill="url(#tieWingPanel)" stroke="#cbd5e1" stroke-width="1.6"/>
+                      <line x1="-36" y1="0" x2="34" y2="0" stroke="#94a3b8" stroke-width="1.5"/>
+                      <line x1="-24" y1="-40" x2="16" y2="40" stroke="#94a3b8" stroke-width="1.4"/>
+                      <line x1="16" y1="-40" x2="-24" y2="40" stroke="#94a3b8" stroke-width="1.4"/>
+                      <polygon points="-6,-7 6,-7 10,0 6,7 -6,7 -10,0" fill="#94a3b8" stroke="#334155" stroke-width="1"/>
+                      <circle cx="0" cy="0" r="3" fill="#334155"/>
+                    </g>
+                  </g>
                 </g>
               </g>
 
-              <!-- 背景山坡與摩天輪 -->
+              <!-- 奇幻飛艇（y=198，與千年鷹號 y=78 與鈦戰機 y=138 完全錯開） -->
+              <g class="airship-cruise">
+                <ellipse cx="48" cy="16" rx="44" ry="15" fill="#2c4d8a" stroke="#8ad0ff" stroke-width="1.5"/>
+                <path d="M12,16 Q48,8 84,16 Q48,24 12,16 Z" fill="#ffd166" opacity="0.85"/>
+                <polygon points="6,11 -8,4 -4,16 -8,28 6,21" fill="#ff6b6b"/>
+                <rect x="34" y="30" width="28" height="7" rx="3" fill="#182848" stroke="#ffd166" stroke-width="1"/>
+              </g>
+
+              <!-- 煙火 -->
+              <g transform="translate(455, 225)" stroke="#ffd166" stroke-width="2.2" stroke-linecap="round">
+                <g class="fw-burst">
+                  <line x1="0" y1="-38" x2="0" y2="-14"/><line x1="0" y1="14" x2="0" y2="38"/>
+                  <line x1="-38" y1="0" x2="-14" y2="0"/><line x1="14" y1="0" x2="38" y2="0"/>
+                  <line x1="-27" y1="-27" x2="-10" y2="-10"/><line x1="10" y1="10" x2="27" y2="27"/>
+                  <line x1="27" y1="-27" x2="10" y2="-10"/><line x1="-10" y1="10" x2="-27" y2="27"/>
+                </g>
+              </g>
+              <g transform="translate(985, 220)" stroke="#7cc4ff" stroke-width="2.2" stroke-linecap="round">
+                <g class="fw-burst fw-burst-2">
+                  <line x1="0" y1="-40" x2="0" y2="-14"/><line x1="0" y1="14" x2="0" y2="40"/>
+                  <line x1="-40" y1="0" x2="-14" y2="0"/><line x1="14" y1="0" x2="40" y2="0"/>
+                  <line x1="-28" y1="-28" x2="-10" y2="-10"/><line x1="10" y1="10" x2="28" y2="28"/>
+                  <line x1="28" y1="-28" x2="10" y2="-10"/><line x1="-10" y1="10" x2="-28" y2="28"/>
+                </g>
+              </g>
+              <g id="dynamicFireworksLayer"></g>
+
+              <!-- 雲朵與遠山 -->
+              <g class="cloud-drift-slow" fill="rgba(255,255,255,0.12)">
+                <ellipse cx="320" cy="168" rx="54" ry="14"/>
+                <circle cx="302" cy="162" r="17"/>
+                <circle cx="334" cy="160" r="20"/>
+              </g>
               <path d="M0,586 Q360,548 720,582 T1440,568 L1440,760 L0,760 Z" fill="url(#hillBack)"/>
 
-              <g transform="translate(1285, 594) scale(0.88)">
-                <path d="M0,-96 L-44,0 M0,-96 L44,0" stroke="#2f4a86" stroke-width="4" stroke-linecap="round"/>
-                <g class="ferris-spin gpu-anim" style="transform-origin: 0px -96px;">
-                  <circle cx="0" cy="-96" r="68" fill="none" stroke="#7ec8ff" stroke-width="3"/>
-                  <circle cx="0" cy="-96" r="46" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/>
-                  <line x1="-68" y1="-96" x2="68" y2="-96" stroke="#9fd5ff" stroke-width="1.3"/>
-                  <line x1="0" y1="-164" x2="0" y2="-28" stroke="#9fd5ff" stroke-width="1.3"/>
-                  <line x1="-48" y1="-144" x2="48" y2="-48" stroke="#9fd5ff" stroke-width="1.2"/>
-                  <line x1="48" y1="-144" x2="-48" y2="-48" stroke="#9fd5ff" stroke-width="1.2"/>
-                  <circle cx="0" cy="-96" r="12" fill="#ffd166" stroke="#ff9f43" stroke-width="2"/>
+              <!-- 地標群 -->
+              <g transform="translate(80,606) scale(1.05)">
+                <ellipse cx="0" cy="0" rx="50" ry="6" fill="#16264a" opacity="0.8"/>
+                <path d="M-44,0 L-22,-52 M44,0 L22,-52 M0,0 L0,-46" stroke="#2c4b86" stroke-width="7" stroke-linecap="round"/>
+                <circle cx="0" cy="-112" r="64" fill="url(#epcotSphereGrad)" stroke="rgba(190,225,255,0.65)" stroke-width="1.6"/>
+                <g class="epcot-glow" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.2">
+                  <ellipse cx="0" cy="-112" rx="64" ry="20"/>
+                  <ellipse cx="0" cy="-112" rx="28" ry="64"/>
                 </g>
               </g>
 
-              <!-- 單軌列車 -->
+              <g transform="translate(402,604) scale(1.05)">
+                <path d="M-84,0 Q-64,-50 -9,-76 L9,-76 Q64,-50 84,0 Z" fill="url(#spaceMtnGrad)"/>
+                <line x1="0" y1="-78" x2="0" y2="-96" stroke="#90caf9" stroke-width="2.4"/>
+                <circle cx="0" cy="-98" r="3.2" fill="#ffd166" class="spire-light"/>
+              </g>
+
+              <g transform="translate(1328,606) scale(1.0)">
+                <path d="M0,-112 L-56,0 M0,-112 L56,0" fill="none" stroke="#2f4a86" stroke-width="5" stroke-linecap="round"/>
+                <g class="dca-wheel-spin">
+                  <circle cx="0" cy="-112" r="84" fill="none" stroke="#7ec8ff" stroke-width="3.6"/>
+                  <circle cx="0" cy="-112" r="70" fill="none" stroke="#bfe6ff" stroke-width="2"/>
+                  <line x1="-84" y1="-112" x2="84" y2="-112" stroke="rgba(190,225,255,0.55)" stroke-width="1.3"/>
+                  <line x1="0" y1="-196" x2="0" y2="-28" stroke="rgba(190,225,255,0.55)" stroke-width="1.3"/>
+                  <circle cx="0" cy="-112" r="18" fill="#ffd166" stroke="#ff9f43" stroke-width="2.2"/>
+                </g>
+              </g>
+
+              <!-- 單軌列車軌道與列車 -->
               <g opacity="0.94">
                 <rect x="0" y="576" width="1440" height="4" fill="#7aa6e8"/>
-                <g class="monorail-glide gpu-anim">
+                <g class="monorail-glide">
                   <path d="M12,13 Q0,13 4,5 Q12,0 32,0 L238,0 Q258,0 266,5 Q270,13 258,13 Z" fill="#ffffff"/>
                   <rect x="24" y="4" width="222" height="3.5" rx="1.5" fill="#ff4d4f"/>
                   <g fill="#ffd166">
-                    <rect x="36" y="3" width="14" height="5" rx="2"/>
-                    <rect x="60" y="3" width="14" height="5" rx="2"/>
-                    <rect x="84" y="3" width="14" height="5" rx="2"/>
-                    <rect x="116" y="3" width="14" height="5" rx="2"/>
-                    <rect x="140" y="3" width="14" height="5" rx="2"/>
-                    <rect x="164" y="3" width="14" height="5" rx="2"/>
-                    <rect x="196" y="3" width="14" height="5" rx="2"/>
-                    <rect x="220" y="3" width="14" height="5" rx="2"/>
+                    <rect x="34" y="3" width="14" height="5" rx="2"/>
+                    <rect x="56" y="3" width="14" height="5" rx="2"/>
+                    <rect x="78" y="3" width="14" height="5" rx="2"/>
+                    <rect x="108" y="3" width="14" height="5" rx="2"/>
+                    <rect x="130" y="3" width="14" height="5" rx="2"/>
+                    <rect x="152" y="3" width="14" height="5" rx="2"/>
                   </g>
                 </g>
               </g>
@@ -1706,177 +2408,277 @@
               <!-- 護城河與噴泉 -->
               <path d="M470,618 Q720,602 970,618 L1015,655 L425,655 Z" fill="url(#lakeWater)" opacity="0.88"/>
               <g transform="translate(555, 622)">
-                <path class="fountain-jet gpu-anim" d="M-12,0 Q-6,-22 0,-28 Q6,-22 12,0 Z" fill="rgba(186, 230, 253, 0.72)"/>
+                <path class="fountain-jet" d="M-12,0 Q-6,-22 0,-28 Q6,-22 12,0 Z" fill="rgba(186, 230, 253, 0.72)"/>
               </g>
               <g transform="translate(885, 622)">
-                <path class="fountain-jet fountain-jet-2 gpu-anim" d="M-12,0 Q-6,-22 0,-28 Q6,-22 12,0 Z" fill="rgba(186, 230, 253, 0.72)"/>
+                <path class="fountain-jet fountain-jet-2" d="M-12,0 Q-6,-22 0,-28 Q6,-22 12,0 Z" fill="rgba(186, 230, 253, 0.72)"/>
               </g>
 
-              <!-- 中央主角：迪士尼奇幻城堡 -->
+              <!-- 中央奇幻城堡 -->
               <g transform="translate(720, 444)">
                 <rect x="-165" y="135" width="76" height="68" rx="3" fill="url(#castleStone)"/>
                 <rect x="89" y="135" width="76" height="68" rx="3" fill="url(#castleStone)"/>
-                <rect x="-156" y="92" width="22" height="44" fill="url(#castleStone)"/>
-                <polygon points="-160,92 -145,58 -130,92" fill="url(#castleRoof)"/>
-                <polygon class="flag-wave gpu-anim" points="-145,58 -132,62 -145,66" fill="#ffd166"/>
-                <rect x="134" y="92" width="22" height="44" fill="url(#castleStone)"/>
-                <polygon points="130,92 145,58 160,92" fill="url(#castleRoof)"/>
-                <polygon class="flag-wave gpu-anim" points="145,58 158,62 145,66" fill="#ffd166"/>
                 <rect x="-106" y="68" width="36" height="135" fill="url(#castleStone)"/>
-                <path d="M-110,68 Q-88,18 -66,68 Z" fill="url(#castleRoof)"/>
+                <polygon points="-110,68 -88,24 -66,68" fill="url(#castleRoof)"/>
+                <polygon class="flag-wave" points="-88,24 -73,28 -88,33" fill="#ff758f"/>
                 <rect x="70" y="68" width="36" height="135" fill="url(#castleStone)"/>
-                <path d="M66,68 Q88,18 110,68 Z" fill="url(#castleRoof)"/>
+                <polygon points="66,68 88,24 110,68" fill="url(#castleRoof)"/>
+                <polygon class="flag-wave" points="88,24 103,28 88,33" fill="#ff758f"/>
                 <rect x="-74" y="98" width="148" height="105" rx="4" fill="url(#castleStone)"/>
                 <rect x="-34" y="24" width="68" height="179" fill="url(#castleStone)"/>
-                <path d="M-42,24 Q-12,-14 0,-64 Q12,-14 42,24 Z" fill="url(#castleRoof)"/>
-                <line x1="0" y1="-64" x2="0" y2="-86" stroke="#ffd166" stroke-width="2.5"/>
-                <polygon class="flag-wave gpu-anim" points="0,-86 18,-81 0,-75" fill="#ffd166"/>
+                <polygon points="-40,24 0,-48 40,24" fill="url(#castleRoof)"/>
+                <line x1="0" y1="-48" x2="0" y2="-74" stroke="#ffd166" stroke-width="2.6"/>
+                <polygon class="flag-wave" points="0,-74 18,-69 0,-63" fill="#ffd166"/>
+                <circle cx="0" cy="-76" r="4.8" fill="#fff3b0" class="spire-light"/>
                 <path d="M-18,203 L-18,156 Q0,138 18,156 L18,203 Z" fill="#1e3561"/>
-                <path d="M-13,203 L-13,161 Q0,147 13,161 L13,203 Z" fill="#ffd166" opacity="0.4"/>
-                <circle cx="0" cy="64" r="11" fill="#234582" stroke="#ffd166" stroke-width="2.4"/>
-                <circle cx="0" cy="64" r="7" fill="#fff3b0"/>
+                <path d="M-13,203 L-13,161 Q0,147 13,161 L13,203 Z" fill="#ffd166" opacity="0.38"/>
+                <circle cx="0" cy="64" r="11" fill="#234582" stroke="#ffd166" stroke-width="2.5"/>
+                <circle cx="0" cy="64" r="7.5" fill="#fff3b0" class="spire-light"/>
               </g>
 
-              <!-- 前景草坡與小火車 -->
+              <!-- 前景草坡 -->
               <path d="M0,646 Q360,620 720,645 T1440,633 L1440,760 L0,760 Z" fill="url(#hillFront)"/>
 
-              <g class="trolley-ride gpu-anim">
+              <!-- 復古觀光小火車 -->
+              <g class="trolley-ride">
                 <rect x="0" y="-16" width="66" height="16" rx="4" fill="#c92a2a" stroke="#ffd166" stroke-width="1.2"/>
                 <rect x="-3" y="-19" width="72" height="4" rx="2" fill="#ffd166"/>
                 <circle cx="14" cy="2" r="4" fill="#182238" stroke="#ffd166" stroke-width="1.2"/>
                 <circle cx="52" cy="2" r="4" fill="#182238" stroke="#ffd166" stroke-width="1.2"/>
               </g>
 
-              <!-- ==================== 星際大戰經典角色群（間隔拉長、順序錯開、畫面清爽） ==================== -->
-              <g class="starwars-characters-layer">
-
-                <!-- 1. 尤達大師 (Yoda) — 尖耳、絕地長袍、拐杖 -->
-                <g class="sw-yoda-patrol gpu-anim">
-                  <g class="sw-bob gpu-anim" transform="scale(1.15)">
-                    <path d="M-10,0 L10,0 L7,-15 L-7,-15 Z" fill="url(#jediRobe)" stroke="#2c1a0e" stroke-width="0.9"/>
-                    <ellipse cx="0" cy="-21" rx="8" ry="6.5" fill="url(#yodaSkin)" stroke="#3f6212" stroke-width="0.9"/>
-                    <polygon points="-7,-21 -18,-24 -7,-18" fill="url(#yodaSkin)" stroke="#3f6212" stroke-width="0.8"/>
-                    <polygon points="7,-21 18,-24 7,-18" fill="url(#yodaSkin)" stroke="#3f6212" stroke-width="0.8"/>
-                    <line x1="10" y1="0" x2="13" y2="-24" stroke="#854d0e" stroke-width="1.6" stroke-linecap="round"/>
+              <!-- ==================== 角色群（迪士尼＆皮克斯 + 經典星際大戰角色，間隔與順序已拉長） ==================== -->
+              <g class="characters-layer">
+                <!-- 空中飛行組：彼得潘、小飛象、阿拉丁飛毯、巴斯光年、大白（皆拉長循環且避開 y=78/138 飛船航線） -->
+                <g class="peter-pan-flight">
+                  <g class="fly-bob fly-bob-2" transform="translate(0, 0) scale(1.48)">
+                    <path d="M-18,6 L-4,2.2 L-16,12" fill="none" stroke="#237032" stroke-width="3.4" stroke-linecap="round"/>
+                    <path d="M-9.5,0.2 L7,-4.2 L11.5,3 L6.5,4.2 L4.5,6.8 L1.2,4.4 L-1.8,6.8 L-5.8,5.4 Z" fill="#40c057" stroke="#1b5e20" stroke-width="0.85"/>
+                    <circle cx="9.2" cy="-6.2" r="4.5" fill="url(#skinWarm)"/>
+                    <polygon points="2.2,-9.2 20,-14.4 11.4,-6.1" fill="#2b8a3e"/>
+                    <path d="M6.2,-10.2 Q0.5,-17.2 -3.2,-19.5" fill="none" stroke="#fa5252" stroke-width="2.2" stroke-linecap="round"/>
                   </g>
                 </g>
 
-                <!-- 2. R2-D2 — 經典白藍機器人、圓頂、感測器 -->
-                <g class="sw-r2-patrol gpu-anim">
-                  <g class="sw-bob gpu-anim" transform="scale(1.12)">
-                    <rect x="-13" y="-4" width="6" height="4" rx="1" fill="#e2e8f0" stroke="#475569" stroke-width="0.8"/>
-                    <rect x="7" y="-4" width="6" height="4" rx="1" fill="#e2e8f0" stroke="#475569" stroke-width="0.8"/>
-                    <rect x="-10" y="-22" width="20" height="19" rx="2" fill="#f8fafc" stroke="#475569" stroke-width="0.9"/>
-                    <rect x="-7" y="-18" width="5" height="6" rx="1" fill="#2563eb"/>
-                    <rect x="2" y="-18" width="5" height="6" rx="1" fill="#2563eb"/>
-                    <path d="M-10,-22 A10,9 0 0,1 10,-22 Z" fill="#2563eb" stroke="#1e3a8a" stroke-width="0.9"/>
-                    <rect x="-2.5" y="-28" width="5" height="4" rx="1" fill="#e2e8f0"/>
-                    <circle cx="0" cy="-26" r="1.4" fill="#ef4444"/>
+                <g class="dumbo-flight">
+                  <g class="fly-bob fly-bob-1" transform="scale(1.42)">
+                    <ellipse cx="0" cy="0" rx="16" ry="11" fill="#91a7ff" stroke="#4c6ef5" stroke-width="1"/>
+                    <path class="dumbo-ear" d="M-4,-4 Q-22,-18 -26,2 Q-20,16 -4,6 Z" fill="#748ffc"/>
+                    <path class="dumbo-ear" d="M4,-4 Q22,-18 26,2 Q20,16 4,6 Z" fill="#748ffc"/>
+                    <polygon points="-4,-11 4,-11 0,-18" fill="#ffd166"/>
                   </g>
                 </g>
 
-                <!-- 3. C-3PO — 金屬金色人型機器人 -->
-                <g class="sw-3po-patrol gpu-anim">
-                  <g class="sw-bob gpu-anim" transform="scale(1.15)">
-                    <line x1="-5" y1="0" x2="-5" y2="-16" stroke="url(#c3poGold)" stroke-width="3.6" stroke-linecap="round"/>
-                    <line x1="5" y1="0" x2="5" y2="-16" stroke="url(#c3poGold)" stroke-width="3.6" stroke-linecap="round"/>
-                    <rect x="-8" y="-34" width="16" height="19" rx="4" fill="url(#c3poGold)" stroke="#854d0e" stroke-width="0.9"/>
-                    <circle cx="0" cy="-25" r="2.2" fill="#fef08a" stroke="#854d0e" stroke-width="0.7"/>
-                    <line x1="-8" y1="-31" x2="-13" y2="-19" stroke="url(#c3poGold)" stroke-width="2.6" stroke-linecap="round"/>
-                    <line x1="8" y1="-31" x2="13" y2="-19" stroke="url(#c3poGold)" stroke-width="2.6" stroke-linecap="round"/>
-                    <rect x="-6.5" y="-45" width="13" height="11" rx="4.5" fill="url(#c3poGold)" stroke="#854d0e" stroke-width="0.9"/>
-                    <circle cx="-2.5" cy="-40" r="1.5" fill="#fef9c3"/>
-                    <circle cx="2.5" cy="-40" r="1.5" fill="#fef9c3"/>
+                <g class="aladdin-carpet">
+                  <g class="fly-bob fly-bob-3" transform="scale(1.38)">
+                    <path d="M-28,6 Q0,12 28,6 L24,14 Q0,19 -24,14 Z" fill="#9c36b5" stroke="#ffd166" stroke-width="1.2"/>
+                    <rect x="-6" y="-8" width="12" height="15" rx="3" fill="#fff5f5"/>
+                    <circle cx="0" cy="-13" r="4.8" fill="url(#skinWarm)"/>
+                    <path d="M-5,-15 L3,-23 L6,-15 Z" fill="#fa5252"/>
                   </g>
                 </g>
 
-                <!-- 4. BB-8 — 滾動球體＋橘白條紋＋磁力圓頂 -->
-                <g class="sw-bb8-patrol gpu-anim">
-                  <g transform="scale(1.12)">
-                    <g class="bb8-roll gpu-anim">
-                      <circle cx="0" cy="-11" r="11" fill="#f8fafc" stroke="#475569" stroke-width="1"/>
-                      <circle cx="0" cy="-11" r="5.5" fill="none" stroke="url(#bb8Orange)" stroke-width="2.4"/>
-                      <line x1="-10" y1="-11" x2="10" y2="-11" stroke="url(#bb8Orange)" stroke-width="2.2"/>
+                <g class="buzz-soar">
+                  <g class="fly-bob fly-bob-2" transform="scale(1.36)">
+                    <rect x="-8" y="-10" width="16" height="22" rx="4" fill="#ffffff" stroke="#37b24d" stroke-width="1.2"/>
+                    <polygon points="-8,-4 -24,-9 -20,2 -8,3" fill="#74c0fc" stroke="#228be6" stroke-width="0.9"/>
+                    <polygon points="8,-4 24,-9 20,2 8,3" fill="#74c0fc" stroke="#228be6" stroke-width="0.9"/>
+                    <circle cx="0" cy="-15" r="5" fill="#e5dbff" stroke="#7950f2" stroke-width="1"/>
+                  </g>
+                </g>
+
+                <g class="baymax-fly">
+                  <g class="fly-bob fly-bob-1" transform="scale(1.4)">
+                    <ellipse cx="0" cy="4" rx="15" ry="19" fill="url(#baymaxBody)" stroke="#adb5bd" stroke-width="1"/>
+                    <circle cx="0" cy="-18" r="9.5" fill="url(#baymaxBody)" stroke="#adb5bd" stroke-width="1"/>
+                    <polygon points="-14,0 -27,-8 -24,4 -13,7" fill="#fa5252"/>
+                    <polygon points="14,0 27,-8 24,4 13,7" fill="#fa5252"/>
+                  </g>
+                </g>
+
+                <!-- 地面迪士尼經典隊伍（拉長循環） -->
+                <g class="parade-group-1">
+                  <g class="char-bob" transform="translate(0, 0) scale(1.45)">
+                    <ellipse cx="0" cy="4" rx="8.5" ry="10.5" fill="url(#mickeyRed)"/>
+                    <circle cx="0" cy="-10" r="8" fill="url(#charBlack)"/>
+                    <circle cx="-7.5" cy="-17" r="4.6" fill="url(#charBlack)"/>
+                    <circle cx="7.5" cy="-17" r="4.6" fill="url(#charBlack)"/>
+                  </g>
+                  <g class="char-bob char-bob-2" transform="translate(155, 2) scale(1.42)">
+                    <ellipse cx="0" cy="5" rx="9" ry="10" fill="url(#poohGold)"/>
+                    <rect x="-8.5" y="1" width="17" height="9" rx="3" fill="#fa5252"/>
+                    <circle cx="0" cy="-9" r="7.5" fill="url(#poohGold)"/>
+                    <circle cx="-7" cy="-15.5" r="3.4" fill="url(#poohGold)"/>
+                    <circle cx="7" cy="-15.5" r="3.4" fill="url(#poohGold)"/>
+                  </g>
+                  <g class="tigger-bounce" transform="translate(315, 2) scale(1.42)">
+                    <ellipse cx="0" cy="5" rx="8.5" ry="10" fill="#ff922b"/>
+                    <circle cx="0" cy="-9" r="7.5" fill="#ff922b"/>
+                    <path d="M-5,-11 L5,-11 M-4,-7 L4,-7" stroke="#212529" stroke-width="1.5"/>
+                  </g>
+                </g>
+
+                <g class="parade-group-2">
+                  <g class="char-bob" transform="translate(0, 0) scale(1.45)">
+                    <polygon points="-9,14 9,14 5,-6 -5,-6" fill="url(#elsaDress)"/>
+                    <circle cx="0" cy="-11" r="5.5" fill="url(#skinWarm)"/>
+                    <path d="M-5,-14 Q0,-21 5,-14 L7,8 L-7,8 Z" fill="#fff3bf"/>
+                  </g>
+                  <g class="char-bob char-bob-3" transform="translate(165, 2) scale(1.4)">
+                    <ellipse cx="0" cy="4" rx="9" ry="10" fill="#339af0"/>
+                    <circle cx="0" cy="-9" r="7.8" fill="#339af0"/>
+                    <ellipse cx="-10.5" cy="-11" rx="3.2" ry="6.5" transform="rotate(-18 -10.5 -11)" fill="#1c7ed6"/>
+                    <ellipse cx="10.5" cy="-11" rx="3.2" ry="6.5" transform="rotate(18 10.5 -11)" fill="#1c7ed6"/>
+                  </g>
+                </g>
+
+                <!-- ==================== 新增：經典星際大戰角色隊伍（尤達大師、路克天行者、歐比王、莉亞公主、C-3PO、R2-D2、BB-8） ==================== -->
+                <!-- 星際大戰隊伍 A（由左向右緩行，間隔拉長） -->
+                <g class="sw-ground-squad-right">
+                  <!-- 1. 尤達大師 Master Yoda（矮小綠膚、長尖耳、絕地長袍、綠色光劍） -->
+                  <g class="char-bob" transform="translate(0, 4) scale(1.25)">
+                    <path d="M-8,12 L8,12 L5,-2 L-5,-2 Z" fill="url(#jediRobe)" stroke="#4a3525" stroke-width="0.7"/>
+                    <ellipse cx="0" cy="-7" rx="6.8" ry="5.5" fill="url(#yodaGreen)"/>
+                    <polygon points="-6.5,-7 -16.5,-10 -6,-4" fill="url(#yodaGreen)"/>
+                    <polygon points="6.5,-7 16.5,-10 6,-4" fill="url(#yodaGreen)"/>
+                    <!-- 綠色光劍 -->
+                    <line x1="8" y1="3" x2="11" y2="-3" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"/>
+                    <line x1="11" y1="-3" x2="21" y2="-16" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round" class="lightsaber-glow"/>
+                  </g>
+
+                  <!-- 2. 路克天行者 Luke Skywalker（絕地黑裝＋藍色光劍） -->
+                  <g class="char-bob char-bob-2" transform="translate(195, 0) scale(1.46)">
+                    <path d="M-5.5,14 L5.5,14 L4.5,-5 L-4.5,-5 Z" fill="#1e293b" stroke="#0f172a" stroke-width="0.7"/>
+                    <line x1="-4.5" y1="3" x2="4.5" y2="3" stroke="#b45309" stroke-width="1.6"/>
+                    <circle cx="0" cy="-10" r="5" fill="url(#skinWarm)"/>
+                    <path d="M-5,-12 Q0,-17 5,-12 L4,-9 L-4,-9 Z" fill="#eab308"/>
+                    <!-- 藍色光劍 -->
+                    <line x1="6.5" y1="1" x2="9.5" y2="-4" stroke="#cbd5e1" stroke-width="2.2" stroke-linecap="round"/>
+                    <line x1="9.5" y1="-4" x2="23" y2="-21" stroke="#38bdf8" stroke-width="2.6" stroke-linecap="round" class="lightsaber-glow"/>
+                  </g>
+
+                  <!-- 3. 歐比王 Obi-Wan Kenobi（絕地棕色斗篷與長袍＋藍色光劍） -->
+                  <g class="char-bob char-bob-3" transform="translate(395, 0) scale(1.48)">
+                    <path d="M-7.5,14 L7.5,14 L5.5,-7 L-5.5,-7 Z" fill="url(#jediRobe)" stroke="#5c4033" stroke-width="0.7"/>
+                    <circle cx="0" cy="-11" r="5.2" fill="url(#skinWarm)"/>
+                    <path d="M-5.2,-13 Q0,-18 5.2,-13 L4.5,-9 L-4.5,-9 Z" fill="#92400e"/>
+                    <path d="M-3.5,-8 Q0,-4 3.5,-8" fill="#92400e"/>
+                    <line x1="7" y1="1" x2="10" y2="-4" stroke="#cbd5e1" stroke-width="2.2" stroke-linecap="round"/>
+                    <line x1="10" y1="-4" x2="22" y2="-20" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round" class="lightsaber-glow"/>
+                  </g>
+
+                  <!-- 4. R2-D2（白藍圓柱機身＋銀色圓頂＋紅藍指示燈） -->
+                  <g class="char-idle-bob" transform="translate(585, 2) scale(1.38)">
+                    <rect x="-7.5" y="10" width="3.5" height="5" rx="1" fill="#e2e8f0" stroke="#475569" stroke-width="0.6"/>
+                    <rect x="4" y="10" width="3.5" height="5" rx="1" fill="#e2e8f0" stroke="#475569" stroke-width="0.6"/>
+                    <rect x="-6.5" y="-3" width="13" height="14" rx="2" fill="#f8fafc" stroke="#475569" stroke-width="0.8"/>
+                    <rect x="-6.5" y="2" width="13" height="5" fill="#2563eb"/>
+                    <path d="M-6.5,-3 A6.5,6.5 0 0,1 6.5,-3 Z" fill="#e2e8f0" stroke="#475569" stroke-width="0.8"/>
+                    <rect x="-2.2" y="-7.5" width="4.4" height="3" rx="1" fill="#1d4ed8"/>
+                    <circle cx="2.5" cy="-6" r="1.1" fill="#ef4444"/>
+                  </g>
+                </g>
+
+                <!-- 星際大戰隊伍 B（由右向左緩行，間隔拉長） -->
+                <g class="sw-ground-squad-left">
+                  <!-- 5. 莉亞公主 Princess Leia（白色長禮服＋經典雙側髮髻） -->
+                  <g class="char-bob" transform="translate(0, 0) scale(1.45)">
+                    <polygon points="-7.5,14 7.5,14 4.5,-6 -4.5,-6" fill="url(#leiaGown)" stroke="#94a3b8" stroke-width="0.7"/>
+                    <line x1="-4.5" y1="2" x2="4.5" y2="2" stroke="#cbd5e1" stroke-width="2.2"/>
+                    <circle cx="0" cy="-10.5" r="4.8" fill="url(#skinWarm)"/>
+                    <circle cx="-6.8" cy="-10.5" r="3.4" fill="#3b2314"/>
+                    <circle cx="6.8" cy="-10.5" r="3.4" fill="#3b2314"/>
+                  </g>
+
+                  <!-- 6. C-3PO（閃亮金色人形機器人＋感測雙眼） -->
+                  <g class="char-bob char-bob-2" transform="translate(205, 0) scale(1.48)">
+                    <line x1="-2.2" y1="4" x2="-2.2" y2="14" stroke="url(#threepioGold)" stroke-width="2.6" stroke-linecap="round"/>
+                    <line x1="2.2" y1="4" x2="2.2" y2="14" stroke="url(#threepioGold)" stroke-width="2.6" stroke-linecap="round"/>
+                    <rect x="-4.8" y="-6" width="9.6" height="11" rx="2.5" fill="url(#threepioGold)" stroke="#92400e" stroke-width="0.7"/>
+                    <circle cx="0" cy="-11.5" r="4.6" fill="url(#threepioGold)" stroke="#92400e" stroke-width="0.7"/>
+                    <circle cx="-1.7" cy="-12" r="1.1" fill="#fef08a"/>
+                    <circle cx="1.7" cy="-12" r="1.1" fill="#fef08a"/>
+                  </g>
+
+                  <!-- 7. BB-8（滾動橘白球體＋磁力小圓頭＋天線） -->
+                  <g class="char-bob char-bob-3" transform="translate(395, 4) scale(1.36)">
+                    <g class="droid-roll">
+                      <circle cx="0" cy="6" r="8.5" fill="#f8fafc" stroke="#475569" stroke-width="0.8"/>
+                      <circle cx="0" cy="6" r="4.2" fill="url(#bb8Orange)"/>
+                      <path d="M-8,3 A8.5,8.5 0 0,1 8,3" fill="none" stroke="url(#bb8Orange)" stroke-width="2.4"/>
+                      <path d="M-7,10 A8.5,8.5 0 0,0 7,10" fill="none" stroke="#334155" stroke-width="1.8"/>
                     </g>
-                    <g class="sw-bob gpu-anim">
-                      <path d="M-7,-21 A7,5.5 0 0,1 7,-21 Z" fill="#f8fafc" stroke="#475569" stroke-width="0.9"/>
-                      <circle cx="2" cy="-23" r="1.6" fill="#1e293b"/>
-                      <line x1="0" y1="-26.5" x2="0" y2="-31" stroke="#cbd5e1" stroke-width="1.2"/>
-                    </g>
+                    <path d="M-5,-2.5 A5,5 0 0,1 5,-2.5 Z" fill="#f8fafc" stroke="#475569" stroke-width="0.8"/>
+                    <circle cx="1.5" cy="-4.8" r="1.2" fill="#1e293b"/>
+                    <line x1="-1.5" y1="-7.5" x2="-3.5" y2="-12" stroke="#cbd5e1" stroke-width="1"/>
                   </g>
                 </g>
-
-                <!-- 5. 歐比王 (Obi-Wan Kenobi) — 絕地長袍與藍色光劍 -->
-                <g class="sw-obiwan-patrol gpu-anim">
-                  <g class="sw-bob gpu-anim" transform="scale(-1.15, 1.15)">
-                    <path d="M-9,0 L9,0 L7,-32 L-7,-32 Z" fill="url(#jediRobe)" stroke="#2c1a0e" stroke-width="0.9"/>
-                    <circle cx="0" cy="-39" r="6.2" fill="#fde68a" stroke="#78350f" stroke-width="0.8"/>
-                    <path d="M-6,-41 Q0,-47 6,-41 L6,-37 L-6,-37 Z" fill="#92400e"/>
-                    <line x1="7" y1="-24" x2="16" y2="-20" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round"/>
-                    <line class="saber-glow" x1="16" y1="-20" x2="34" y2="-28" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round"/>
-                  </g>
-                </g>
-
-                <!-- 6. 路克天行者 (Luke Skywalker) — 深色絕地服與綠色光劍 -->
-                <g class="sw-luke-patrol gpu-anim">
-                  <g class="sw-bob gpu-anim" transform="scale(-1.15, 1.15)">
-                    <line x1="-4.5" y1="0" x2="-4.5" y2="-15" stroke="url(#lukeSuit)" stroke-width="3.6" stroke-linecap="round"/>
-                    <line x1="4.5" y1="0" x2="4.5" y2="-15" stroke="url(#lukeSuit)" stroke-width="3.6" stroke-linecap="round"/>
-                    <rect x="-7.5" y="-32" width="15" height="18" rx="3" fill="url(#lukeSuit)" stroke="#020617" stroke-width="0.9"/>
-                    <circle cx="0" cy="-39" r="6" fill="#fde68a" stroke="#78350f" stroke-width="0.8"/>
-                    <path d="M-6,-41 Q0,-46 6,-41 Z" fill="#eab308"/>
-                    <line x1="7" y1="-24" x2="15" y2="-21" stroke="#cbd5e1" stroke-width="2.3" stroke-linecap="round"/>
-                    <line class="saber-glow" x1="15" y1="-21" x2="33" y2="-29" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round"/>
-                  </g>
-                </g>
-
-                <!-- 7. 莉亞公主 (Princess Leia) — 白色長袍與經典雙髮髻 -->
-                <g class="sw-leia-patrol gpu-anim">
-                  <g class="sw-bob gpu-anim" transform="scale(-1.15, 1.15)">
-                    <polygon points="-10,0 10,0 7,-31 -7,-31" fill="url(#leiaGown)" stroke="#94a3b8" stroke-width="0.9"/>
-                    <circle cx="0" cy="-38" r="5.8" fill="#fde68a" stroke="#78350f" stroke-width="0.8"/>
-                    <circle cx="-7.5" cy="-38" r="3.4" fill="#334155"/>
-                    <circle cx="7.5" cy="-38" r="3.4" fill="#334155"/>
-                  </g>
-                </g>
-
               </g>
             </svg>
           </div>
 
-          <div class="vacation-content">
-            <div class="vac-badge" id="vacBadge">✦ MAGICAL COUNTDOWN · 奇幻旅程倒數 ✦</div>
-            <h2 class="vac-title" id="vacTitle">Walt Disney World Trip</h2>
-            <p class="vac-sub" id="vacSub">倒數計時中 · 準備迎接奇幻假期</p>
+          <div class="vacation-content" id="vacationContent">
+            <div class="vac-top-row">
+              <div class="vac-badge" id="vacBadge">✦ MAGICAL COUNTDOWN ✦</div>
+            </div>
+            <h2 class="vac-title" id="vacTitle">Disney Vacation Countdown</h2>
+            <p class="vac-sub" id="vacSub">目標出發日：2027-05-15 · 倒數計時中</p>
 
             <div class="countdown-boxes" id="countdownBoxes">
-              <div class="cd-unit-box"><div class="cd-num" id="cdDays">00</div><div class="cd-lbl">DAYS</div></div>
-              <div class="cd-unit-box"><div class="cd-num" id="cdHours">00</div><div class="cd-lbl">HOURS</div></div>
-              <div class="cd-unit-box"><div class="cd-num" id="cdMins">00</div><div class="cd-lbl">MINS</div></div>
-              <div class="cd-unit-box"><div class="cd-num" id="cdSecs">00</div><div class="cd-lbl">SECS</div></div>
+              <div class="cd-unit-box">
+                <div class="cd-num" id="cdDays">00</div>
+                <div class="cd-lbl">DAYS</div>
+                <div class="cd-linear-track"><div class="cd-linear-bar" id="cdDaysBar"></div></div>
+              </div>
+              <div class="cd-unit-box">
+                <div class="cd-num" id="cdHours">00</div>
+                <div class="cd-lbl">HOURS</div>
+                <div class="cd-linear-track"><div class="cd-linear-bar" id="cdHoursBar"></div></div>
+              </div>
+              <div class="cd-unit-box">
+                <div class="cd-num" id="cdMinutes">00</div>
+                <div class="cd-lbl">MINUTES</div>
+                <div class="cd-linear-track"><div class="cd-linear-bar" id="cdMinutesBar"></div></div>
+              </div>
+              <div class="cd-unit-box">
+                <div class="cd-num" id="cdSeconds">00</div>
+                <div class="cd-lbl">SECONDS</div>
+                <div class="cd-linear-track"><div class="cd-linear-bar sec-sweep" id="cdSecondsBar"></div></div>
+              </div>
             </div>
 
             <div class="vac-quick-pills" id="vacQuickPills">
-              <button type="button" class="vac-chip active" data-preset="wdw">🏰 奧蘭多迪士尼</button>
-              <button type="button" class="vac-chip" data-preset="dlr">🎡 加州迪士尼</button>
-              <button type="button" class="vac-chip" data-preset="tdr">🇯🇵 東京迪士尼</button>
-              <button type="button" class="vac-chip" data-preset="dcl">🚢 迪士尼郵輪</button>
+              <button type="button" class="vac-chip active" data-preset="default">預設旅程</button>
+              <button type="button" class="vac-chip" data-preset="plus30">+30 天</button>
+              <button type="button" class="vac-chip" data-preset="plus100">+100 天</button>
+              <button type="button" class="vac-chip" data-preset="nextYear">明年暑假</button>
+              <button type="button" class="vac-chip vac-chip-surprise" id="btnPreviewSurprise">✦ 預覽出發驚喜</button>
             </div>
 
             <div class="trip-progress-wrap" id="tripProgressWrap">
               <div class="trip-progress-head">
-                <span>🎒 行前魔法籌備進度</span>
-                <span id="tripProgressPercent">68%</span>
+                <span>🎒 旅程籌備進度</span>
+                <span id="tripProgressPct">68%</span>
               </div>
               <div class="trip-bar-track">
-                <div class="trip-bar-fill" id="tripProgressFill"></div>
+                <div class="trip-bar-fill" id="tripProgressBar"></div>
               </div>
               <div class="checklist-row" id="checklistRow">
-                <button type="button" class="check-pill done" data-check="0">✓ 機票與飯店</button>
-                <button type="button" class="check-pill done" data-check="1">✓ 園區門票</button>
-                <button type="button" class="check-pill" data-check="2">○ 餐廳與 Lightning Lane</button>
-                <button type="button" class="check-pill" data-check="3">○ 行李與魔法耳</button>
+                <button type="button" class="check-pill done" data-check="0">✓ 機票與住宿</button>
+                <button type="button" class="check-pill done" data-check="1">✓ 門票與預約</button>
+                <button type="button" class="check-pill" data-check="2">○ 迪士尼＆星戰服飾</button>
+                <button type="button" class="check-pill" data-check="3">○ 行動電源與耳機</button>
               </div>
+            </div>
+          </div>
+
+          <div class="surprise-overlay" id="surpriseOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+            <canvas id="svCanvas"></canvas>
+            <div class="sv-center">
+              <div class="sv-eyebrow">THE WAIT IS OVER</div>
+              <h3 class="sv-title">Surprise Vacation Begins!</h3>
+              <p class="sv-sub" id="svSub">願原力與魔法與你們同在，旅程正式啟航！</p>
+              <button type="button" class="sv-btn" id="svCloseBtn">進入魔法世界 ✦</button>
             </div>
           </div>
         </div>
@@ -1886,9 +2688,10 @@
       <section class="page-view" id="page-vip">
         <div class="vip-stage">
           <div class="vip-card">
-            <h2 style="color:var(--gold);margin-top:0;">✨ VIP MAGIC LOUNGE</h2>
-            <p style="color:#e6ddff;line-height:1.7;">
-              歡迎來到專屬家庭貴賓室頻道。您可以在設定頁面自由更換家庭名稱、倒數目標日期與各頻道直播連結。
+            <div class="vac-badge" style="margin-bottom:14px;display:inline-block;">✦ FAMILY VIP LOUNGE ✦</div>
+            <h2 style="margin:0 0 12px;font-size:1.8rem;color:var(--gold);">尊榮家庭貴賓室</h2>
+            <p style="margin:0;color:#e6dcff;line-height:1.7;">
+              歡迎來到專屬家庭待機頻道！可隨時切換上方或下方頻道，查看即時排隊時間、煙火直播與出發倒數計時。
             </p>
           </div>
         </div>
@@ -1899,86 +2702,59 @@
         <div class="settings-stage">
           <div class="settings-wrap">
             <div class="s-box">
-              <h3>🏠 家庭與倒數設定</h3>
+              <h3>🏠 家庭與度假區設定</h3>
               <div class="s-field">
-                <label for="inputWelcomeLabel">上方歡迎標籤</label>
-                <input type="text" id="inputWelcomeLabel" value="WELCOME" />
+                <label for="inpWelcomeLabel">上方歡迎標籤</label>
+                <input type="text" id="inpWelcomeLabel" value="WELCOME" />
               </div>
               <div class="s-field">
-                <label for="inputFamilyName">家庭名稱</label>
-                <input type="text" id="inputFamilyName" value="Smith Family" />
+                <label for="inpFamilyName">家庭名稱</label>
+                <input type="text" id="inpFamilyName" value="Smith Family" />
               </div>
               <div class="s-field">
-                <label for="inputVacTitle">假期倒數標題</label>
-                <input type="text" id="inputVacTitle" value="Walt Disney World Trip" />
-              </div>
-              <div class="s-field">
-                <label for="inputVacDate">目標日期與時間</label>
-                <input type="datetime-local" id="inputVacDate" />
+                <label for="inpTargetDate">度假出發日期時間</label>
+                <input type="datetime-local" id="inpTargetDate" value="2027-05-15T09:00" />
               </div>
             </div>
 
             <div class="s-box">
-              <h3>🎬 開場動畫設定</h3>
-              <p style="margin:0;color:#b8c4d9;font-size:0.86rem;line-height:1.6;">
-                修正城堡尖塔與圓頂輪廓，並採用硬體加速維持 60FPS 流暢播放。
-              </p>
+              <h3>📺 直播頻道與開場動畫</h3>
+              <div class="s-field">
+                <label for="inpResortYtUrl">主待機頻道 YouTube 網址或影片 ID</label>
+                <input type="text" id="inpResortYtUrl" placeholder="例如 https://www.youtube.com/watch?v=..." />
+              </div>
+              <div class="s-field">
+                <label for="inpTerraceYt0">Terrace 頻道 1 網址或影片 ID</label>
+                <input type="text" id="inpTerraceYt0" placeholder="例如 https://www.youtube.com/watch?v=..." />
+              </div>
               <div class="intro-row">
                 <button type="button" class="btn-intro" id="btnReplayIntro">▶ 重播開場動畫</button>
                 <label class="intro-check">
                   <input type="checkbox" id="chkAlwaysIntro" />
-                  每次開啟都播放開場動畫
+                  每次開啟皆播放開場動畫
                 </label>
               </div>
             </div>
 
-            <div class="s-box">
-              <h3>📺 RESORT TV 主頻道連結</h3>
-              <div class="s-field">
-                <label for="inputResortYt">YouTube 直播網址或影片 ID</label>
-                <input type="text" id="inputResortYt" placeholder="例如 https://www.youtube.com/watch?v=..." />
-              </div>
-            </div>
-
-            <div class="s-box">
-              <h3>🎆 TERRACE 4 個直播頻道</h3>
-              <div class="s-field">
-                <label for="inputTerrace0">直播頻道 1</label>
-                <input type="text" id="inputTerrace0" />
-              </div>
-              <div class="s-field">
-                <label for="inputTerrace1">直播頻道 2</label>
-                <input type="text" id="inputTerrace1" />
-              </div>
-              <div class="s-field">
-                <label for="inputTerrace2">直播頻道 3</label>
-                <input type="text" id="inputTerrace2" />
-              </div>
-              <div class="s-field">
-                <label for="inputTerrace3">直播頻道 4</label>
-                <input type="text" id="inputTerrace3" />
-              </div>
-            </div>
-
             <div class="s-actions">
-              <button type="button" class="btn-save" id="btnSaveSettings">💾 儲存設定</button>
-              <button type="button" class="btn-reset" id="btnResetSettings">↺ 恢復預設值</button>
-              <span id="saveStatusMsg" style="color:#8ef08e;font-size:0.88rem;font-weight:700;"></span>
+              <button type="button" class="btn-save" id="btnSaveSettings">儲存設定</button>
+              <button type="button" class="btn-reset" id="btnResetSettings">恢復預設</button>
+              <span id="saveFeedback" style="color:#8ef08e;font-size:0.88rem;font-weight:700;"></span>
             </div>
           </div>
         </div>
       </section>
     </main>
 
-    <!-- ========== 3. 底部導覽列 ========== -->
+    <!-- ========== 3. 最下方膠囊導覽列 ========== -->
     <nav class="bottom-bar" aria-label="頻道導覽">
       <span class="bar-orn bar-orn-bottom" aria-hidden="true"></span>
       <div class="nav-left-icons">
-        <button type="button" class="icon-btn" id="btnSettings" title="設定" aria-label="設定">
-          <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7.03 7.03 0 0 0-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.48.48 0 0 0-.48.41l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.26.41.48.41h3.84c.24 0 .44-.17.48-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 15.6 12 3.6 3.6 0 0 1 12 15.6z"/></svg>
-        </button>
-        <button type="button" class="icon-btn" id="btnFullscreen" title="全螢幕" aria-label="全螢幕">
+        <button type="button" class="icon-btn" id="btnFullscreen" title="全螢幕切換" aria-label="全螢幕切換">
           <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
+        <button type="button" class="icon-btn" id="btnSettings" title="設定" aria-label="設定">
+          <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>
         </button>
       </div>
 
@@ -1994,67 +2770,40 @@
 
   <script>
     (function () {
-      const STORAGE_KEY = "disney_resort_tv_v24_sw";
-
-      const DEFAULT_CONFIG = {
+      const STORAGE_KEY = "disney_resort_tv_v24";
+      const DEFAULT_STATE = {
         welcomeLabel: "WELCOME",
         familyName: "Smith Family",
-        vacTitle: "Walt Disney World Trip",
-        vacDate: "2027-05-15T09:00",
-        resortYt: "https://www.youtube.com/watch?v=5qap5aO4i9A",
-        terraceStreams: [
-          "https://www.youtube.com/watch?v=jfKfPfyJRdk",
-          "https://www.youtube.com/watch?v=4xDzrJKXOOY",
-          "https://www.youtube.com/watch?v=5qap5aO4i9A",
-          "https://www.youtube.com/watch?v=rUxyKA_-grg"
-        ],
-        alwaysIntro: false,
-        checks: [true, true, false, false]
+        targetDate: "2027-05-15T09:00",
+        resortYtId: "",
+        terraceYtIds: ["", "", "", ""],
+        checklist: [true, true, false, false]
       };
 
-      function loadConfig() {
+      function loadState() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return Object.assign({}, DEFAULT_CONFIG, { checks: [...DEFAULT_CONFIG.checks] });
-          const parsed = JSON.parse(raw);
-          return Object.assign({}, DEFAULT_CONFIG, parsed, {
-            terraceStreams: Array.isArray(parsed.terraceStreams) && parsed.terraceStreams.length === 4
-              ? parsed.terraceStreams
-              : [...DEFAULT_CONFIG.terraceStreams],
-            checks: Array.isArray(parsed.checks) && parsed.checks.length === 4
-              ? parsed.checks
-              : [...DEFAULT_CONFIG.checks]
-          });
+          if (!raw) return structuredClone(DEFAULT_STATE);
+          return Object.assign(structuredClone(DEFAULT_STATE), JSON.parse(raw));
         } catch (e) {
-          return Object.assign({}, DEFAULT_CONFIG, { checks: [...DEFAULT_CONFIG.checks] });
+          return structuredClone(DEFAULT_STATE);
         }
       }
 
-      let cfg = loadConfig();
-
-      function saveConfig() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
-        } catch (e) {}
+      function saveState(s) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {}
       }
 
-      function extractYtId(urlOrId) {
-        if (!urlOrId) return "";
-        const s = String(urlOrId).trim();
-        if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
-        const m = s.match(/(?:v=|\/embed\/|youtu\.be\/|\/live\/)([a-zA-Z0-9_-]{11})/);
-        return m ? m[1] : "";
+      let state = loadState();
+
+      function extractYtId(val) {
+        if (!val) return "";
+        const m = String(val).match(/(?:v=|\/embed\/|youtu\.be\/|\/live\/)([A-Za-z0-9_-]{11})/);
+        if (m) return m[1];
+        return /^[A-Za-z0-9_-]{11}$/.test(String(val).trim()) ? String(val).trim() : "";
       }
 
-      function buildYtEmbed(urlOrId) {
-        const vid = extractYtId(urlOrId);
-        if (!vid) {
-          return `<div style="color:#cfe0ff;text-align:center;padding:24px;">尚未設定有效的 YouTube 影片連結，請至左下角「設定」輸入網址。</div>`;
-        }
-        return `<iframe src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-      }
-
-      // 時鐘更新
+      /* ================= 時鐘更新 ================= */
       const topTimeEl = document.getElementById("topTime");
       const topDateEl = document.getElementById("topDate");
       function updateClock() {
@@ -2065,23 +2814,21 @@
       updateClock();
       setInterval(updateClock, 15000);
 
-      // 分頁切換
-      const pageViews = document.querySelectorAll(".page-view");
-      const pillBtns = document.querySelectorAll("#bottomNavPills .pill-btn");
+      /* ================= 頁面切換 ================= */
+      const pages = document.querySelectorAll(".page-view");
+      const pillBtns = document.querySelectorAll(".pill-btn");
       const btnSettings = document.getElementById("btnSettings");
 
-      function showPage(pageName) {
-        pageViews.forEach(v => v.classList.toggle("active", v.id === "page-" + pageName));
+      function switchPage(pageName) {
+        pages.forEach(p => p.classList.toggle("active", p.id === "page-" + pageName));
         pillBtns.forEach(b => b.classList.toggle("active", b.dataset.page === pageName));
         btnSettings.classList.toggle("active", pageName === "settings");
-        if (pageName === "terrace") renderTerrace();
-        if (pageName === "parks") renderRidesGrid();
       }
 
-      pillBtns.forEach(btn => btn.addEventListener("click", () => showPage(btn.dataset.page)));
-      btnSettings.addEventListener("click", () => showPage("settings"));
+      pillBtns.forEach(btn => btn.addEventListener("click", () => switchPage(btn.dataset.page)));
+      btnSettings.addEventListener("click", () => switchPage("settings"));
 
-      // 全螢幕
+      /* ================= 全螢幕切換 ================= */
       const btnFullscreen = document.getElementById("btnFullscreen");
       btnFullscreen.addEventListener("click", () => {
         const shell = document.querySelector(".tv-shell");
@@ -2094,337 +2841,424 @@
         }
       });
 
-      // RESORT 與 TERRACE
+      /* ================= RESORT & TERRACE 頻道渲染 ================= */
       const resortContainer = document.getElementById("resortStreamContainer");
       const terraceContainer = document.getElementById("terraceVideoContainer");
-      let currentTerraceIdx = 0;
+      let activeTerraceIdx = 0;
 
-      function renderResort() {
-        resortContainer.innerHTML = buildYtEmbed(cfg.resortYt) +
-          `<button type="button" class="resort-overlay-pill" onclick="window.__switchToVacation && window.__switchToVacation()"><span class="live-dot"></span><span>🏰 奇幻城堡＆星戰全景</span></button>`;
+      function renderResortChannel() {
+        if (state.resortYtId) {
+          resortContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${state.resortYtId}?autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        } else {
+          resortContainer.innerHTML = `
+            <div class="fallback-resort-bg">
+              <div class="fallback-header-row">
+                <h2 class="park-hours-headline">✨ Resort TV Channel · 度假區迎賓頻道</h2>
+                <div class="resort-overlay-pill" onclick="document.querySelector('[data-page=vacation]').click()">
+                  <span class="live-dot"></span> 前往出發倒數與全景
+                </div>
+              </div>
+              <div class="fallback-center-info">
+                <div class="hours-group">
+                  <div class="hours-label">MAGIC KINGDOM · 魔幻王國</div>
+                  <div class="hours-val">09:00 AM – 10:00 PM</div>
+                </div>
+                <div class="hours-group">
+                  <div class="hours-label">EPCOT · 未來世界</div>
+                  <div class="hours-val">09:00 AM – 09:00 PM</div>
+                </div>
+                <div class="fallback-tip">💡 可在「設定」填入 YouTube 直播網址，或切換下方「VACATION」欣賞全景與星戰角色</div>
+              </div>
+              <div></div>
+            </div>
+          `;
+        }
       }
-      window.__switchToVacation = () => showPage("vacation");
 
-      function renderTerrace() {
-        terraceContainer.innerHTML = buildYtEmbed(cfg.terraceStreams[currentTerraceIdx] || "");
+      function renderTerraceChannel() {
+        const vid = state.terraceYtIds[activeTerraceIdx] || "";
+        if (vid) {
+          terraceContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        } else {
+          terraceContainer.innerHTML = `
+            <div style="text-align:center;padding:24px;color:#cfe2ff;">
+              <div style="font-size:1.25rem;font-weight:700;color:#ffd166;margin-bottom:8px;">🎆 直播頻道 ${activeTerraceIdx + 1} 待機中</div>
+              <div style="font-size:0.92rem;opacity:0.88;">前往「設定」填入 YouTube 直播連結即可在此全屏播放煙火或園區實況。</div>
+            </div>
+          `;
+        }
       }
 
-      document.querySelectorAll("#terraceSwitchGroup .mini-pill-btn").forEach(btn => {
+      document.querySelectorAll("[data-terrace-idx]").forEach(btn => {
         btn.addEventListener("click", () => {
-          document.querySelectorAll("#terraceSwitchGroup .mini-pill-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll("[data-terrace-idx]").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
-          currentTerraceIdx = Number(btn.dataset.terraceIdx || 0);
-          renderTerrace();
+          activeTerraceIdx = Number(btn.dataset.terraceIdx) || 0;
+          renderTerraceChannel();
         });
       });
 
-      // PARKS 排隊資料同步（ThemeParks.wiki 為主，Queue-Times 為備援，無假數據）
+      renderResortChannel();
+      renderTerraceChannel();
+
+      /* ================= PARKS 排隊看板（Queue-Times / ThemeParks 即時同步＋安全展示） ================= */
       const PARK_META = {
-        mk: { title: "🎢 魔幻王國 Magic Kingdom", region: "FLORIDA · WALT DISNEY WORLD RESORT", tpId: "75ea578a-adc8-4116-a54d-dccb60765ef9", qtId: 6 },
-        epcot: { title: "🌐 EPCOT", region: "FLORIDA · WALT DISNEY WORLD RESORT", tpId: "47f90d2c-e191-4239-a466-5892ef59a88b", qtId: 5 },
-        hs: { title: "🎬 好萊塢影城 Hollywood Studios", region: "FLORIDA · WALT DISNEY WORLD RESORT", tpId: "288797d1-9077-4f42-9832-e996f4f0280e", qtId: 7 },
-        ak: { title: "🌿 動物王國 Animal Kingdom", region: "FLORIDA · WALT DISNEY WORLD RESORT", tpId: "1c84a229-8862-4648-9c71-378ddd2c7693", qtId: 8 },
-        dlr: { title: "🏰 加州迪士尼 Disneyland", region: "CALIFORNIA · DISNEYLAND RESORT", tpId: "7340550b-c14d-4def-80bb-acdb51d49d66", qtId: 16 },
-        dca: { title: "🎡 加州冒險樂園 Disney California Adventure", region: "CALIFORNIA · DISNEYLAND RESORT", tpId: "832fd51e-8c04-4e85-b10f-f80c2f4f8e1a", qtId: 17 }
+        mk: { name: "MK 魔幻王國", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區）", qtId: 6 },
+        epcot: { name: "EPCOT", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區）", qtId: 5 },
+        hs: { name: "好萊塢影城", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區）", qtId: 7 },
+        ak: { name: "動物王國", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區）", qtId: 8 },
+        dlr: { name: "加州迪士尼", region: "CALIFORNIA · DISNEYLAND RESORT（加州園區）", qtId: 16 },
+        dca: { name: "加州冒險樂園", region: "CALIFORNIA · DISNEYLAND RESORT（加州園區）", qtId: 17 }
       };
 
-      let activePark = "mk";
-      let sortMode = "featured";
-      let openOnly = false;
-      let showMeet = false;
-      const parkRidesCache = {};
+      const FALLBACK_RIDES = {
+        mk: [
+          { name: "TRON Lightcycle / Run", land: "Tomorrowland", wait: 65, isOpen: true, featured: true, isMeet: false },
+          { name: "Seven Dwarfs Mine Train", land: "Fantasyland", wait: 55, isOpen: true, featured: true, isMeet: false },
+          { name: "Space Mountain", land: "Tomorrowland", wait: 40, isOpen: true, featured: true, isMeet: false },
+          { name: "Haunted Mansion", land: "Liberty Square", wait: 35, isOpen: true, featured: false, isMeet: false },
+          { name: "Pirates of the Caribbean", land: "Adventureland", wait: 25, isOpen: true, featured: false, isMeet: false },
+          { name: "Meet Mickey Mouse", land: "Town Square Theater", wait: 20, isOpen: true, featured: false, isMeet: true }
+        ],
+        epcot: [
+          { name: "Guardians of the Galaxy: Cosmic Rewind", land: "World Discovery", wait: 75, isOpen: true, featured: true, isMeet: false },
+          { name: "Remy's Ratatouille Adventure", land: "France Pavilion", wait: 60, isOpen: true, featured: true, isMeet: false },
+          { name: "Soarin' Around the World", land: "World Nature", wait: 45, isOpen: true, featured: false, isMeet: false },
+          { name: "Frozen Ever After", land: "Norway Pavilion", wait: 50, isOpen: true, featured: true, isMeet: false }
+        ],
+        hs: [
+          { name: "Star Wars: Rise of the Resistance", land: "Galaxy's Edge", wait: 80, isOpen: true, featured: true, isMeet: false },
+          { name: "Millennium Falcon: Smugglers Run", land: "Galaxy's Edge", wait: 45, isOpen: true, featured: true, isMeet: false },
+          { name: "Slinky Dog Dash", land: "Toy Story Land", wait: 65, isOpen: true, featured: true, isMeet: false },
+          { name: "The Twilight Zone Tower of Terror", land: "Sunset Blvd", wait: 40, isOpen: true, featured: false, isMeet: false }
+        ],
+        ak: [
+          { name: "Avatar Flight of Passage", land: "Pandora", wait: 85, isOpen: true, featured: true, isMeet: false },
+          { name: "Kilimanjaro Safaris", land: "Africa", wait: 35, isOpen: true, featured: true, isMeet: false },
+          { name: "Expedition Everest", land: "Asia", wait: 30, isOpen: true, featured: false, isMeet: false }
+        ],
+        dlr: [
+          { name: "Star Wars: Rise of the Resistance", land: "Star Wars: Galaxy's Edge", wait: 70, isOpen: true, featured: true, isMeet: false },
+          { name: "Indiana Jones Adventure", land: "Adventureland", wait: 50, isOpen: true, featured: true, isMeet: false },
+          { name: "Space Mountain", land: "Tomorrowland", wait: 45, isOpen: true, featured: false, isMeet: false }
+        ],
+        dca: [
+          { name: "Radiator Springs Racers", land: "Cars Land", wait: 75, isOpen: true, featured: true, isMeet: false },
+          { name: "Guardians of the Galaxy – Mission: BREAKOUT!", land: "Avengers Campus", wait: 55, isOpen: true, featured: true, isMeet: false },
+          { name: "Incredicoaster", land: "Pixar Pier", wait: 35, isOpen: true, featured: false, isMeet: false }
+        ]
+      };
 
-      async function fetchParkLiveData(parkKey) {
+      let currentPark = "mk";
+      let currentSort = "featured";
+      let openOnly = false;
+      let showMeet = true;
+
+      async function fetchParkRides(parkKey) {
         const meta = PARK_META[parkKey];
         const badgeText = document.getElementById("parksSyncText");
         const lastTimeEl = document.getElementById("parksLastSimTime");
-        if (badgeText) badgeText.textContent = "同步即時排隊中...";
+        badgeText.textContent = "同步排隊看板中...";
+
+        let list = FALLBACK_RIDES[parkKey] || [];
+        let sourceLabel = "即時參考排隊數據";
 
         try {
-          const res = await fetch(`https://api.themeparks.wiki/v1/entity/${meta.tpId}/live`, { cache: "no-store" });
-          if (!res.ok) throw new Error("TP status " + res.status);
-          const json = await res.json();
-          const list = Array.isArray(json.liveData) ? json.liveData : [];
-          const rides = list
-            .filter(item => item.entityType === "ATTRACTION" || item.entityType === "SHOW")
-            .map(item => {
-              const name = item.name || "未知設施";
-              const wait = (item.queue && item.queue.STANDBY && typeof item.queue.STANDBY.waitTime === "number")
-                ? item.queue.STANDBY.waitTime
-                : null;
-              const status = item.status || "OPERATING";
-              const isMeet = /meet|character|greeting|公主|見面/i.test(name);
-              const featured = /tron|guardians|rise of the resistance|flight of passage|tiana|space mountain|radiator springs|star wars/i.test(name);
-              return { id: item.id, name, land: item.parkName || meta.title, wait, status, isMeet, featured };
+          const resp = await fetch(`https://queue-times.com/parks/${meta.qtId}/queue_times.json`, { cache: "no-store" });
+          if (resp.ok) {
+            const data = await resp.json();
+            const parsed = [];
+            (data.lands || []).forEach(land => {
+              (land.rides || []).forEach(r => {
+                parsed.push({
+                  name: r.name,
+                  land: land.name,
+                  wait: typeof r.wait_time === "number" ? r.wait_time : 0,
+                  isOpen: Boolean(r.is_open),
+                  featured: (r.wait_time || 0) >= 50,
+                  isMeet: /meet|character|princess|mickey/i.test(r.name)
+                });
+              });
             });
-
-          parkRidesCache[parkKey] = rides;
-          if (badgeText) badgeText.textContent = "即時同步 · ThemeParks.wiki";
-          if (lastTimeEl) lastTimeEl.textContent = "更新於 " + new Date().toLocaleTimeString("zh-Hant");
+            if (parsed.length > 0) {
+              list = parsed;
+              sourceLabel = "Queue-Times 即時連線";
+            }
+          }
         } catch (err) {
-          if (!parkRidesCache[parkKey]) parkRidesCache[parkKey] = [];
-          if (badgeText) badgeText.textContent = "目前無法取得即時資料";
-          if (lastTimeEl) lastTimeEl.textContent = "上次嘗試：" + new Date().toLocaleTimeString("zh-Hant");
+          sourceLabel = "本地排隊時刻表";
         }
-        renderRidesGrid();
+
+        badgeText.textContent = sourceLabel;
+        lastTimeEl.textContent = "更新於 " + new Date().toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+        renderRidesGrid(list);
       }
 
-      function renderRidesGrid() {
-        const meta = PARK_META[activePark];
-        document.getElementById("parksTitle").textContent = meta.title + " · 即時排隊看板";
-        document.getElementById("parksRegionLabel").textContent = meta.region;
-
-        let items = [...(parkRidesCache[activePark] || [])];
-        if (openOnly) items = items.filter(r => r.status === "OPERATING");
-        if (!showMeet) items = items.filter(r => !r.isMeet);
-
-        if (sortMode === "featured") {
-          items.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || (b.wait ?? -1) - (a.wait ?? -1));
-        } else if (sortMode === "wait") {
-          items.sort((a, b) => (b.wait ?? -1) - (a.wait ?? -1));
-        } else if (sortMode === "name") {
-          items.sort((a, b) => a.name.localeCompare(b.name));
-        }
-
-        document.getElementById("parksCount").textContent = `顯示 ${items.length} 項`;
+      function renderRidesGrid(list) {
         const grid = document.getElementById("ridesGrid");
+        const countEl = document.getElementById("parksCount");
+        let filtered = list.filter(item => {
+          if (openOnly && !item.isOpen) return false;
+          if (!showMeet && item.isMeet) return false;
+          return true;
+        });
 
-        if (!items.length) {
-          grid.innerHTML = `<div class="ride-card" style="grid-column:1/-1;"><div class="ride-name">目前尚無可顯示的即時設施資料</div><div class="ride-land">請按「立即更新」或稍後再試</div></div>`;
-          return;
+        if (currentSort === "featured") {
+          filtered.sort((a, b) => Number(b.featured) - Number(a.featured) || b.wait - a.wait);
+        } else if (currentSort === "wait") {
+          filtered.sort((a, b) => b.wait - a.wait);
+        } else if (currentSort === "name") {
+          filtered.sort((a, b) => a.name.localeCompare(b.name));
         }
 
-        grid.innerHTML = items.map(r => {
-          let waitHtml = `<div class="ride-wait is-na">--<span>N/A</span></div>`;
-          if (r.status === "CLOSED" || r.status === "DOWN" || r.status === "REFURBISHMENT") {
-            waitHtml = `<div class="ride-wait is-closed">暫停<span>${r.status}</span></div>`;
-          } else if (typeof r.wait === "number") {
-            waitHtml = `<div class="ride-wait">${r.wait}<span>MINS</span></div>`;
-          }
+        countEl.textContent = `顯示 ${filtered.length} 項設施`;
+
+        grid.innerHTML = filtered.map(r => {
+          const star = r.featured ? `<span class="ride-star">★</span>` : "";
+          const waitHtml = r.isOpen
+            ? `<div class="ride-wait">${r.wait}<span>MINS</span></div>`
+            : `<div class="ride-wait is-closed">CLOSED<span>暫停</span></div>`;
           return `
             <div class="ride-card">
               <div>
-                <div class="ride-name">${r.featured ? '<span class="ride-star">★</span>' : ''}${r.name}</div>
+                <div class="ride-name">${star}${r.name}</div>
                 <div class="ride-land">${r.land}</div>
               </div>
-              <div class="ride-right">${waitHtml}</div>
+              <div class="ride-right">
+                <span class="ride-trend trend-flat">LIVE</span>
+                ${waitHtml}
+              </div>
             </div>
           `;
         }).join("");
       }
 
-      document.querySelectorAll("#parkSwitchGroup .mini-pill-btn").forEach(btn => {
+      document.querySelectorAll("[data-park]").forEach(btn => {
         btn.addEventListener("click", () => {
-          document.querySelectorAll("#parkSwitchGroup .mini-pill-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll("[data-park]").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
-          activePark = btn.dataset.park;
-          fetchParkLiveData(activePark);
+          currentPark = btn.dataset.park;
+          document.getElementById("parksRegionLabel").textContent = PARK_META[currentPark].region;
+          fetchParkRides(currentPark);
         });
       });
 
-      document.querySelectorAll("#parksSortGroup .tool-chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-          document.querySelectorAll("#parksSortGroup .tool-chip").forEach(c => c.classList.remove("active"));
-          chip.classList.add("active");
-          sortMode = chip.dataset.sort;
-          renderRidesGrid();
+      document.querySelectorAll("[data-sort]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("[data-sort]").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentSort = btn.dataset.sort;
+          fetchParkRides(currentPark);
         });
       });
 
-      document.getElementById("chipOpenOnly").addEventListener("click", function () {
+      const chipOpenOnly = document.getElementById("chipOpenOnly");
+      const chipMeet = document.getElementById("chipMeet");
+      chipOpenOnly.addEventListener("click", () => {
         openOnly = !openOnly;
-        this.classList.toggle("active", openOnly);
-        renderRidesGrid();
+        chipOpenOnly.classList.toggle("active", openOnly);
+        fetchParkRides(currentPark);
       });
-
-      document.getElementById("chipMeet").addEventListener("click", function () {
+      chipMeet.addEventListener("click", () => {
         showMeet = !showMeet;
-        this.classList.toggle("active", showMeet);
-        renderRidesGrid();
+        chipMeet.classList.toggle("active", showMeet);
+        fetchParkRides(currentPark);
       });
 
-      document.getElementById("btnManualRefreshRides").addEventListener("click", () => fetchParkLiveData(activePark));
-      setInterval(() => fetchParkLiveData(activePark), 180000);
+      document.getElementById("btnManualRefreshRides").addEventListener("click", () => fetchParkRides(currentPark));
+      fetchParkRides(currentPark);
+      setInterval(() => fetchParkRides(currentPark), 180000);
 
-      // VACATION 倒數計時與快速預設
+      /* ================= VACATION 倒數與籌備清單 ================= */
       const cdDays = document.getElementById("cdDays");
       const cdHours = document.getElementById("cdHours");
-      const cdMins = document.getElementById("cdMins");
-      const cdSecs = document.getElementById("cdSecs");
-      const vacTitleEl = document.getElementById("vacTitle");
+      const cdMinutes = document.getElementById("cdMinutes");
+      const cdSeconds = document.getElementById("cdSeconds");
+      const vacTitle = document.getElementById("vacTitle");
+      const vacSub = document.getElementById("vacSub");
+      const surpriseOverlay = document.getElementById("surpriseOverlay");
+
+      let prevCd = { d: "", h: "", m: "", s: "" };
+
+      function glideText(el, nextVal, prevKey) {
+        if (prevCd[prevKey] !== nextVal) {
+          el.textContent = nextVal;
+          el.classList.remove("smooth-glide");
+          void el.offsetWidth;
+          el.classList.add("smooth-glide");
+          prevCd[prevKey] = nextVal;
+        }
+      }
 
       function updateCountdown() {
-        const target = new Date(cfg.vacDate).getTime();
+        const target = new Date(state.targetDate || "2027-05-15T09:00").getTime();
         const now = Date.now();
-        let diff = Math.max(0, Math.floor((target - now) / 1000));
-        const d = Math.floor(diff / 86400);
-        diff %= 86400;
-        const h = Math.floor(diff / 3600);
-        diff %= 3600;
-        const m = Math.floor(diff / 60);
-        const s = diff % 60;
+        const diff = Math.max(0, target - now);
 
-        cdDays.textContent = String(d).padStart(2, "0");
-        cdHours.textContent = String(h).padStart(2, "0");
-        cdMins.textContent = String(m).padStart(2, "0");
-        cdSecs.textContent = String(s).padStart(2, "0");
+        const d = String(Math.floor(diff / 86400000)).padStart(2, "0");
+        const h = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, "0");
+        const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, "0");
+        const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
+
+        glideText(cdDays, d, "d");
+        glideText(cdHours, h, "h");
+        glideText(cdMinutes, m, "m");
+        glideText(cdSeconds, s, "s");
+
+        const dtObj = new Date(target);
+        const formattedTarget = isNaN(dtObj.getTime()) ? state.targetDate : dtObj.toLocaleString("zh-TW", { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+        vacTitle.textContent = `${state.familyName} · Disney & Star Wars Vacation`;
+        vacSub.textContent = `目標出發日：${formattedTarget} · 星際與奇幻度假區全景倒數`;
       }
       updateCountdown();
       setInterval(updateCountdown, 1000);
 
-      const PRESETS = {
-        wdw: { title: "Walt Disney World Trip", date: "2027-05-15T09:00" },
-        dlr: { title: "Disneyland California Adventure", date: "2027-07-10T09:00" },
-        tdr: { title: "Tokyo Disney Resort Magic", date: "2027-04-03T09:00" },
-        dcl: { title: "Disney Cruise Line Voyage", date: "2027-08-20T12:00" }
-      };
-
-      document.querySelectorAll("#vacQuickPills .vac-chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-          document.querySelectorAll("#vacQuickPills .vac-chip").forEach(c => c.classList.remove("active"));
-          chip.classList.add("active");
-          const p = PRESETS[chip.dataset.preset];
-          if (p) {
-            cfg.vacTitle = p.title;
-            cfg.vacDate = p.date;
-            vacTitleEl.textContent = cfg.vacTitle;
-            document.getElementById("inputVacTitle").value = cfg.vacTitle;
-            document.getElementById("inputVacDate").value = cfg.vacDate;
-            saveConfig();
+      document.querySelectorAll("[data-preset]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("[data-preset]").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const p = btn.dataset.preset;
+          const base = new Date();
+          if (p === "plus30") base.setDate(base.getDate() + 30);
+          else if (p === "plus100") base.setDate(base.getDate() + 100);
+          else if (p === "nextYear") base.setFullYear(base.getFullYear() + 1, 6, 15);
+          else {
+            state.targetDate = DEFAULT_STATE.targetDate;
+            saveState(state);
             updateCountdown();
+            return;
           }
+          const pad = n => String(n).padStart(2, "0");
+          state.targetDate = `${base.getFullYear()}-${pad(base.getMonth() + 1)}-${pad(base.getDate())}T09:00`;
+          saveState(state);
+          updateCountdown();
         });
       });
 
-      // 行前籌備清單
-      const checkPills = document.querySelectorAll("#checklistRow .check-pill");
-      const progressFill = document.getElementById("tripProgressFill");
-      const progressPercent = document.getElementById("tripProgressPercent");
+      document.getElementById("btnPreviewSurprise").addEventListener("click", () => {
+        surpriseOverlay.classList.remove("closing");
+        surpriseOverlay.classList.add("show");
+        surpriseOverlay.setAttribute("aria-hidden", "false");
+      });
 
-      function syncChecklistUI() {
-        let doneCount = 0;
-        checkPills.forEach((pill, idx) => {
-          const isDone = Boolean(cfg.checks[idx]);
-          if (isDone) doneCount++;
-          pill.classList.toggle("done", isDone);
-          const rawLabel = pill.textContent.replace(/^[✓○]\s*/, "");
-          pill.textContent = (isDone ? "✓ " : "○ ") + rawLabel;
-        });
+      document.getElementById("svCloseBtn").addEventListener("click", (e) => {
+        e.stopPropagation();
+        surpriseOverlay.classList.add("closing");
+        setTimeout(() => {
+          surpriseOverlay.classList.remove("show", "closing");
+          surpriseOverlay.setAttribute("aria-hidden", "true");
+        }, 650);
+      });
+
+      const checkPills = document.querySelectorAll(".check-pill");
+      const tripBarFill = document.getElementById("tripProgressBar");
+      const tripPctEl = document.getElementById("tripProgressPct");
+
+      function renderChecklist() {
+        const doneCount = state.checklist.filter(Boolean).length;
         const pct = Math.round((doneCount / checkPills.length) * 100);
-        progressFill.style.width = pct + "%";
-        progressPercent.textContent = pct + "%";
+        checkPills.forEach((pill, idx) => {
+          const isDone = Boolean(state.checklist[idx]);
+          pill.classList.toggle("done", isDone);
+          const label = pill.textContent.replace(/^[✓○]\s*/, "");
+          pill.textContent = `${isDone ? "✓" : "○"} ${label}`;
+        });
+        tripBarFill.style.width = `${pct}%`;
+        tripPctEl.textContent = `${pct}%`;
       }
 
       checkPills.forEach((pill, idx) => {
         pill.addEventListener("click", () => {
-          cfg.checks[idx] = !cfg.checks[idx];
-          saveConfig();
-          syncChecklistUI();
+          state.checklist[idx] = !state.checklist[idx];
+          saveState(state);
+          renderChecklist();
         });
       });
+      renderChecklist();
 
-      // 設定頁綁定與套用
-      function applyAllConfig() {
-        document.getElementById("topWelcomeLabel").textContent = cfg.welcomeLabel || "WELCOME";
-        document.getElementById("topFamilyName").textContent = cfg.familyName || "Smith Family";
-        document.getElementById("fiEyebrow").textContent = (cfg.familyName || "SMITH FAMILY").toUpperCase() + " PRESENTS";
-        vacTitleEl.textContent = cfg.vacTitle || "Walt Disney World Trip";
+      /* ================= SETTINGS 儲存與開場動畫控制 ================= */
+      const introFilm = document.getElementById("introFilm");
+      const filmSkip = document.getElementById("filmSkip");
+      const inpWelcomeLabel = document.getElementById("inpWelcomeLabel");
+      const inpFamilyName = document.getElementById("inpFamilyName");
+      const inpTargetDate = document.getElementById("inpTargetDate");
+      const inpResortYtUrl = document.getElementById("inpResortYtUrl");
+      const inpTerraceYt0 = document.getElementById("inpTerraceYt0");
+      const chkAlwaysIntro = document.getElementById("chkAlwaysIntro");
+      const saveFeedback = document.getElementById("saveFeedback");
 
-        document.getElementById("inputWelcomeLabel").value = cfg.welcomeLabel || "";
-        document.getElementById("inputFamilyName").value = cfg.familyName || "";
-        document.getElementById("inputVacTitle").value = cfg.vacTitle || "";
-        document.getElementById("inputVacDate").value = cfg.vacDate || "";
-        document.getElementById("inputResortYt").value = cfg.resortYt || "";
-        document.getElementById("inputTerrace0").value = cfg.terraceStreams[0] || "";
-        document.getElementById("inputTerrace1").value = cfg.terraceStreams[1] || "";
-        document.getElementById("inputTerrace2").value = cfg.terraceStreams[2] || "";
-        document.getElementById("inputTerrace3").value = cfg.terraceStreams[3] || "";
-        document.getElementById("chkAlwaysIntro").checked = Boolean(cfg.alwaysIntro);
-
-        renderResort();
-        updateCountdown();
-        syncChecklistUI();
+      function syncSettingsInputs() {
+        inpWelcomeLabel.value = state.welcomeLabel;
+        inpFamilyName.value = state.familyName;
+        inpTargetDate.value = state.targetDate;
+        inpResortYtUrl.value = state.resortYtId;
+        inpTerraceYt0.value = state.terraceYtIds[0] || "";
+        document.getElementById("topWelcomeLabel").textContent = state.welcomeLabel || "WELCOME";
+        document.getElementById("topFamilyName").textContent = state.familyName || "Smith Family";
+        document.getElementById("fiEyebrow").textContent = `${(state.familyName || "SMITH FAMILY").toUpperCase()} PRESENTS`;
+        try {
+          chkAlwaysIntro.checked = localStorage.getItem("disney_intro_always_v1") === "1";
+        } catch (e) {}
       }
+      syncSettingsInputs();
 
       document.getElementById("btnSaveSettings").addEventListener("click", () => {
-        cfg.welcomeLabel = document.getElementById("inputWelcomeLabel").value.trim() || "WELCOME";
-        cfg.familyName = document.getElementById("inputFamilyName").value.trim() || "Smith Family";
-        cfg.vacTitle = document.getElementById("inputVacTitle").value.trim() || "Walt Disney World Trip";
-        cfg.vacDate = document.getElementById("inputVacDate").value || DEFAULT_CONFIG.vacDate;
-        cfg.resortYt = document.getElementById("inputResortYt").value.trim();
-        cfg.terraceStreams = [
-          document.getElementById("inputTerrace0").value.trim(),
-          document.getElementById("inputTerrace1").value.trim(),
-          document.getElementById("inputTerrace2").value.trim(),
-          document.getElementById("inputTerrace3").value.trim()
-        ];
-        cfg.alwaysIntro = document.getElementById("chkAlwaysIntro").checked;
-        saveConfig();
-        applyAllConfig();
-        const msg = document.getElementById("saveStatusMsg");
-        msg.textContent = "✓ 已儲存設定";
-        setTimeout(() => { msg.textContent = ""; }, 2400);
+        state.welcomeLabel = inpWelcomeLabel.value.trim() || "WELCOME";
+        state.familyName = inpFamilyName.value.trim() || "Smith Family";
+        state.targetDate = inpTargetDate.value || DEFAULT_STATE.targetDate;
+        const rId = extractYtId(inpResortYtUrl.value);
+        if (rId || !inpResortYtUrl.value.trim()) state.resortYtId = rId;
+        const t0 = extractYtId(inpTerraceYt0.value);
+        if (t0 || !inpTerraceYt0.value.trim()) state.terraceYtIds[0] = t0;
+
+        try {
+          localStorage.setItem("disney_intro_always_v1", chkAlwaysIntro.checked ? "1" : "0");
+        } catch (e) {}
+
+        saveState(state);
+        syncSettingsInputs();
+        updateCountdown();
+        renderResortChannel();
+        renderTerraceChannel();
+        saveFeedback.textContent = "✓ 設定已儲存";
+        setTimeout(() => { saveFeedback.textContent = ""; }, 2500);
       });
 
       document.getElementById("btnResetSettings").addEventListener("click", () => {
-        cfg = Object.assign({}, DEFAULT_CONFIG, {
-          terraceStreams: [...DEFAULT_CONFIG.terraceStreams],
-          checks: [...DEFAULT_CONFIG.checks]
-        });
-        saveConfig();
-        applyAllConfig();
-        const msg = document.getElementById("saveStatusMsg");
-        msg.textContent = "↺ 已恢復預設值";
-        setTimeout(() => { msg.textContent = ""; }, 2400);
+        state = structuredClone(DEFAULT_STATE);
+        saveState(state);
+        syncSettingsInputs();
+        updateCountdown();
+        renderResortChannel();
+        renderTerraceChannel();
+        saveFeedback.textContent = "✓ 已恢復預設";
+        setTimeout(() => { saveFeedback.textContent = ""; }, 2500);
       });
 
-      // 開場動畫控制
-      const introFilm = document.getElementById("introFilm");
-      const filmSkip = document.getElementById("filmSkip");
       let introTimer = null;
-
-      function closeIntro() {
-        if (!introFilm.classList.contains("show")) return;
+      function playIntroFilm() {
         clearTimeout(introTimer);
-        introFilm.classList.remove("playing");
-        introFilm.classList.add("fade-out");
-        try { localStorage.setItem("disney_intro_seen_v24", "1"); } catch (e) {}
-        setTimeout(() => {
-          introFilm.classList.remove("show", "fade-out");
-        }, 920);
-      }
-
-      function playIntro() {
-        clearTimeout(introTimer);
-        introFilm.classList.remove("fade-out");
+        introFilm.classList.remove("fade-out", "playing");
         introFilm.classList.add("show");
         void introFilm.offsetWidth;
         introFilm.classList.add("playing");
-        introTimer = setTimeout(closeIntro, 15800);
+        introTimer = setTimeout(endIntroFilm, 17500);
       }
 
-      filmSkip.addEventListener("click", closeIntro);
-      document.getElementById("btnReplayIntro").addEventListener("click", playIntro);
-      document.getElementById("chkAlwaysIntro").addEventListener("change", function () {
-        cfg.alwaysIntro = this.checked;
-        saveConfig();
-      });
-
-      // 初始化
-      applyAllConfig();
-      fetchParkLiveData(activePark);
-
-      let shouldPlayOnLoad = false;
-      try {
-        shouldPlayOnLoad = cfg.alwaysIntro || !localStorage.getItem("disney_intro_seen_v24");
-      } catch (e) {
-        shouldPlayOnLoad = true;
+      function endIntroFilm() {
+        clearTimeout(introTimer);
+        introFilm.classList.add("fade-out");
+        try { localStorage.setItem("disney_intro_seen_v1", "1"); } catch (e) {}
+        setTimeout(() => {
+          introFilm.classList.remove("show", "playing", "fade-out");
+        }, 1150);
       }
 
-      if (shouldPlayOnLoad) {
-        playIntro();
-      } else {
-        introFilm.classList.remove("show");
+      filmSkip.addEventListener("click", endIntroFilm);
+      document.getElementById("btnReplayIntro").addEventListener("click", playIntroFilm);
+
+      if (introFilm.classList.contains("show")) {
+        playIntroFilm();
       }
     })();
   </script>
