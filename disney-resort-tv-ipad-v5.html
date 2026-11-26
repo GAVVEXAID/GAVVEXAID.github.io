@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V21（全角色雙層獨立動畫＆巡迴修正版）</title>
+  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V22（完整修復＋全優化版）</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -25,6 +25,11 @@
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
+    }
+
+    input, select, textarea {
+      user-select: text;
+      -webkit-user-select: text;
     }
 
     html, body {
@@ -146,6 +151,7 @@
       right: 18px;
       background: rgba(15, 22, 36, 0.72);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 999px;
       padding: 6px 14px;
@@ -325,6 +331,7 @@
       flex-direction: column;
       gap: 12px;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .parks-header {
@@ -525,7 +532,12 @@
       height: 100%;
       pointer-events: none;
       z-index: 1;
-      overflow: clip;
+      overflow: hidden;
+    }
+
+    /* 效能優化：當 VACATION 頁面非 active 時暫停內部龐大 SVG 動畫，避免低階平板或手機卡頓 */
+    #page-vacation:not(.active) * {
+      animation-play-state: paused !important;
     }
 
     /* 閃爍星星與十字星芒 */
@@ -662,7 +674,7 @@
       50% { transform: translateY(-24px) scale(1.25); opacity: 0.92; }
     }
 
-    /* 園區漂浮氣球群（純相對旋轉擺動，外層負責座標） */
+    /* 園區漂浮氣球群 */
     .balloon-cluster {
       transform-box: fill-box;
       transform-origin: bottom center;
@@ -772,12 +784,10 @@
       100% { transform: scale(1.32); opacity: 0; }
     }
 
-    /* 煙火次波與多層綻放 */
     .fw-burst-4 { animation-delay: 0.9s; }
     .fw-burst-5 { animation-delay: 2.6s; }
 
-    /* ================= 39位超精緻迪士尼＆皮克斯角色專屬動畫（全角色雙向往復巡迴＋零左上角殘留） ================= */
-    /* 1. 高空飛行組（全部改為持續可見＋優雅高空巡迴，絕不只有出現一次） */
+    /* ================= 39位超精緻迪士尼＆皮克斯角色專屬動畫 ================= */
     .peter-pan-flight {
       transform: translate(-340px, 118px) rotate(-6deg);
       animation: peterPanFly 26s linear infinite -4s both;
@@ -878,7 +888,6 @@
       100% { transform: translate(1720px, 245px) rotate(-7deg); }
     }
 
-    /* 2. 前景地面巡遊大隊 */
     .parade-group-1 {
       transform: translate(-620px, 644px);
       animation: paradeWalkRight 42s linear infinite -12s both;
@@ -897,7 +906,6 @@
       100% { transform: translate(-720px, 654px); }
     }
 
-    /* 3. 地標定點＆草坡巡迴夥伴（外層 <g transform="translate(...)"> 負責座標，內層純相對動畫，徹底避免 Safari 左上角座標歸零 Bug！） */
     .char-bob {
       transform-box: fill-box;
       transform-origin: bottom center;
@@ -932,7 +940,6 @@
       100% { transform: translateY(-4px) rotate(2deg); }
     }
 
-    /* 動物方城市 茱蒂警官＆狐狸尼克：在右側城堡廣場與小鎮草坡之間悠閒巡邏散步，全螢幕與平板永遠清晰可見 */
     .zootopia-patrol {
       transform: translate(1018px, 616px);
       animation: zootopiaStroll 24s ease-in-out infinite alternate both;
@@ -943,7 +950,6 @@
       100% { transform: translate(1135px, 614px); }
     }
 
-    /* 原版療癒杯麵：在右側廣場親切招手散步，不會被全螢幕邊緣裁切 */
     .baymax-ground-stroll {
       transform: translate(1178px, 616px);
       animation: baymaxStroll 22s ease-in-out infinite alternate both;
@@ -954,7 +960,6 @@
       100% { transform: translate(1088px, 620px); }
     }
 
-    /* 左側史迪奇＆奇奇蒂蒂悠閒逛大街，保證任何螢幕比例都能反覆看到 */
     .stitch-stroll {
       transform: translate(235px, 616px);
       animation: stitchPatrol 21s ease-in-out infinite alternate both;
@@ -1005,7 +1010,6 @@
       100% { transform: translateY(-6px) rotate(3deg); opacity: 1; }
     }
 
-    /* 艾莎 Elsa 施展冰雪魔法與雪花漩渦動畫 */
     .elsa-arm-cast {
       transform-box: fill-box;
       transform-origin: 0% 50%;
@@ -1052,7 +1056,6 @@
       100% { transform: rotate(5deg); }
     }
 
-    /* 閃電麥坤：持續循環飛馳（取消原先 45%~100% 長時間隱身停滯，讓每次都能看到麥坤奔馳！） */
     .mcqueen-zip {
       transform: translate(-220px, 654px);
       animation: mcqueenRace 16s linear infinite -3s both;
@@ -1071,6 +1074,7 @@
       0% { opacity: 0.28; transform: scale(0.95); }
       100% { opacity: 0.88; transform: scale(1.06); }
     }
+
     .vacation-content {
       position: relative;
       z-index: 2;
@@ -1184,9 +1188,6 @@
       line-height: 1;
       text-shadow: 0 2px 8px rgba(255, 209, 102, 0.25);
       display: inline-block;
-    }
-
-    .cd-num {
       will-change: transform, opacity;
       transition: opacity 0.24s linear, transform 0.24s linear;
     }
@@ -1348,6 +1349,7 @@
       background: #111724;
       padding: 20px 28px;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .settings-wrap {
@@ -1551,7 +1553,6 @@
         font-size: 0.72rem;
       }
 
-      /* 底部導覽列支援手機滑動與緊湊排版 */
       .bottom-bar {
         height: 58px;
         min-height: 58px;
@@ -1589,7 +1590,6 @@
         flex-shrink: 0;
       }
 
-      /* 假期倒數主畫面在手機直式螢幕下的比例與字級微調 */
       .vacation-stage {
         padding: 10px 8px;
         justify-content: flex-start;
@@ -1652,7 +1652,6 @@
         padding: 3px 7px;
       }
 
-      /* 排隊看板與其他分頁手機版適配 */
       .parks-stage {
         padding: 12px 12px;
       }
@@ -1684,7 +1683,6 @@
       }
     }
 
-    /* 手機橫式螢幕高度較矮時的緊湊適配 */
     @media (max-height: 460px) {
       .top-bar { height: 42px; min-height: 42px; }
       .bottom-bar { height: 46px; min-height: 46px; }
@@ -1696,7 +1694,6 @@
       .trip-progress-wrap { display: none; }
     }
   </style>
-
 </head>
 <body>
   <div class="tv-shell">
@@ -1725,11 +1722,11 @@
         <div class="terrace-stage">
           <div class="terrace-top">
             <h2 class="terrace-title">🎆 VIRTUAL TERRACE · 煙火秀與園區實況（4 頻道）</h2>
-            <div class="stream-switch-group">
-              <button class="mini-pill-btn active" data-terrace-idx="0">直播頻道 1</button>
-              <button class="mini-pill-btn" data-terrace-idx="1">直播頻道 2</button>
-              <button class="mini-pill-btn" data-terrace-idx="2">直播頻道 3</button>
-              <button class="mini-pill-btn" data-terrace-idx="3">直播頻道 4</button>
+            <div class="stream-switch-group" id="terraceSwitchGroup">
+              <button type="button" class="mini-pill-btn active" data-terrace-idx="0">直播頻道 1</button>
+              <button type="button" class="mini-pill-btn" data-terrace-idx="1">直播頻道 2</button>
+              <button type="button" class="mini-pill-btn" data-terrace-idx="2">直播頻道 3</button>
+              <button type="button" class="mini-pill-btn" data-terrace-idx="3">直播頻道 4</button>
             </div>
           </div>
           <div class="terrace-video-box" id="terraceVideoContainer"></div>
@@ -1744,23 +1741,23 @@
               <h2 id="parksTitle">🎢 排隊看板</h2>
               <span class="sim-mode-badge" id="parksSyncBadge">
                 <span id="parksSyncIcon">🌐</span>
-                <span id="parksSyncText">正在連線 Queue-Times 即時資料...</span>
+                <span id="parksSyncText">正在連線即時排隊資料...</span>
               </span>
-              <button class="refresh-mini-btn" id="btnManualRefreshRides" title="立即向伺服器重新取得最新排隊時間">↻ 立即更新</button>
+              <button type="button" class="refresh-mini-btn" id="btnManualRefreshRides" title="立即向伺服器重新取得最新排隊時間">↻ 立即更新</button>
             </div>
 
-            <div class="stream-switch-group">
-              <button class="mini-pill-btn active" data-park="mk">MK 魔幻王國</button>
-              <button class="mini-pill-btn" data-park="epcot">EPCOT</button>
-              <button class="mini-pill-btn" data-park="hs">好萊塢影城</button>
-              <button class="mini-pill-btn" data-park="ak">動物王國</button>
-              <button class="mini-pill-btn" data-park="dlr">加州迪士尼</button>
-              <button class="mini-pill-btn" data-park="dca">加州冒險樂園</button>
+            <div class="stream-switch-group" id="parkSwitchGroup">
+              <button type="button" class="mini-pill-btn active" data-park="mk">MK 魔幻王國</button>
+              <button type="button" class="mini-pill-btn" data-park="epcot">EPCOT</button>
+              <button type="button" class="mini-pill-btn" data-park="hs">好萊塢影城</button>
+              <button type="button" class="mini-pill-btn" data-park="ak">動物王國</button>
+              <button type="button" class="mini-pill-btn" data-park="dlr">加州迪士尼</button>
+              <button type="button" class="mini-pill-btn" data-park="dca">加州冒險樂園</button>
             </div>
           </div>
 
           <div class="parks-notice-bar">
-            <span id="parksNoticeText">資料來源：Queue-Times.com 社群即時排隊 API（每 3 分鐘自動同步；若離線或跨域受限將自動無縫切換為備援模擬）。</span>
+            <span id="parksNoticeText">資料來源：ThemeParks.wiki &amp; Queue-Times.com 即時排隊 API（每 3 分鐘自動同步；若離線或受限將自動無縫切換為備援模擬）。</span>
             <span id="parksLastSimTime" style="color:#ffd166;font-weight:700;font-variant-numeric:tabular-nums;"></span>
           </div>
 
@@ -1769,7 +1766,7 @@
         </div>
       </section>
 
-      <!-- VACATION：多地標奇幻度假區夜景（城堡＋EPCOT地球＋太空山＋摩天輪＋驚魂古塔＋單軌列車＋煙火） -->
+      <!-- VACATION：多地標奇幻度假區夜景 -->
       <section class="page-view" id="page-vacation">
         <div class="vacation-stage">
           <div class="vacation-bg-layer" aria-hidden="true">
@@ -1848,7 +1845,7 @@
               <!-- 城堡後方暖金魔法光暈 -->
               <circle cx="720" cy="485" r="370" fill="url(#castleAura)"/>
 
-              <!-- 城堡兩側探照燈光束（慶典氛圍） -->
+              <!-- 城堡兩側探照燈光束 -->
               <polygon class="searchlight-left" points="565,585 450,150 535,150" fill="url(#beamGrad)"/>
               <polygon class="searchlight-right" points="875,585 905,150 990,150" fill="url(#beamGrad)"/>
 
@@ -1868,7 +1865,7 @@
                 <circle class="star-twinkle star-t1" cx="1310" cy="245" r="2.0"/>
               </g>
 
-              <!-- 十字閃爍星光（外層定位、內層閃爍，徹底杜絕 Safari 歸零） -->
+              <!-- 十字閃爍星光 -->
               <g transform="translate(175, 185)" fill="#ffd166">
                 <polygon class="star-twinkle star-t2" points="0,-11 2.8,-2.8 11,0 2.8,2.8 0,11 -2.8,2.8 -11,0 -2.8,-2.8"/>
               </g>
@@ -1883,7 +1880,7 @@
               <line class="shooting-star" x1="230" y1="65" x2="600" y2="205" stroke="#fff5c0" stroke-width="2.3" stroke-linecap="round"/>
               <line class="shooting-star-2" x1="1180" y1="62" x2="840" y2="195" stroke="#a6dbff" stroke-width="2.1" stroke-linecap="round"/>
 
-              <!-- 飛越夜空的奇幻飛艇（點綴夜間燈飾） -->
+              <!-- 飛越夜空的奇幻飛艇 -->
               <g class="airship-cruise">
                 <ellipse cx="48" cy="16" rx="44" ry="15" fill="#2c4d8a" stroke="#8ad0ff" stroke-width="1.5"/>
                 <path d="M12,16 Q48,8 84,16 Q48,24 12,16 Z" fill="#ffd166" opacity="0.85"/>
@@ -1894,7 +1891,7 @@
                 <circle cx="56" cy="33.5" r="1.4" fill="#fff3b0"/>
               </g>
 
-              <!-- 多層次慶典煙火綻放（5 組錯落綻放，外層定位、內層綻放） -->
+              <!-- 多層次慶典煙火綻放 -->
               <g transform="translate(455, 215)" stroke="#ffd166" stroke-width="2.2" stroke-linecap="round">
                 <g class="fw-burst">
                   <line x1="0" y1="-40" x2="0" y2="-14"/><line x1="0" y1="14" x2="0" y2="40"/>
@@ -2113,7 +2110,6 @@
                 <line x1="36" y1="62" x2="36" y2="8" stroke="#182238" stroke-width="3.5"/>
                 <circle cx="36" cy="4" r="13" fill="rgba(255, 214, 102, 0.36)" class="lamp-glow"/>
                 <circle cx="36" cy="4" r="4.5" fill="#fff3b0"/>
-                <!-- 外層定位、內層搖曳 -->
                 <g transform="translate(88, 56)">
                   <g class="balloon-cluster">
                     <line x1="0" y1="0" x2="-10" y2="-38" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
@@ -2161,13 +2157,11 @@
                 <circle cx="52" cy="2" r="4" fill="#182238" stroke="#ffd166" stroke-width="1.2"/>
               </g>
 
-
-              <!-- ==================== 超精緻高辨識度迪士尼＆皮克斯角色群 (39位全角色常駐巡迴・徹底消除左上角殘留) ==================== -->
+              <!-- ==================== 超精緻高辨識度迪士尼＆皮克斯角色群 (39位全角色常駐巡迴) ==================== -->
               <g class="characters-layer">
                 <!-- 【高空奇幻飛行組 (12位)】 -->
                 <!-- 1-3. 小飛俠彼得潘、溫蒂、約翰 -->
                 <g class="peter-pan-flight">
-                  <!-- 1. 彼得潘 -->
                   <g transform="translate(132, -8) scale(1.52)">
                     <path d="M-19,6 L-4,2 L-17,12" fill="none" stroke="#2f9e44" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M-19,6 L-23,5 M-17,12 L-21,12" stroke="#8d5524" stroke-width="2.5" stroke-linecap="round"/>
@@ -2182,7 +2176,6 @@
                     <path d="M6,-10 Q1,-16.5 -2,-18.5" stroke="#fa5252" stroke-width="2.3" stroke-linecap="round"/>
                   </g>
 
-                  <!-- 2. 溫蒂 -->
                   <g transform="translate(68, 8) scale(1.52)">
                     <path d="M-19,6 Q-3,-5 12,-1 L10,9 Q-5,13 -21,10 Z" fill="#74c0fc" stroke="#1c7ed6" stroke-width="0.9"/>
                     <path d="M-18,8 Q-4,6 9,6" fill="none" stroke="#d0ebff" stroke-width="1"/>
@@ -2193,7 +2186,6 @@
                     <polygon points="7,-9.5 10,-7 13,-9.5 13,-6 10,-7 7,-6" fill="#339af0"/>
                   </g>
 
-                  <!-- 3. 約翰 -->
                   <g transform="translate(6, 22) scale(1.52)">
                     <rect x="-12" y="-1" width="20" height="7.5" rx="3.5" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.9"/>
                     <line x1="-8" y1="-1" x2="-8" y2="6.5" stroke="#dee2e6" stroke-width="0.8"/>
@@ -2207,7 +2199,7 @@
                   </g>
                 </g>
 
-                <!-- 4. 小飛象 Dumbo（純粹角色剪影美學：無眼黑眼白，凸顯黃色馬戲團尖帽＋粉紅內耳巨耳＋紅黃領巾＋金色魔法羽毛） -->
+                <!-- 4. 小飛象 Dumbo -->
                 <g class="dumbo-flight">
                   <g transform="scale(1.64)">
                     <ellipse cx="3" cy="5" rx="15" ry="11" fill="#91a7ff" stroke="#4263eb" stroke-width="1"/>
@@ -2364,7 +2356,7 @@
                   </g>
                 </g>
 
-                <!-- 【地標定點＆庭園巡迴組 (13位，外層精準定位/巡迴、內層純相對微動，全螢幕與平板永遠清晰可見、絕不卡左上角)】 -->
+                <!-- 【地標定點＆庭園巡迴組 (13位)】 -->
                 <!-- 13. 獅子王辛巴 Simba -->
                 <g transform="translate(415, 550) scale(1.66)">
                   <g class="simba-roar">
@@ -2399,7 +2391,7 @@
                   </g>
                 </g>
 
-                <!-- 15. 史迪奇 Stitch（在左側草坡悠閒散步巡迴） -->
+                <!-- 15. 史迪奇 Stitch -->
                 <g class="stitch-stroll">
                   <g transform="scale(1.62)"><g class="char-idle-bob">
                     <ellipse cx="0" cy="14" rx="10.5" ry="9" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
@@ -2425,10 +2417,9 @@
                   </g></g>
                 </g>
 
-                <!-- 16-17. 奇奇與蒂蒂 Chip 'n' Dale（在左側草坡悠閒散步巡迴） -->
+                <!-- 16-17. 奇奇與蒂蒂 Chip 'n' Dale -->
                 <g class="chipdale-stroll">
                   <g transform="scale(1.6)"><g class="char-idle-bob char-idle-bob-2">
-                    <!-- 16. 奇奇 -->
                     <ellipse cx="-11" cy="11" rx="7.2" ry="7.5" fill="#7f4f24"/>
                     <ellipse cx="-11" cy="11.5" rx="4.2" ry="5" fill="#e6ccb2"/>
                     <circle cx="-11" cy="0" r="9" fill="#7f4f24"/>
@@ -2438,7 +2429,7 @@
                     <circle cx="-13.5" cy="-2" r="1.4" fill="#182238"/>
                     <circle cx="-8.5" cy="-2" r="1.4" fill="#182238"/>
                     <circle cx="-11" cy="1.5" r="2.5" fill="#182238"/>
-                    <!-- 17. 蒂蒂 -->
+
                     <ellipse cx="12" cy="12" rx="7.2" ry="7.5" fill="#b07d4f"/>
                     <ellipse cx="12" cy="12.5" rx="4.2" ry="5" fill="#faedcd"/>
                     <circle cx="12" cy="1" r="9" fill="#b07d4f"/>
@@ -2452,10 +2443,9 @@
                   </g></g>
                 </g>
 
-                <!-- 18-19. 怪獸電力公司 毛怪蘇利文 ＆ 大眼仔麥克（外層定位、內層搖擺跳躍） -->
+                <!-- 18-19. 怪獸電力公司 毛怪蘇利文 ＆ 大眼仔麥克 -->
                 <g transform="translate(885, 610) scale(1.66)">
                   <g class="monsters-wave">
-                    <!-- 18. 毛怪 Sulley -->
                     <path d="M-24,14 Q-36,10 -33,1" fill="none" stroke="#15aabf" stroke-width="5.6" stroke-linecap="round"/>
                     <ellipse cx="-15" cy="3" rx="16.5" ry="20" fill="#22b8cf" stroke="#1098ad" stroke-width="1"/>
                     <circle cx="-22" cy="-5" r="3.6" fill="#9c36b5" opacity="0.82"/>
@@ -2474,7 +2464,6 @@
                     <ellipse cx="-21" cy="22" rx="5.2" ry="2.8" fill="#15aabf"/>
                     <ellipse cx="-9" cy="22" rx="5.2" ry="2.8" fill="#15aabf"/>
 
-                    <!-- 19. 大眼仔 Mike Wazowski -->
                     <g class="mike-jump">
                       <line x1="11" y1="17" x2="10" y2="23" stroke="#51cf66" stroke-width="2.4" stroke-linecap="round"/>
                       <line x1="19" y1="17" x2="20" y2="23" stroke="#51cf66" stroke-width="2.4" stroke-linecap="round"/>
@@ -2494,10 +2483,9 @@
                   </g>
                 </g>
 
-                <!-- 20-21. 動物方城市 茱蒂警官 Judy Hopps ＆ 狐狸尼克 Nick Wilde（移入安全視覺主舞台並持續巡邏，保證每次全螢幕都能清晰看見！） -->
+                <!-- 20-21. 動物方城市 茱蒂警官 Judy Hopps ＆ 狐狸尼克 Nick Wilde -->
                 <g class="zootopia-patrol">
                   <g transform="scale(1.62)"><g class="char-idle-bob char-idle-bob-3">
-                    <!-- 20. 茱蒂 Judy -->
                     <rect x="-15" y="13" width="8" height="9" rx="2" fill="#1c7ed6"/>
                     <rect x="-16" y="3" width="10" height="11" rx="2.5" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
                     <circle cx="-13" cy="6" r="1.5" fill="#ffd166"/>
@@ -2507,7 +2495,7 @@
                     <circle cx="-13" cy="-2.5" r="1.3" fill="#9c36b5"/>
                     <circle cx="-9" cy="-2.5" r="1.3" fill="#9c36b5"/>
                     <circle cx="-11" cy="-0.5" r="1.1" fill="#ff8787"/>
-                    <!-- 21. 尼克 Nick -->
+
                     <path d="M15,15 Q24,12 22,5 Q17,7 14,12 Z" fill="#f76707"/>
                     <circle cx="22" cy="5.5" r="2.2" fill="#fff3bf"/>
                     <rect x="6" y="13" width="9" height="9" rx="2" fill="#8d5524"/>
@@ -2523,7 +2511,7 @@
                   </g></g>
                 </g>
 
-                <!-- 22. 大英雄天團 療癒系原版杯麵 Baymax（移入安全視覺主舞台右側並悠閒招手巡迴） -->
+                <!-- 22. 大英雄天團 療癒系原版杯麵 Baymax -->
                 <g class="baymax-ground-stroll">
                   <g transform="scale(1.64)"><g class="char-idle-bob">
                     <ellipse cx="0" cy="11" rx="14" ry="12" fill="#ffffff" stroke="#ced4da" stroke-width="1.1"/>
@@ -2539,7 +2527,7 @@
                   </g></g>
                 </g>
 
-                <!-- 23. 冰雪奇緣 艾莎 Elsa（外層定位、內層純相對魔法動畫，徹底杜絕左上角定位偏移） -->
+                <!-- 23. 冰雪奇緣 艾莎 Elsa -->
                 <g transform="translate(756, 518) scale(1.62)">
                   <path d="M-2,3 Q-13,11 -17,20 L-5,19 Z" fill="rgba(165, 216, 255, 0.76)"/>
                   <polygon points="-6.5,19 6.5,19 2.8,2 -2.8,2" fill="#4dabf7" stroke="#d0ebff" stroke-width="0.9"/>
@@ -2568,7 +2556,7 @@
                   </g>
                 </g>
 
-                <!-- 24. 冰雪奇緣 安娜 Anna（外層定位、內層搖擺） -->
+                <!-- 24. 冰雪奇緣 安娜 Anna -->
                 <g transform="translate(718, 520) scale(1.6)">
                   <g class="char-idle-bob char-idle-bob-2">
                     <polygon points="-6,18 6,18 3,3 -3,3" fill="#1c7ed6" stroke="#74c0fc" stroke-width="0.7"/>
@@ -2582,7 +2570,7 @@
                   </g>
                 </g>
 
-                <!-- 25. 魔髮奇緣 樂佩公主 Rapunzel（外層定位、內層搖擺） -->
+                <!-- 25. 魔髮奇緣 樂佩公主 Rapunzel -->
                 <g transform="translate(658, 522) scale(1.6)">
                   <g class="char-idle-bob">
                     <polygon points="-6.5,18 6.5,18 3,2 -3,2" fill="#9775fa" stroke="#e5dbff" stroke-width="0.8"/>
@@ -2598,7 +2586,6 @@
 
                 <!-- 【前景草坡大遊行組 1：經典米奇家族＆百畝森林夥伴向右散步 (7位)】 -->
                 <g class="parade-group-1">
-                  <!-- 26. 米奇 Mickey Mouse -->
                   <g transform="translate(0, -26) scale(1.66)"><g class="char-bob">
                     <rect x="-6.5" y="2" width="13" height="11" rx="3" fill="#fa5252"/>
                     <circle cx="-2.4" cy="7" r="1.4" fill="#ffffff"/>
@@ -2613,7 +2600,6 @@
                     <ellipse cx="3.8" cy="14.8" rx="4" ry="2.2" fill="#ffd166"/>
                   </g></g>
 
-                  <!-- 27. 米妮 Minnie Mouse -->
                   <g transform="translate(46, -26) scale(1.66)"><g class="char-bob char-bob-2">
                     <polygon points="-8.5,13 8.5,13 4.8,1 -4.8,1" fill="#ff4d4f"/>
                     <circle cx="-2.6" cy="8" r="1.2" fill="#ffffff"/>
@@ -2629,7 +2615,6 @@
                     <ellipse cx="3.5" cy="14.8" rx="3.6" ry="2" fill="#ffd166"/>
                   </g></g>
 
-                  <!-- 28. 唐老鴨 Donald Duck -->
                   <g transform="translate(92, -24) scale(1.66)"><g class="char-bob char-bob-3">
                     <rect x="-6.5" y="1" width="13" height="10" rx="3" fill="#228be6"/>
                     <line x1="-6" y1="3.5" x2="6" y2="3.5" stroke="#ffffff" stroke-width="1"/>
@@ -2642,7 +2627,6 @@
                     <ellipse cx="3.2" cy="13.2" rx="3.8" ry="2" fill="#fcc419"/>
                   </g></g>
 
-                  <!-- 29. 高飛 Goofy -->
                   <g transform="translate(138, -32) scale(1.66)"><g class="char-bob">
                     <rect x="-4.8" y="10" width="9.6" height="8.5" rx="1.5" fill="#339af0"/>
                     <rect x="-5.5" y="1" width="11" height="10" rx="2" fill="#ff922b"/>
@@ -2656,7 +2640,6 @@
                     <ellipse cx="3.5" cy="19.5" rx="4" ry="2" fill="#8d5524"/>
                   </g></g>
 
-                  <!-- 30. 小熊維尼 Winnie the Pooh -->
                   <g transform="translate(194, -24) scale(1.66)"><g class="char-bob char-bob-2">
                     <ellipse cx="0" cy="6" rx="8" ry="8.5" fill="#fcc419"/>
                     <rect x="-7.5" y="0" width="15" height="6.8" rx="2.5" fill="#fa5252"/>
@@ -2667,7 +2650,6 @@
                     <circle cx="5.2" cy="-3.8" r="1.4" fill="#182238"/>
                   </g></g>
 
-                  <!-- 31. 小豬 Piglet -->
                   <g transform="translate(232, -21) scale(1.64)"><g class="char-bob char-bob-3">
                     <ellipse cx="0" cy="5.5" rx="5.2" ry="6.5" fill="#ff8787"/>
                     <line x1="-4.5" y1="3.5" x2="4.5" y2="3.5" stroke="#e64980" stroke-width="1.4"/>
@@ -2679,7 +2661,6 @@
                     <circle cx="1.2" cy="-4.8" r="0.9" fill="#182238"/>
                   </g></g>
 
-                  <!-- 32. 跳跳虎 Tigger -->
                   <g transform="translate(274, -27) scale(1.66)"><g class="tigger-bounce">
                     <ellipse cx="0" cy="6" rx="6.5" ry="9.5" fill="#ff922b"/>
                     <ellipse cx="1.8" cy="6" rx="4" ry="6.8" fill="#fff3bf"/>
@@ -2695,7 +2676,6 @@
 
                 <!-- 【前景草坡大遊行組 2：冰雪奇緣＋玩具總動員＋達菲家族向左散步 (6位)】 -->
                 <g class="parade-group-2">
-                  <!-- 33. 雪寶 Olaf -->
                   <g transform="translate(0, -25) scale(1.66)"><g class="char-bob">
                     <line x1="-4.5" y1="0.5" x2="-10.5" y2="-4.5" stroke="#5c4033" stroke-width="1.3" stroke-linecap="round"/>
                     <line x1="4.5" y1="0.5" x2="10.5" y2="-3.5" stroke="#5c4033" stroke-width="1.3" stroke-linecap="round"/>
@@ -2711,7 +2691,6 @@
                     <line x1="-2" y1="-11" x2="-4" y2="-15" stroke="#5c4033" stroke-width="1.2"/>
                   </g></g>
 
-                  <!-- 34. 胡迪警長 Woody -->
                   <g transform="translate(50, -31) scale(1.66)"><g class="char-bob char-bob-2">
                     <rect x="-4.8" y="9" width="9.6" height="8.5" rx="1.5" fill="#228be6"/>
                     <rect x="-5.5" y="1" width="11" height="9.5" rx="2" fill="#ffd43b"/>
@@ -2724,7 +2703,6 @@
                     <rect x="-4.8" y="-13" width="9.6" height="4.2" rx="1.2" fill="#8d5524"/>
                   </g></g>
 
-                  <!-- 35. 玩具總動員三眼怪 Alien -->
                   <g transform="translate(100, -23) scale(1.66)"><g class="char-bob char-bob-3">
                     <rect x="-6.5" y="1" width="13" height="10.5" rx="3" fill="#228be6"/>
                     <rect x="-6.5" y="1" width="13" height="2.4" fill="#7048e8"/>
@@ -2739,7 +2717,6 @@
                     <circle cx="3.4" cy="-5" r="0.8" fill="#182238"/>
                   </g></g>
 
-                  <!-- 36. 達菲熊 Duffy -->
                   <g transform="translate(156, -24) scale(1.66)"><g class="char-bob">
                     <ellipse cx="0" cy="6" rx="7.2" ry="8.5" fill="#c68b59"/>
                     <polygon points="-4.5,1 4.5,1 0,5.5" fill="#ffffff" stroke="#228be6" stroke-width="1.1"/>
@@ -2750,7 +2727,6 @@
                     <rect x="-4.2" y="-12.5" width="8.4" height="3" rx="1.2" fill="#ffffff" stroke="#228be6" stroke-width="0.9"/>
                   </g></g>
 
-                  <!-- 37. 雪莉玫 ShellieMay -->
                   <g transform="translate(204, -24) scale(1.66)"><g class="char-bob char-bob-2">
                     <ellipse cx="0" cy="6" rx="7.2" ry="8.5" fill="#d99b84"/>
                     <polygon points="-4.5,1 4.5,1 0,5.5" fill="#fff0f6" stroke="#ff8787" stroke-width="1.1"/>
@@ -2761,7 +2737,6 @@
                     <polygon points="-4.8,-12 0,-9.5 4.8,-12 4.8,-7.5 0,-9.5 -4.8,-7.5" fill="#ff6b6b"/>
                   </g></g>
 
-                  <!-- 38. 星黛露 StellaLou -->
                   <g transform="translate(252, -26) scale(1.66)"><g class="char-bob char-bob-3">
                     <polygon points="-8,12 8,12 4.5,2 -4.5,2" fill="#74c0fc" stroke="#339af0" stroke-width="0.8"/>
                     <ellipse cx="0" cy="1" rx="5.5" ry="6.5" fill="#b197fc"/>
@@ -2788,7 +2763,7 @@
                 </g>
               </g>
 
-              <!-- 隱藏米奇微光剪影 (Hidden Mickeys，外層定位、內層呼吸閃爍) -->
+              <!-- 隱藏米奇微光剪影 -->
               <g fill="rgba(255, 243, 176, 0.52)">
                 <g transform="translate(268, 634)">
                   <g class="hidden-mickey-sparkle">
@@ -2852,10 +2827,10 @@
 
             <!-- 快捷主題切換膠囊 -->
             <div class="vac-quick-pills" id="vacQuickPills">
-              <button class="vac-chip active" data-preset="summer">☀️ 暑假之旅</button>
-              <button class="vac-chip" data-preset="newyear">🎆 跨年煙火</button>
-              <button class="vac-chip" data-preset="christmas">🎄 聖誕假期</button>
-              <button class="vac-chip" data-preset="custom">✨ 自訂日期</button>
+              <button type="button" class="vac-chip active" data-preset="summer">☀️ 暑假之旅</button>
+              <button type="button" class="vac-chip" data-preset="newyear">🎆 跨年煙火</button>
+              <button type="button" class="vac-chip" data-preset="christmas">🎄 聖誕假期</button>
+              <button type="button" class="vac-chip" data-preset="custom">✨ 自訂日期</button>
             </div>
 
             <!-- 魔法旅程進度條與行前準備清單 -->
@@ -2882,7 +2857,7 @@
             <p style="color: #d4def2; font-size: 1.05rem; line-height: 1.65; margin: 0 0 20px;" id="vipFireworksStatus">
               建議提前 20 分鐘切換至「TERRACE」或「RESORT」頻道，準備欣賞夜間煙火實況。
             </p>
-            <button class="btn-save" onclick="switchPage('terrace')">立即前往煙火直播畫面</button>
+            <button type="button" class="btn-save" id="btnVipGoTerrace">立即前往煙火直播畫面</button>
           </div>
         </div>
       </section>
@@ -2934,7 +2909,7 @@
             <div class="s-box" style="grid-column: 1 / -1;">
               <h3>📺 中央主畫面 YouTube Disney Resort TV 直播網址</h3>
               <div class="s-field">
-                <label for="inpResortYt">主畫面 RESORT TV YouTube 網址</label>
+                <label for="inpResortYt">主畫面 RESORT TV YouTube 網址（支援一般影片、直播、youtu.be、Shorts 與播放清單）</label>
                 <input type="url" id="inpResortYt" placeholder="例如：https://www.youtube.com/watch?v=... 或 https://youtu.be/..." />
               </div>
             </div>
@@ -2966,8 +2941,8 @@
             </div>
 
             <div class="s-actions">
-              <button class="btn-save" id="btnSaveSettings">儲存並套用設定</button>
-              <button class="btn-reset" id="btnResetSettings">恢復預設值</button>
+              <button type="button" class="btn-save" id="btnSaveSettings">儲存並套用設定</button>
+              <button type="button" class="btn-reset" id="btnResetSettings">恢復預設值</button>
               <span id="saveMsg" style="color: #5cd65c; font-weight: 700; font-size: 0.92rem;"></span>
             </div>
           </div>
@@ -2978,21 +2953,21 @@
     <!-- ========== 3. 最下方：設定齒輪 + 首頁房子 + 分區膠囊按鈕 ========== -->
     <footer class="bottom-bar">
       <div class="nav-left-icons">
-        <button class="icon-btn" id="btn-settings" title="設定" onclick="switchPage('settings')">
+        <button type="button" class="icon-btn" id="btn-settings" title="設定" data-nav-target="settings">
           <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>
         </button>
 
-        <button class="icon-btn active" id="btn-home" title="回到主畫面" onclick="switchPage('resort')">
+        <button type="button" class="icon-btn active" id="btn-home" title="回到主畫面" data-nav-target="resort">
           <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         </button>
       </div>
 
       <nav class="nav-pills">
-        <button class="pill-btn active" data-page="resort" onclick="switchPage('resort')">RESORT</button>
-        <button class="pill-btn" data-page="terrace" onclick="switchPage('terrace')">TERRACE</button>
-        <button class="pill-btn" data-page="parks" onclick="switchPage('parks')">PARKS</button>
-        <button class="pill-btn" data-page="vacation" onclick="switchPage('vacation')">VACATION</button>
-        <button class="pill-btn" data-page="vip" onclick="switchPage('vip')">VIP</button>
+        <button type="button" class="pill-btn active" data-page="resort">RESORT</button>
+        <button type="button" class="pill-btn" data-page="terrace">TERRACE</button>
+        <button type="button" class="pill-btn" data-page="parks">PARKS</button>
+        <button type="button" class="pill-btn" data-page="vacation">VACATION</button>
+        <button type="button" class="pill-btn" data-page="vip">VIP</button>
       </nav>
     </footer>
   </div>
@@ -3134,53 +3109,95 @@
       ]
     };
 
+    function safeClone(obj) {
+      if (typeof structuredClone === "function") {
+        try { return structuredClone(obj); } catch (e) {}
+      }
+      return JSON.parse(JSON.stringify(obj));
+    }
+
     let state = loadState();
-    let ridesData = structuredClone(INITIAL_RIDES);
+    let ridesData = safeClone(INITIAL_RIDES);
     let currentTerraceIdx = 0;
     let currentParkKey = "mk";
     let lastSimTime = new Date();
-    let liveSyncMode = "connecting"; // "live" | "fallback" | "connecting"
+    let liveSyncMode = "connecting";
     let activeApiSource = "ThemeParks.wiki";
     let prevDigits = { d: "", h: "", m: "", s: "" };
 
     function loadState() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return structuredClone(DEFAULT_DATA);
+        if (!raw) return safeClone(DEFAULT_DATA);
         const parsed = JSON.parse(raw);
         return {
-          ...structuredClone(DEFAULT_DATA),
+          ...safeClone(DEFAULT_DATA),
           ...parsed,
-          checklist: Array.isArray(parsed.checklist) ? parsed.checklist : structuredClone(DEFAULT_DATA.checklist)
+          checklist: Array.isArray(parsed.checklist) ? parsed.checklist : safeClone(DEFAULT_DATA.checklist)
         };
-      } catch {
-        return structuredClone(DEFAULT_DATA);
+      } catch (e) {
+        return safeClone(DEFAULT_DATA);
       }
     }
 
     function saveState() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch {}
+      } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
     }
 
     function toYouTubeEmbedUrl(inputUrl) {
       if (!inputUrl) return "";
       const url = inputUrl.trim();
-      if (url.includes("/embed/")) return url;
+      if (!url) return "";
 
-      const watchMatch = url.match(/[?&]v=([^&]+)/);
-      const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
-      const liveMatch = url.match(/youtube\.com\/live\/([^?&]+)/);
+      try {
+        // 如果已經是 embed 網址，補上相容播放參數
+        if (url.includes("/embed/")) {
+          const u = new URL(url.startsWith("http") ? url : "https://" + url);
+          u.searchParams.set("autoplay", "1");
+          u.searchParams.set("mute", "1");
+          u.searchParams.set("playsinline", "1");
+          u.searchParams.set("rel", "0");
+          return u.toString();
+        }
 
-      let videoId = "";
-      if (watchMatch) videoId = watchMatch[1];
-      else if (shortMatch) videoId = shortMatch[1];
-      else if (liveMatch) videoId = liveMatch[1];
+        // 支援播放清單網址 (playlist?list=...)
+        const listOnlyMatch = url.match(/youtube\.com\/playlist\?.*[?&]?list=([^&]+)/);
+        if (listOnlyMatch) {
+          return `https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(listOnlyMatch[1])}&autoplay=1&mute=1&playsinline=1&rel=0`;
+        }
 
-      if (videoId) {
-        return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&rel=0`;
-      }
+        const watchMatch = url.match(/[?&]v=([^&]+)/);
+        const shortMatch = url.match(/youtu\.be\/([^?&/]+)/);
+        const liveMatch = url.match(/youtube\.com\/live\/([^?&/]+)/);
+        const shortsMatch = url.match(/youtube\.com\/shorts\/([^?&/]+)/);
+        const listParamMatch = url.match(/[?&]list=([^&]+)/);
+
+        let videoId = "";
+        if (watchMatch) videoId = watchMatch[1];
+        else if (shortMatch) videoId = shortMatch[1];
+        else if (liveMatch) videoId = liveMatch[1];
+        else if (shortsMatch) videoId = shortsMatch[1];
+
+        if (videoId) {
+          let embed = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&mute=1&playsinline=1&rel=0&loop=1&playlist=${encodeURIComponent(videoId)}`;
+          if (listParamMatch && !listParamMatch[1].startsWith("RD")) {
+            embed = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?list=${encodeURIComponent(listParamMatch[1])}&autoplay=1&mute=1&playsinline=1&rel=0`;
+          }
+          return embed;
+        }
+      } catch (e) {}
+
       return url;
     }
 
@@ -3193,28 +3210,47 @@
         btn.classList.toggle("active", btn.dataset.page === pageId);
       });
 
-      document.getElementById("btn-home").classList.toggle("active", pageId === "resort");
-      document.getElementById("btn-settings").classList.toggle("active", pageId === "settings");
+      const btnHome = document.getElementById("btn-home");
+      const btnSettings = document.getElementById("btn-settings");
+      if (btnHome) btnHome.classList.toggle("active", pageId === "resort");
+      if (btnSettings) btnSettings.classList.toggle("active", pageId === "settings");
+
+      if (pageId === "vacation") {
+        stabilizeSafariFullscreenLayout();
+      } else if (pageId === "parks") {
+        renderParks(false);
+      } else if (pageId === "terrace") {
+        renderTerrace();
+      }
     }
 
     function renderResortMain() {
       const container = document.getElementById("resortStreamContainer");
-      const embedUrl = toYouTubeEmbedUrl(state.resortYtUrl);
+      if (!container) return;
+      const rawUrl = (state.resortYtUrl || "").trim();
+      const embedUrl = toYouTubeEmbedUrl(rawUrl);
 
       if (embedUrl) {
         container.innerHTML = `
-          <div class="resort-overlay-pill" onclick="switchPage('settings')" title="點擊更換直播網址">
+          <div class="resort-overlay-pill" id="btnOverlayResortSettings" title="點擊更換直播網址">
             <span class="live-dot"></span>
-            <span>DISNEY RESORT TV LIVE</span>
+            <span>DISNEY RESORT TV LIVE（點此更換網址）</span>
           </div>
-          <iframe src="${embedUrl}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+          <iframe
+            src="${escapeHtml(embedUrl)}"
+            title="Disney Resort TV Stream"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
         `;
+        const pill = document.getElementById("btnOverlayResortSettings");
+        if (pill) pill.addEventListener("click", () => switchPage("settings"));
       } else {
         container.innerHTML = `
           <div class="fallback-resort-bg">
             <div class="fallback-header-row">
               <h1 class="park-hours-headline">Walt Disney World &amp; Disneyland Resort</h1>
-              <div class="resort-overlay-pill" style="position:static;" onclick="switchPage('settings')">
+              <div class="resort-overlay-pill" id="btnOverlayResortSettings" style="position:static;">
                 <span class="live-dot"></span>
                 <span>點此貼上 YouTube Resort TV 直播網址</span>
               </div>
@@ -3254,30 +3290,41 @@
             </svg>
           </div>
         `;
+        const pill = document.getElementById("btnOverlayResortSettings");
+        if (pill) pill.addEventListener("click", () => switchPage("settings"));
       }
     }
 
     function renderTerrace() {
       const container = document.getElementById("terraceVideoContainer");
+      if (!container) return;
       const channelUrls = [state.terraceYt1, state.terraceYt2, state.terraceYt3, state.terraceYt4];
       const rawUrl = channelUrls[currentTerraceIdx] || "";
       const embedUrl = toYouTubeEmbedUrl(rawUrl);
 
       if (embedUrl) {
-        container.innerHTML = `<iframe src="${embedUrl}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+        container.innerHTML = `
+          <iframe
+            src="${escapeHtml(embedUrl)}"
+            title="Virtual Terrace Stream ${currentTerraceIdx + 1}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        `;
       } else {
         container.innerHTML = `
           <div style="text-align:center; padding:24px;">
             <p style="font-size:1.25rem; font-weight:700; margin:0 0 8px;">尚未設定煙火直播頻道 ${currentTerraceIdx + 1}</p>
             <p style="color:#a9b8d4; margin:0 0 16px;">目前共有 4 個直播頻道可切換，請點左下角 ⚙️ 設定貼上 YouTube 煙火或園區直播網址。</p>
-            <button class="btn-save" onclick="switchPage('settings')">前往設定貼上網址</button>
+            <button type="button" class="btn-save" id="btnTerraceGoSettings">前往設定貼上網址</button>
           </div>
         `;
+        const goBtn = document.getElementById("btnTerraceGoSettings");
+        if (goBtn) goBtn.addEventListener("click", () => switchPage("settings"));
       }
     }
 
     async function fetchLiveParkRides(meta) {
-      // 1. 第一優先：ThemeParks.wiki 官方級免費開放 API（原生支援 CORS、無需代理）
       try {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 6500);
@@ -3306,7 +3353,6 @@
         }
       } catch (e) {}
 
-      // 2. 第二備援：Queue-Times 透過 CORS 代理通道
       const qtTarget = `https://queue-times.com/parks/${meta.id}/queue_times.json`;
       const qtProxies = [
         `https://api.allorigins.win/raw?url=${encodeURIComponent(qtTarget)}`,
@@ -3377,7 +3423,6 @@
           const prevList = ridesData[parkKey] || [];
           const prevMap = new Map(prevList.map(item => [item.name.toLowerCase(), item.wait]));
 
-          // 優先匹配招牌設施，若不夠 6 項則補上其他排隊最久的熱門設施
           const featuredKeywords = prevList.map(p => p.name.toLowerCase());
           const matched = [];
           const usedNames = new Set();
@@ -3481,8 +3526,8 @@
         return `
           <div class="ride-card ${flashClass}">
             <div>
-              <div class="ride-name">${r.name}</div>
-              <div class="ride-land">${r.land}</div>
+              <div class="ride-name">${escapeHtml(r.name)}</div>
+              <div class="ride-land">${escapeHtml(r.land)}</div>
             </div>
             <div class="ride-right">
               ${trendHtml}
@@ -3585,7 +3630,6 @@
       applyFlipDigit("cdMins", m, "m");
       applyFlipDigit("cdSecs", s, "s");
 
-      // 線性進度條：秒數（每 1 秒線性推進）、分鐘（每 60 秒線性推進）、小時（每 3600 秒線性推進）、天數（每 86400 秒線性推進）
       const subSecRatio = diff > 0 ? ((diff % 1000) / 1000) : 0;
       const minRatio = diff > 0 ? ((diff % 60000) / 60000) : 0;
       const hrRatio = diff > 0 ? ((diff % 3600000) / 3600000) : 0;
@@ -3598,7 +3642,10 @@
     }
 
     function smoothCountdownLoop() {
-      updateTimers();
+      const vacPage = document.getElementById("page-vacation");
+      if (vacPage && vacPage.classList.contains("active")) {
+        updateTimers();
+      }
       requestAnimationFrame(smoothCountdownLoop);
     }
 
@@ -3614,7 +3661,7 @@
       container.innerHTML = list.map((item, idx) => `
         <button type="button" class="check-pill ${item.done ? "done" : ""}" data-check-idx="${idx}">
           <span>${item.done ? "✓" : "○"}</span>
-          <span>${item.label}</span>
+          <span>${escapeHtml(item.label)}</span>
         </button>
       `).join("");
 
@@ -3645,17 +3692,7 @@
       document.getElementById("inpFireworksTime").value = state.fireworksTime;
     }
 
-    document.querySelectorAll("#vacQuickPills .vac-chip").forEach(chip => {
-      chip.addEventListener("click", () => {
-        const key = chip.dataset.preset;
-        const p = PRESETS[key];
-        if (!p) return;
-        state.holidayPreset = key;
-        state.vacTitle = p.title;
-        state.vacDate = p.date;
-        saveState();
-    
-    // 螢幕比例自適應引擎：iPad / 橫式平板顯示 1440px 全景視野；手機直式自動聚焦中央城堡與角色主舞台
+    // 螢幕比例自適應引擎
     function adaptStageToViewport() {
       const svg = document.getElementById("resortPanoramaSvg");
       if (!svg) return;
@@ -3672,7 +3709,6 @@
       }
     }
 
-    // 修復 Safari / iPadOS 全螢幕切換、旋轉或返回前景時視口尺寸同步（絕不切換 display:none 破壞 SVG 動畫座標！）
     function stabilizeSafariFullscreenLayout() {
       const shell = document.querySelector(".tv-shell");
       adaptStageToViewport();
@@ -3683,6 +3719,140 @@
       }
     }
 
+    // ================= 綁定所有互動按鈕事件 =================
+    function bindAllEvents() {
+      // 底部導覽列按鈕
+      document.querySelectorAll(".pill-btn[data-page]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          switchPage(btn.dataset.page);
+        });
+      });
+
+      const btnSettings = document.getElementById("btn-settings");
+      if (btnSettings) btnSettings.addEventListener("click", () => switchPage("settings"));
+
+      const btnHome = document.getElementById("btn-home");
+      if (btnHome) btnHome.addEventListener("click", () => switchPage("resort"));
+
+      // VIP 頁面前往煙火直播按鈕
+      const btnVipGoTerrace = document.getElementById("btnVipGoTerrace");
+      if (btnVipGoTerrace) btnVipGoTerrace.addEventListener("click", () => switchPage("terrace"));
+
+      // TERRACE 4 個直播頻道切換按鈕
+      document.querySelectorAll("#terraceSwitchGroup .mini-pill-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentTerraceIdx = Number(btn.dataset.terraceIdx) || 0;
+          document.querySelectorAll("#terraceSwitchGroup .mini-pill-btn").forEach(b => {
+            b.classList.toggle("active", b === btn);
+          });
+          renderTerrace();
+        });
+      });
+
+      // PARKS 6 大園區切換按鈕
+      document.querySelectorAll("#parkSwitchGroup .mini-pill-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentParkKey = btn.dataset.park || "mk";
+          document.querySelectorAll("#parkSwitchGroup .mini-pill-btn").forEach(b => {
+            b.classList.toggle("active", b === btn);
+          });
+          renderParks(false);
+          syncParkLiveWaitTimes(currentParkKey, false);
+        });
+      });
+
+      // PARKS 立即更新按鈕
+      const btnManualRefreshRides = document.getElementById("btnManualRefreshRides");
+      if (btnManualRefreshRides) {
+        btnManualRefreshRides.addEventListener("click", () => {
+          syncParkLiveWaitTimes(currentParkKey, true);
+        });
+      }
+
+      // VACATION 快捷主題膠囊按鈕
+      document.querySelectorAll("#vacQuickPills .vac-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          const key = chip.dataset.preset;
+          const p = PRESETS[key];
+          if (!p) return;
+          state.holidayPreset = key;
+          state.vacTitle = p.title;
+          state.vacDate = p.date;
+          saveState();
+          fillSettingsForm();
+          refreshVacationHeader();
+          updateTimers();
+        });
+      });
+
+      // 設定頁下拉選單聯動
+      const inpHolidayPreset = document.getElementById("inpHolidayPreset");
+      if (inpHolidayPreset) {
+        inpHolidayPreset.addEventListener("change", () => {
+          const p = PRESETS[inpHolidayPreset.value];
+          if (p) {
+            document.getElementById("inpVacTitle").value = p.title;
+            document.getElementById("inpVacDate").value = p.date;
+          }
+        });
+      }
+
+      // 儲存並套用設定按鈕
+      const btnSaveSettings = document.getElementById("btnSaveSettings");
+      if (btnSaveSettings) {
+        btnSaveSettings.addEventListener("click", () => {
+          state.welcomeLabel = document.getElementById("inpWelcomeLabel").value.trim() || "WELCOME";
+          state.familyName = document.getElementById("inpFamilyName").value.trim() || "Smith Family";
+          state.dateLocale = document.getElementById("inpDateLocale").value || "en";
+          state.holidayPreset = document.getElementById("inpHolidayPreset").value || "summer";
+          state.vacTitle = document.getElementById("inpVacTitle").value.trim() || PRESETS.summer.title;
+          state.vacDate = document.getElementById("inpVacDate").value || PRESETS.summer.date;
+          state.resortYtUrl = document.getElementById("inpResortYt").value.trim();
+          state.terraceYt1 = document.getElementById("inpTerraceYt1").value.trim();
+          state.terraceYt2 = document.getElementById("inpTerraceYt2").value.trim();
+          state.terraceYt3 = document.getElementById("inpTerraceYt3").value.trim();
+          state.terraceYt4 = document.getElementById("inpTerraceYt4").value.trim();
+          state.fireworksTime = document.getElementById("inpFireworksTime").value || "21:00";
+
+          saveState();
+          updateTopBar();
+          renderResortMain();
+          renderTerrace();
+          refreshVacationHeader();
+          updateTimers();
+
+          const msg = document.getElementById("saveMsg");
+          if (msg) {
+            msg.textContent = "✅ 設定已儲存並套用！";
+            setTimeout(() => { msg.textContent = ""; }, 3000);
+          }
+        });
+      }
+
+      // 恢復預設值按鈕
+      const btnResetSettings = document.getElementById("btnResetSettings");
+      if (btnResetSettings) {
+        btnResetSettings.addEventListener("click", () => {
+          state = safeClone(DEFAULT_DATA);
+          saveState();
+          fillSettingsForm();
+          updateTopBar();
+          renderResortMain();
+          renderTerrace();
+          refreshVacationHeader();
+          updateTimers();
+          renderChecklist();
+
+          const msg = document.getElementById("saveMsg");
+          if (msg) {
+            msg.textContent = "🔄 已恢復為預設設定";
+            setTimeout(() => { msg.textContent = ""; }, 3000);
+          }
+        });
+      }
+    }
+
+    // 視口與全螢幕事件監聽
     window.addEventListener("resize", stabilizeSafariFullscreenLayout);
     window.addEventListener("orientationchange", () => {
       setTimeout(stabilizeSafariFullscreenLayout, 120);
@@ -3702,9 +3872,7 @@
       }
     });
 
-    stabilizeSafariFullscreenLayout();
-
-    // 不定時、一陣一陣的慶典煙火排程器（模仿迪士尼城堡夜間煙火秀的節奏）
+    // 不定時、一陣一陣的慶典煙火排程器
     (function initSporadicFireworks() {
       const layer = document.getElementById("dynamicFireworksLayer");
       if (!layer) return;
@@ -3794,6 +3962,33 @@
       setTimeout(triggerFireworkSalvo, 2500);
     })();
 
+    // ================= 初始化啟動應用程式 =================
+    function initApp() {
+      bindAllEvents();
+      fillSettingsForm();
+      updateTopBar();
+      renderResortMain();
+      renderTerrace();
+      renderParks(false);
+      refreshVacationHeader();
+      updateTimers();
+      renderChecklist();
+      stabilizeSafariFullscreenLayout();
+
+      // 啟動頂部時鐘更新（每秒）
+      setInterval(updateTopBar, 1000);
+
+      // 啟動平滑倒數動畫循環
+      requestAnimationFrame(smoothCountdownLoop);
+
+      // 首次同步園區即時排隊時間，並每 3 分鐘自動背景更新
+      syncParkLiveWaitTimes(currentParkKey, false);
+      setInterval(() => {
+        syncParkLiveWaitTimes(currentParkKey, false);
+      }, 180000);
+    }
+
+    initApp();
   </script>
 </body>
 </html>
