@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V22（完整修復＋全優化版）</title>
+  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V23（極致60FPS硬體加速版）</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -540,6 +540,41 @@
       animation-play-state: paused !important;
     }
 
+    /* ================= 極致 60FPS GPU 合成層隔離與硬體加速 ================= */
+    #resortPanoramaSvg {
+      contain: strict;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+    .vacation-content {
+      contain: layout style;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+    .monorail-glide,
+    .airship-cruise,
+    .trolley-ride,
+    .peter-pan-flight,
+    .dumbo-flight,
+    .tinkerbell-orbit,
+    .aladdin-carpet,
+    .buzz-soar,
+    .eve-walle-drift,
+    .up-house-float,
+    .baymax-fly,
+    .parade-group-1,
+    .parade-group-2,
+    .zootopia-patrol,
+    .baymax-ground-stroll,
+    .stitch-stroll,
+    .chipdale-stroll,
+    .mcqueen-zip,
+    .ferris-spin {
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
     /* 閃爍星星與十字星芒 */
     .star-twinkle {
       transform-box: fill-box;
@@ -625,8 +660,8 @@
       animation: monorailRun 18s linear infinite both;
     }
     @keyframes monorailRun {
-      0% { transform: translate(-340px, 563px); }
-      100% { transform: translate(1780px, 563px); }
+      0% { transform: translate3d(-340px, 563px, 0); }
+      100% { transform: translate3d(1780px, 563px, 0); }
     }
 
     /* 城堡尖塔微光與旗幟 */
@@ -695,9 +730,9 @@
       animation: airshipFly 34s linear infinite -9s both;
     }
     @keyframes airshipFly {
-      0% { transform: translate(-220px, 165px); }
-      50% { transform: translate(720px, 148px); }
-      100% { transform: translate(1660px, 165px); }
+      0% { transform: translate3d(-220px, 165px, 0); }
+      50% { transform: translate3d(720px, 148px, 0); }
+      100% { transform: translate3d(1660px, 165px, 0); }
     }
 
     /* 城堡護城河／湖面水波微光 */
@@ -767,8 +802,8 @@
       animation: trolleyMove 26s linear infinite -6s both;
     }
     @keyframes trolleyMove {
-      0% { transform: translate(-180px, 646px); }
-      100% { transform: translate(1620px, 646px); }
+      0% { transform: translate3d(-180px, 646px, 0); }
+      100% { transform: translate3d(1620px, 646px, 0); }
     }
 
     /* 不定時慶典煙火陣列（一陣一陣動態綻放） */
@@ -793,9 +828,9 @@
       animation: peterPanFly 26s linear infinite -4s both;
     }
     @keyframes peterPanFly {
-      0% { transform: translate(-340px, 118px) rotate(-6deg); }
-      45% { transform: translate(680px, 78px) rotate(-2deg); }
-      100% { transform: translate(1740px, 108px) rotate(-5deg); }
+      0% { transform: translate3d(-340px, 118px, 0) rotate(-6deg); }
+      45% { transform: translate3d(680px, 78px, 0) rotate(-2deg); }
+      100% { transform: translate3d(1740px, 108px, 0) rotate(-5deg); }
     }
 
     .dumbo-flight {
@@ -803,9 +838,9 @@
       animation: dumboFly 30s linear infinite -10s both;
     }
     @keyframes dumboFly {
-      0% { transform: translate(1680px, 178px); }
-      50% { transform: translate(720px, 152px); }
-      100% { transform: translate(-320px, 182px); }
+      0% { transform: translate3d(1680px, 178px, 0); }
+      50% { transform: translate3d(720px, 152px, 0); }
+      100% { transform: translate3d(-320px, 182px, 0); }
     }
     .dumbo-ear {
       transform-box: fill-box;
@@ -822,11 +857,11 @@
       animation: tinkFlutter 16s ease-in-out infinite both;
     }
     @keyframes tinkFlutter {
-      0% { transform: translate(555px, 415px); }
-      25% { transform: translate(665px, 345px); }
-      50% { transform: translate(865px, 375px); }
-      75% { transform: translate(775px, 455px); }
-      100% { transform: translate(555px, 415px); }
+      0% { transform: translate3d(555px, 415px, 0); }
+      25% { transform: translate3d(665px, 345px, 0); }
+      50% { transform: translate3d(865px, 375px, 0); }
+      75% { transform: translate3d(775px, 455px, 0); }
+      100% { transform: translate3d(555px, 415px, 0); }
     }
     .tink-wing {
       transform-box: fill-box;
@@ -843,9 +878,9 @@
       animation: carpetGlide 32s linear infinite -14s both;
     }
     @keyframes carpetGlide {
-      0% { transform: translate(-300px, 232px) rotate(3deg); }
-      50% { transform: translate(720px, 204px) rotate(-2deg); }
-      100% { transform: translate(1740px, 228px) rotate(3deg); }
+      0% { transform: translate3d(-300px, 232px, 0) rotate(3deg); }
+      50% { transform: translate3d(720px, 204px, 0) rotate(-2deg); }
+      100% { transform: translate3d(1740px, 228px, 0) rotate(3deg); }
     }
 
     .buzz-soar {
@@ -853,9 +888,9 @@
       animation: buzzFly 25s linear infinite -7s both;
     }
     @keyframes buzzFly {
-      0% { transform: translate(1700px, 278px) rotate(12deg); }
-      50% { transform: translate(740px, 236px) rotate(4deg); }
-      100% { transform: translate(-320px, 268px) rotate(10deg); }
+      0% { transform: translate3d(1700px, 278px, 0) rotate(12deg); }
+      50% { transform: translate3d(740px, 236px, 0) rotate(4deg); }
+      100% { transform: translate3d(-320px, 268px, 0) rotate(10deg); }
     }
 
     .eve-walle-drift {
@@ -863,9 +898,9 @@
       animation: eveDrift 29s linear infinite -19s both;
     }
     @keyframes eveDrift {
-      0% { transform: translate(-280px, 315px); }
-      50% { transform: translate(700px, 292px); }
-      100% { transform: translate(1720px, 318px); }
+      0% { transform: translate3d(-280px, 315px, 0); }
+      50% { transform: translate3d(700px, 292px, 0); }
+      100% { transform: translate3d(1720px, 318px, 0); }
     }
 
     .up-house-float {
@@ -873,9 +908,9 @@
       animation: upHouseDrift 38s linear infinite -8s both;
     }
     @keyframes upHouseDrift {
-      0% { transform: translate(1680px, 142px); }
-      50% { transform: translate(760px, 118px); }
-      100% { transform: translate(-240px, 138px); }
+      0% { transform: translate3d(1680px, 142px, 0); }
+      50% { transform: translate3d(760px, 118px, 0); }
+      100% { transform: translate3d(-240px, 138px, 0); }
     }
 
     .baymax-fly {
@@ -883,9 +918,9 @@
       animation: baymaxHeroFly 28s linear infinite -5s both;
     }
     @keyframes baymaxHeroFly {
-      0% { transform: translate(-280px, 255px) rotate(-8deg); }
-      48% { transform: translate(720px, 212px) rotate(-3deg); }
-      100% { transform: translate(1720px, 245px) rotate(-7deg); }
+      0% { transform: translate3d(-280px, 255px, 0) rotate(-8deg); }
+      48% { transform: translate3d(720px, 212px, 0) rotate(-3deg); }
+      100% { transform: translate3d(1720px, 245px, 0) rotate(-7deg); }
     }
 
     .parade-group-1 {
@@ -893,8 +928,8 @@
       animation: paradeWalkRight 42s linear infinite -12s both;
     }
     @keyframes paradeWalkRight {
-      0% { transform: translate(-620px, 644px); }
-      100% { transform: translate(1640px, 644px); }
+      0% { transform: translate3d(-620px, 644px, 0); }
+      100% { transform: translate3d(1640px, 644px, 0); }
     }
 
     .parade-group-2 {
@@ -902,8 +937,8 @@
       animation: paradeWalkLeft 46s linear infinite -20s both;
     }
     @keyframes paradeWalkLeft {
-      0% { transform: translate(1640px, 654px); }
-      100% { transform: translate(-720px, 654px); }
+      0% { transform: translate3d(1640px, 654px, 0); }
+      100% { transform: translate3d(-720px, 654px, 0); }
     }
 
     .char-bob {
@@ -945,9 +980,9 @@
       animation: zootopiaStroll 24s ease-in-out infinite alternate both;
     }
     @keyframes zootopiaStroll {
-      0% { transform: translate(1018px, 616px); }
-      50% { transform: translate(925px, 622px); }
-      100% { transform: translate(1135px, 614px); }
+      0% { transform: translate3d(1018px, 616px, 0); }
+      50% { transform: translate3d(925px, 622px, 0); }
+      100% { transform: translate3d(1135px, 614px, 0); }
     }
 
     .baymax-ground-stroll {
@@ -955,9 +990,9 @@
       animation: baymaxStroll 22s ease-in-out infinite alternate both;
     }
     @keyframes baymaxStroll {
-      0% { transform: translate(1178px, 616px); }
-      50% { transform: translate(1235px, 614px); }
-      100% { transform: translate(1088px, 620px); }
+      0% { transform: translate3d(1178px, 616px, 0); }
+      50% { transform: translate3d(1235px, 614px, 0); }
+      100% { transform: translate3d(1088px, 620px, 0); }
     }
 
     .stitch-stroll {
@@ -965,9 +1000,9 @@
       animation: stitchPatrol 21s ease-in-out infinite alternate both;
     }
     @keyframes stitchPatrol {
-      0% { transform: translate(235px, 616px); }
-      50% { transform: translate(345px, 622px); }
-      100% { transform: translate(165px, 616px); }
+      0% { transform: translate3d(235px, 616px, 0); }
+      50% { transform: translate3d(345px, 622px, 0); }
+      100% { transform: translate3d(165px, 616px, 0); }
     }
 
     .chipdale-stroll {
@@ -975,9 +1010,9 @@
       animation: chipdalePatrol 23s ease-in-out infinite alternate both;
     }
     @keyframes chipdalePatrol {
-      0% { transform: translate(388px, 624px); }
-      50% { transform: translate(485px, 628px); }
-      100% { transform: translate(310px, 622px); }
+      0% { transform: translate3d(388px, 624px, 0); }
+      50% { transform: translate3d(485px, 628px, 0); }
+      100% { transform: translate3d(310px, 622px, 0); }
     }
 
     .monsters-wave {
@@ -1061,8 +1096,8 @@
       animation: mcqueenRace 16s linear infinite -3s both;
     }
     @keyframes mcqueenRace {
-      0% { transform: translate(-220px, 654px); }
-      100% { transform: translate(1620px, 654px); }
+      0% { transform: translate3d(-220px, 654px, 0); }
+      100% { transform: translate3d(1620px, 654px, 0); }
     }
 
     .hidden-mickey-sparkle {
@@ -1091,9 +1126,7 @@
 
     .vacation-content .vac-badge,
     .vacation-content .vac-chip {
-      background: rgba(10, 20, 42, 0.58);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(9, 18, 38, 0.84);
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
     }
     .vacation-content .vac-chip.active {
@@ -1109,9 +1142,7 @@
       font-weight: 600;
     }
     .vacation-content .trip-progress-wrap {
-      background: rgba(9, 17, 36, 0.52);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(8, 15, 32, 0.82);
       border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
@@ -1222,6 +1253,15 @@
       will-change: transform;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
+    }
+
+    .cd-linear-bar.sec-sweep {
+      animation: secBarSweep 1s linear infinite;
+    }
+
+    @keyframes secBarSweep {
+      0% { transform: scale3d(1, 1, 1); }
+      100% { transform: scale3d(0, 1, 1); }
     }
 
     .cd-lbl {
@@ -1837,16 +1877,6 @@
                 </linearGradient>
               
                 <!-- 角色專屬立體漸層與光影質感（極致精修無眼版） -->
-                <filter id="charShadow" x="-15%" y="-15%" width="130%" height="135%">
-                  <feDropShadow dx="0" dy="1.8" stdDeviation="1.4" flood-color="#050b1a" flood-opacity="0.45"/>
-                </filter>
-                <filter id="magicSoftGlow" x="-35%" y="-35%" width="170%" height="170%">
-                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
-                  <feMerge>
-                    <feMergeNode in="blur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
                 <radialGradient id="skinWarm" cx="36%" cy="28%" r="72%">
                   <stop offset="0%" stop-color="#fff4e4"/>
                   <stop offset="55%" stop-color="#ffdcb8"/>
@@ -2281,7 +2311,7 @@
               </g>
 
               <!-- ==================== 極致精修高辨識度迪士尼＆皮克斯角色群 (39位全角色·純粹無眼藝術剪影版) ==================== -->
-              <g class="characters-layer" filter="url(#charShadow)">
+              <g class="characters-layer">
                 <!-- 【高空奇幻飛行組 (12位) — 精修層次服飾、飄逸動態與無眼藝術剪影】 -->
                 <!-- 1-3. 小飛俠彼得潘、溫蒂、約翰 -->
                 <g class="peter-pan-flight">
@@ -2417,7 +2447,7 @@
                     <circle cx="3.1" cy="12.1" r="1.8" fill="#ffffff"/>
                     <!-- 星塵魔法棒 -->
                     <line x1="4" y1="-2" x2="13" y2="-9.8" stroke="#fff3b0" stroke-width="1.6" stroke-linecap="round"/>
-                    <polygon points="13,-13 13.9,-10.6 16.3,-9.8 13.9,-8.9 13,-6.5 12.1,-8.9 9.7,-9.8 12.1,-10.6" fill="#ffd166" filter="url(#magicSoftGlow)"/>
+                    <polygon points="13,-13 13.9,-10.6 16.3,-9.8 13.9,-8.9 13,-6.5 12.1,-8.9 9.7,-9.8 12.1,-10.6" fill="#ffd166"/>
                   </g>
                 </g>
 
@@ -3427,6 +3457,7 @@
 
       if (pageId === "vacation") {
         stabilizeSafariFullscreenLayout();
+        updateTimers();
       } else if (pageId === "parks") {
         renderParks(false);
       } else if (pageId === "terrace") {
@@ -3783,8 +3814,7 @@
     const cdNumEls = {};
     const barEls = {};
     let cachedTargetMs = 0;
-    let lastBarQuantized = -1;
-    let rafCountdownId = null;
+    let countdownTickTimer = null;
 
     function getCdNumEl(elId) {
       if (!cdNumEls[elId]) {
@@ -3800,7 +3830,6 @@
         el.textContent = newVal;
         prevDigits[key] = newVal;
         el.classList.remove("smooth-glide");
-        // 透過雙層 rAF 觸發重新播放動畫，避免同步讀取 offsetWidth 引發版面抖動
         requestAnimationFrame(() => {
           const target = getCdNumEl(elId);
           if (target && prevDigits[key] === newVal) {
@@ -3822,7 +3851,6 @@
 
       const parsed = new Date(state.vacDate).getTime();
       cachedTargetMs = isNaN(parsed) ? 0 : parsed;
-      lastBarQuantized = -1;
 
       const fw = state.fireworksTime || "21:00";
       document.getElementById("vipFireworksHeadline").textContent = `今晚煙火秀：${fw} 準時登場`;
@@ -3854,28 +3882,40 @@
       applyFlipDigit("cdMins", m, "m");
       applyFlipDigit("cdSecs", s, "s");
 
-      // 以 20ms 步進量化進度條，兼顧視覺滑順與 GPU 負擔降低
-      const quantized = Math.floor(nowMs / 20);
-      if (quantized !== lastBarQuantized) {
-        lastBarQuantized = quantized;
-        const subSecRatio = diff > 0 ? ((diff % 1000) / 1000) : 0;
-        const minRatio = diff > 0 ? ((diff % 60000) / 60000) : 0;
-        const hrRatio = diff > 0 ? ((diff % 3600000) / 3600000) : 0;
-        const dayRatio = diff > 0 ? ((diff % 86400000) / 86400000) : 0;
-
-        setLinearBarScale("barSecs", subSecRatio);
-        setLinearBarScale("barMins", minRatio);
-        setLinearBarScale("barHours", hrRatio);
-        setLinearBarScale("barDays", dayRatio);
+      // 秒針進度條交由純 GPU CSS 動畫跑 60FPS，零 JS 主執行緒負擔；分/時/日每秒更新一次即可
+      const secBar = barEls["barSecs"] || (barEls["barSecs"] = document.getElementById("barSecs"));
+      if (secBar) {
+        if (diff > 0) {
+          if (!secBar.classList.contains("sec-sweep")) {
+            secBar.classList.add("sec-sweep");
+          }
+          const subSecOffset = -((1000 - (diff % 1000)) / 1000).toFixed(2) + "s";
+          if (secBar.style.animationDelay !== subSecOffset) {
+            secBar.style.animationDelay = subSecOffset;
+          }
+        } else {
+          secBar.classList.remove("sec-sweep");
+          secBar.style.transform = "scale3d(0, 1, 1)";
+        }
       }
+
+      const minRatio = diff > 0 ? ((diff % 60000) / 60000) : 0;
+      const hrRatio = diff > 0 ? ((diff % 3600000) / 3600000) : 0;
+      const dayRatio = diff > 0 ? ((diff % 86400000) / 86400000) : 0;
+
+      setLinearBarScale("barMins", minRatio);
+      setLinearBarScale("barHours", hrRatio);
+      setLinearBarScale("barDays", dayRatio);
     }
 
-    function smoothCountdownLoop() {
+    function scheduleExactSecondTick() {
+      if (countdownTickTimer) clearTimeout(countdownTickTimer);
       const vacPage = document.getElementById("page-vacation");
       if (vacPage && vacPage.classList.contains("active")) {
         updateTimers();
       }
-      rafCountdownId = requestAnimationFrame(smoothCountdownLoop);
+      const delayToNextSec = 1000 - (Date.now() % 1000) + 8;
+      countdownTickTimer = setTimeout(scheduleExactSecondTick, delayToNextSec);
     }
 
     function renderChecklist() {
@@ -4138,6 +4178,7 @@
         burst.setAttribute("class", "dynamic-fw-burst");
         burst.style.setProperty("--fw-dur", dur);
 
+        const frag = document.createDocumentFragment();
         for (let i = 0; i < rays; i++) {
           const angle = (i * 360 / rays) * (Math.PI / 180);
           const line = document.createElementNS(ns, "line");
@@ -4148,7 +4189,7 @@
           line.setAttribute("stroke", i % 2 === 0 ? pal.main : pal.sub);
           line.setAttribute("stroke-width", i % 2 === 0 ? "2.3" : "1.6");
           line.setAttribute("stroke-linecap", "round");
-          burst.appendChild(line);
+          frag.appendChild(line);
         }
 
         const ring = document.createElementNS(ns, "circle");
@@ -4159,15 +4200,16 @@
         ring.setAttribute("stroke", pal.sub);
         ring.setAttribute("stroke-width", "1.4");
         ring.setAttribute("stroke-dasharray", "2.5 5.5");
-        burst.appendChild(ring);
+        frag.appendChild(ring);
 
         const core = document.createElementNS(ns, "circle");
         core.setAttribute("cx", "0");
         core.setAttribute("cy", "0");
         core.setAttribute("r", "3.2");
         core.setAttribute("fill", "#ffffff");
-        burst.appendChild(core);
+        frag.appendChild(core);
 
+        burst.appendChild(frag);
         g.appendChild(burst);
         layer.appendChild(g);
 
@@ -4208,7 +4250,7 @@
       setInterval(updateTopBar, 1000);
 
       // 啟動平滑倒數動畫循環
-      requestAnimationFrame(smoothCountdownLoop);
+      scheduleExactSecondTick();
 
       // 首次同步園區即時排隊時間，並每 3 分鐘自動背景更新
       syncParkLiveWaitTimes(currentParkKey, false);
