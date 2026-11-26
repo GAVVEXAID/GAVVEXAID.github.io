@@ -2,10 +2,11 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V19（緊急修復 Safari/iPad 全螢幕左上角殘留）</title>
+  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V19.1（Safari/iPad 全螢幕左上角殘留修復）</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -32,20 +33,45 @@
       padding: 0;
       width: 100%;
       height: 100%;
+      min-height: 100dvh;
       overflow: hidden;
       background: #0e131c;
       color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "Noto Sans TC", sans-serif;
+      overscroll-behavior: none;
     }
 
     .tv-shell {
+      position: fixed;
+      inset: 0;
       display: flex;
       flex-direction: column;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       height: 100dvh;
+      overflow: hidden;
+      background: #0e131c;
       padding-top: env(safe-area-inset-top, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
       padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
+      transform: translate3d(0, 0, 0);
+    }
+
+    /* 修復 Safari / iPadOS 全螢幕切換與安全區左上角殘留區塊 */
+    :fullscreen,
+    :-webkit-full-screen,
+    .tv-shell:fullscreen,
+    .tv-shell:-webkit-full-screen {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #0e131c !important;
+      overflow: hidden !important;
     }
 
     /* ================= 1. 最上方狀態列 ================= */
@@ -498,11 +524,14 @@
     .vacation-bg-layer {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 1;
-      overflow: hidden;
-      transform: translateZ(0);
+      overflow: clip;
+      transform: translate3d(0, 0, 0);
       backface-visibility: hidden;
+      contain: strict;
     }
 
     /* 閃爍星星與十字星芒 */
@@ -3138,6 +3167,9 @@
 
       document.getElementById("btn-home").classList.toggle("active", pageId === "resort");
       document.getElementById("btn-settings").classList.toggle("active", pageId === "settings");
+      if (pageId === "vacation" || pageId === "resort") {
+        requestAnimationFrame(stabilizeSafariFullscreenLayout);
+      }
     }
 
     function renderResortMain() {
@@ -3598,52 +3630,6 @@
         state.vacDate = p.date;
         saveState();
     
-    // 螢幕比例自適應引擎：iPad / 橫式平板顯示 1440px 全景視野；手機直式自動聚焦中央城堡與角色主舞台，避免左右過度裁切導致比例變形
-    function adaptStageToViewport() {
-      const svg = document.getElementById("resortPanoramaSvg");
-      if (!svg) return;
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      const isMobilePortrait = w < 768 && h > w;
-
-      if (isMobilePortrait) {
-        // 聚焦中央核心舞台 (x: 360..1080, width: 720, height: 760)，讓城堡、煙火、飛翔角色與大遊行在手機直螢幕裡比例完美！
-        svg.setAttribute("viewBox", "360 0 720 760");
-        svg.setAttribute("preserveAspectRatio", "xMidYMax slice");
-      } else {
-        // iPad 橫式 / 桌機全螢幕：完整呈現左右 EPCOT 地球、太空山、驚魂古塔、皮克斯摩天輪與中央城堡全景
-        svg.setAttribute("viewBox", "0 0 1440 760");
-        svg.setAttribute("preserveAspectRatio", "xMidYMax slice");
-      }
-    }
-
-    window.addEventListener("resize", adaptStageToViewport);
-    window.addEventListener("orientationchange", adaptStageToViewport);
-
-    function forceSvgAnimationSync() {
-      const layer = document.querySelector(".characters-layer");
-      if (!layer) return;
-      layer.style.display = "none";
-      void layer.getBoundingClientRect();
-      layer.style.display = "";
-    }
-    document.addEventListener("fullscreenchange", () => {
-      adaptStageToViewport();
-      forceSvgAnimationSync();
-    });
-    document.addEventListener("webkitfullscreenchange", () => {
-      adaptStageToViewport();
-      forceSvgAnimationSync();
-    });
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) {
-        adaptStageToViewport();
-        forceSvgAnimationSync();
-      }
-    });
-
-    adaptStageToViewport();
-
     fillSettingsForm();
         refreshVacationHeader();
       updateTimers();
@@ -3690,52 +3676,6 @@
       state = structuredClone(DEFAULT_DATA);
       saveState();
   
-    // 螢幕比例自適應引擎：iPad / 橫式平板顯示 1440px 全景視野；手機直式自動聚焦中央城堡與角色主舞台，避免左右過度裁切導致比例變形
-    function adaptStageToViewport() {
-      const svg = document.getElementById("resortPanoramaSvg");
-      if (!svg) return;
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      const isMobilePortrait = w < 768 && h > w;
-
-      if (isMobilePortrait) {
-        // 聚焦中央核心舞台 (x: 360..1080, width: 720, height: 760)，讓城堡、煙火、飛翔角色與大遊行在手機直螢幕裡比例完美！
-        svg.setAttribute("viewBox", "360 0 720 760");
-        svg.setAttribute("preserveAspectRatio", "xMidYMax slice");
-      } else {
-        // iPad 橫式 / 桌機全螢幕：完整呈現左右 EPCOT 地球、太空山、驚魂古塔、皮克斯摩天輪與中央城堡全景
-        svg.setAttribute("viewBox", "0 0 1440 760");
-        svg.setAttribute("preserveAspectRatio", "xMidYMax slice");
-      }
-    }
-
-    window.addEventListener("resize", adaptStageToViewport);
-    window.addEventListener("orientationchange", adaptStageToViewport);
-
-    function forceSvgAnimationSync() {
-      const layer = document.querySelector(".characters-layer");
-      if (!layer) return;
-      layer.style.display = "none";
-      void layer.getBoundingClientRect();
-      layer.style.display = "";
-    }
-    document.addEventListener("fullscreenchange", () => {
-      adaptStageToViewport();
-      forceSvgAnimationSync();
-    });
-    document.addEventListener("webkitfullscreenchange", () => {
-      adaptStageToViewport();
-      forceSvgAnimationSync();
-    });
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) {
-        adaptStageToViewport();
-        forceSvgAnimationSync();
-      }
-    });
-
-    adaptStageToViewport();
-
     fillSettingsForm();
       updateTopBar();
       refreshVacationHeader();
@@ -3773,52 +3713,6 @@
     });
 
 
-    // 螢幕比例自適應引擎：iPad / 橫式平板顯示 1440px 全景視野；手機直式自動聚焦中央城堡與角色主舞台，避免左右過度裁切導致比例變形
-    function adaptStageToViewport() {
-      const svg = document.getElementById("resortPanoramaSvg");
-      if (!svg) return;
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      const isMobilePortrait = w < 768 && h > w;
-
-      if (isMobilePortrait) {
-        // 聚焦中央核心舞台 (x: 360..1080, width: 720, height: 760)，讓城堡、煙火、飛翔角色與大遊行在手機直螢幕裡比例完美！
-        svg.setAttribute("viewBox", "360 0 720 760");
-        svg.setAttribute("preserveAspectRatio", "xMidYMax slice");
-      } else {
-        // iPad 橫式 / 桌機全螢幕：完整呈現左右 EPCOT 地球、太空山、驚魂古塔、皮克斯摩天輪與中央城堡全景
-        svg.setAttribute("viewBox", "0 0 1440 760");
-        svg.setAttribute("preserveAspectRatio", "xMidYMax slice");
-      }
-    }
-
-    window.addEventListener("resize", adaptStageToViewport);
-    window.addEventListener("orientationchange", adaptStageToViewport);
-
-    function forceSvgAnimationSync() {
-      const layer = document.querySelector(".characters-layer");
-      if (!layer) return;
-      layer.style.display = "none";
-      void layer.getBoundingClientRect();
-      layer.style.display = "";
-    }
-    document.addEventListener("fullscreenchange", () => {
-      adaptStageToViewport();
-      forceSvgAnimationSync();
-    });
-    document.addEventListener("webkitfullscreenchange", () => {
-      adaptStageToViewport();
-      forceSvgAnimationSync();
-    });
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) {
-        adaptStageToViewport();
-        forceSvgAnimationSync();
-      }
-    });
-
-    adaptStageToViewport();
-
     fillSettingsForm();
     updateTopBar();
     refreshVacationHeader();
@@ -3837,6 +3731,76 @@
     setInterval(() => {
       syncParkLiveWaitTimes(currentParkKey, false);
     }, 180000);
+
+    // 螢幕比例自適應引擎：iPad / 橫式平板顯示 1440px 全景視野；手機直式自動聚焦中央城堡與角色主舞台
+    function adaptStageToViewport() {
+      const svg = document.getElementById("resortPanoramaSvg");
+      if (!svg) return;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const isMobilePortrait = w < 768 && h > w;
+
+      if (isMobilePortrait) {
+        svg.setAttribute("viewBox", "360 0 720 760");
+        svg.setAttribute("preserveAspectRatio", "xMidYMax slice");
+      } else {
+        svg.setAttribute("viewBox", "0 0 1440 760");
+        svg.setAttribute("preserveAspectRatio", "xMidYMax slice");
+      }
+    }
+
+    // 修復 Safari / iPadOS 全螢幕切換、旋轉或返回前景時左上角殘留區塊與合成層錯位
+    function stabilizeSafariFullscreenLayout() {
+      const shell = document.querySelector(".tv-shell");
+      const stage = document.querySelector(".center-stage");
+      const svg = document.getElementById("resortPanoramaSvg");
+      const bgLayer = document.querySelector(".vacation-bg-layer");
+
+      adaptStageToViewport();
+
+      if (shell) {
+        shell.style.width = "100vw";
+        shell.style.height = "100dvh";
+        shell.style.transform = "translate3d(0, 0, 0)";
+      }
+
+      [stage, bgLayer, svg].forEach(el => {
+        if (!el) return;
+        el.style.transform = "translate3d(0, 0, 0.01px)";
+        void el.offsetWidth;
+        requestAnimationFrame(() => {
+          el.style.transform = "translate3d(0, 0, 0)";
+        });
+      });
+
+      const layer = document.querySelector(".characters-layer");
+      if (layer) {
+        layer.style.display = "none";
+        void layer.getBoundingClientRect();
+        layer.style.display = "";
+      }
+    }
+
+    window.addEventListener("resize", stabilizeSafariFullscreenLayout);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(stabilizeSafariFullscreenLayout, 120);
+    });
+    window.addEventListener("pageshow", stabilizeSafariFullscreenLayout);
+    document.addEventListener("fullscreenchange", () => {
+      stabilizeSafariFullscreenLayout();
+      setTimeout(stabilizeSafariFullscreenLayout, 150);
+    });
+    document.addEventListener("webkitfullscreenchange", () => {
+      stabilizeSafariFullscreenLayout();
+      setTimeout(stabilizeSafariFullscreenLayout, 150);
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        stabilizeSafariFullscreenLayout();
+      }
+    });
+
+    stabilizeSafariFullscreenLayout();
 
     // 不定時、一陣一陣的慶典煙火排程器（模仿迪士尼城堡夜間煙火秀的節奏）
     (function initSporadicFireworks() {
