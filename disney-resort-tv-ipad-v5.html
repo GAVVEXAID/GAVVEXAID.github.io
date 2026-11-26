@@ -2,11 +2,10 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V19.1（Safari/iPad 全螢幕左上角殘留修復）</title>
+  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V21（全角色雙層獨立動畫＆巡迴修正版）</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -33,45 +32,20 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      min-height: 100dvh;
       overflow: hidden;
       background: #0e131c;
       color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "Noto Sans TC", sans-serif;
-      overscroll-behavior: none;
     }
 
     .tv-shell {
-      position: fixed;
-      inset: 0;
       display: flex;
       flex-direction: column;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       height: 100dvh;
-      overflow: hidden;
-      background: #0e131c;
       padding-top: env(safe-area-inset-top, 0px);
-      padding-right: env(safe-area-inset-right, 0px);
       padding-bottom: env(safe-area-inset-bottom, 0px);
-      padding-left: env(safe-area-inset-left, 0px);
-      transform: translate3d(0, 0, 0);
-    }
-
-    /* 修復 Safari / iPadOS 全螢幕切換與安全區左上角殘留區塊 */
-    :fullscreen,
-    :-webkit-full-screen,
-    .tv-shell:fullscreen,
-    .tv-shell:-webkit-full-screen {
-      position: fixed !important;
-      inset: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      height: 100dvh !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      background: #0e131c !important;
-      overflow: hidden !important;
     }
 
     /* ================= 1. 最上方狀態列 ================= */
@@ -521,6 +495,29 @@
       overflow: hidden;
     }
 
+    /* 修復 Safari / iPadOS 全螢幕切換與安全區左上角殘留區塊 */
+    :fullscreen,
+    :-webkit-full-screen,
+    .tv-shell:fullscreen,
+    .tv-shell:-webkit-full-screen {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #0e131c !important;
+      overflow: hidden !important;
+    }
+
+    #resortPanoramaSvg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
     .vacation-bg-layer {
       position: absolute;
       inset: 0;
@@ -529,9 +526,6 @@
       pointer-events: none;
       z-index: 1;
       overflow: clip;
-      transform: translate3d(0, 0, 0);
-      backface-visibility: hidden;
-      contain: strict;
     }
 
     /* 閃爍星星與十字星芒 */
@@ -615,7 +609,6 @@
 
     /* 單軌列車沿高架滑行（精準貼齊 y=576 高架梁軌道） */
     .monorail-glide {
-      /* offscreen safe */
       transform: translate(-340px, 563px);
       animation: monorailRun 18s linear infinite both;
     }
@@ -626,6 +619,8 @@
 
     /* 城堡尖塔微光與旗幟 */
     .spire-light {
+      transform-box: fill-box;
+      transform-origin: center;
       animation: spireGlow 3.2s ease-in-out infinite alternate;
     }
     @keyframes spireGlow {
@@ -654,6 +649,8 @@
 
     /* 漂浮魔法金粉 */
     .pixie-dust {
+      transform-box: fill-box;
+      transform-origin: center;
       animation: pixieFloat 7s ease-in-out infinite;
     }
     .pd-1 { animation-delay: 0s; }
@@ -665,7 +662,7 @@
       50% { transform: translateY(-24px) scale(1.25); opacity: 0.92; }
     }
 
-    /* 園區漂浮氣球群 */
+    /* 園區漂浮氣球群（純相對旋轉擺動，外層負責座標） */
     .balloon-cluster {
       transform-box: fill-box;
       transform-origin: bottom center;
@@ -680,11 +677,10 @@
       100% { transform: rotate(4deg) translateY(-9px); }
     }
 
-    /* 飛越城堡的奇幻飛艇／飛行船與魔法光軌 */
+    /* 飛越城堡的奇幻飛艇／飛行船 */
     .airship-cruise {
-      /* offscreen safe */
       transform: translate(-220px, 165px);
-      animation: airshipFly 34s linear infinite both;
+      animation: airshipFly 34s linear infinite -9s both;
     }
     @keyframes airshipFly {
       0% { transform: translate(-220px, 165px); }
@@ -694,6 +690,8 @@
 
     /* 城堡護城河／湖面水波微光 */
     .water-shimmer {
+      transform-box: fill-box;
+      transform-origin: center;
       animation: waterRipple 4.2s ease-in-out infinite alternate;
     }
     .water-shimmer-2 {
@@ -751,18 +749,16 @@
       85%, 100% { stroke-dashoffset: -420; opacity: 0; }
     }
 
-    /* 小鎮大街復古蒸汽火車／接駁車緩行 */
+    /* 小鎮大街復古觀光小火車／接駁車緩行 */
     .trolley-ride {
-      /* offscreen safe */
       transform: translate(-180px, 646px);
-      animation: trolleyMove 26s linear infinite both;
+      animation: trolleyMove 26s linear infinite -6s both;
     }
     @keyframes trolleyMove {
       0% { transform: translate(-180px, 646px); }
       100% { transform: translate(1620px, 646px); }
     }
 
-    
     /* 不定時慶典煙火陣列（一陣一陣動態綻放） */
     .dynamic-fw-burst {
       transform-box: fill-box;
@@ -780,10 +776,11 @@
     .fw-burst-4 { animation-delay: 0.9s; }
     .fw-burst-5 { animation-delay: 2.6s; }
 
-    /* ================= 35位超精緻迪士尼＆皮克斯角色專屬動畫（全角色清晰可見＋60fps 流暢） ================= */
+    /* ================= 39位超精緻迪士尼＆皮克斯角色專屬動畫（全角色雙向往復巡迴＋零左上角殘留） ================= */
+    /* 1. 高空飛行組（全部改為持續可見＋優雅高空巡迴，絕不只有出現一次） */
     .peter-pan-flight {
       transform: translate(-340px, 118px) rotate(-6deg);
-      animation: peterPanFly 32s linear infinite -4s both;
+      animation: peterPanFly 26s linear infinite -4s both;
     }
     @keyframes peterPanFly {
       0% { transform: translate(-340px, 118px) rotate(-6deg); }
@@ -793,7 +790,7 @@
 
     .dumbo-flight {
       transform: translate(1680px, 178px);
-      animation: dumboFly 38s linear infinite -12s both;
+      animation: dumboFly 30s linear infinite -10s both;
     }
     @keyframes dumboFly {
       0% { transform: translate(1680px, 178px); }
@@ -833,7 +830,7 @@
 
     .aladdin-carpet {
       transform: translate(-300px, 232px) rotate(3deg);
-      animation: carpetGlide 42s linear infinite -18s both;
+      animation: carpetGlide 32s linear infinite -14s both;
     }
     @keyframes carpetGlide {
       0% { transform: translate(-300px, 232px) rotate(3deg); }
@@ -843,7 +840,7 @@
 
     .buzz-soar {
       transform: translate(1700px, 278px) rotate(12deg);
-      animation: buzzFly 29s linear infinite -7s both;
+      animation: buzzFly 25s linear infinite -7s both;
     }
     @keyframes buzzFly {
       0% { transform: translate(1700px, 278px) rotate(12deg); }
@@ -853,7 +850,7 @@
 
     .eve-walle-drift {
       transform: translate(-280px, 315px);
-      animation: eveDrift 35s linear infinite -24s both;
+      animation: eveDrift 29s linear infinite -19s both;
     }
     @keyframes eveDrift {
       0% { transform: translate(-280px, 315px); }
@@ -863,7 +860,7 @@
 
     .up-house-float {
       transform: translate(1680px, 142px);
-      animation: upHouseDrift 52s linear infinite -8s both;
+      animation: upHouseDrift 38s linear infinite -8s both;
     }
     @keyframes upHouseDrift {
       0% { transform: translate(1680px, 142px); }
@@ -873,7 +870,7 @@
 
     .baymax-fly {
       transform: translate(-280px, 255px) rotate(-8deg);
-      animation: baymaxHeroFly 34s linear infinite -5s both;
+      animation: baymaxHeroFly 28s linear infinite -5s both;
     }
     @keyframes baymaxHeroFly {
       0% { transform: translate(-280px, 255px) rotate(-8deg); }
@@ -884,7 +881,7 @@
     /* 2. 前景地面巡遊大隊 */
     .parade-group-1 {
       transform: translate(-620px, 644px);
-      animation: paradeWalkRight 54s linear infinite -14s both;
+      animation: paradeWalkRight 42s linear infinite -12s both;
     }
     @keyframes paradeWalkRight {
       0% { transform: translate(-620px, 644px); }
@@ -893,13 +890,14 @@
 
     .parade-group-2 {
       transform: translate(1640px, 654px);
-      animation: paradeWalkLeft 58s linear infinite -22s both;
+      animation: paradeWalkLeft 46s linear infinite -20s both;
     }
     @keyframes paradeWalkLeft {
       0% { transform: translate(1640px, 654px); }
       100% { transform: translate(-720px, 654px); }
     }
 
+    /* 3. 地標定點＆草坡巡迴夥伴（外層 <g transform="translate(...)"> 負責座標，內層純相對動畫，徹底避免 Safari 左上角座標歸零 Bug！） */
     .char-bob {
       transform-box: fill-box;
       transform-origin: bottom center;
@@ -922,7 +920,6 @@
       100% { transform: translateY(-13px) scaleY(1.06); }
     }
 
-    /* 3. 地標定點＆趣味互動角色（始終清晰登場，無隱藏消失） */
     .char-idle-bob {
       transform-box: fill-box;
       transform-origin: bottom center;
@@ -933,6 +930,49 @@
     @keyframes charIdleSway {
       0% { transform: translateY(0px) rotate(-2deg); }
       100% { transform: translateY(-4px) rotate(2deg); }
+    }
+
+    /* 動物方城市 茱蒂警官＆狐狸尼克：在右側城堡廣場與小鎮草坡之間悠閒巡邏散步，全螢幕與平板永遠清晰可見 */
+    .zootopia-patrol {
+      transform: translate(1018px, 616px);
+      animation: zootopiaStroll 24s ease-in-out infinite alternate both;
+    }
+    @keyframes zootopiaStroll {
+      0% { transform: translate(1018px, 616px); }
+      50% { transform: translate(925px, 622px); }
+      100% { transform: translate(1135px, 614px); }
+    }
+
+    /* 原版療癒杯麵：在右側廣場親切招手散步，不會被全螢幕邊緣裁切 */
+    .baymax-ground-stroll {
+      transform: translate(1178px, 616px);
+      animation: baymaxStroll 22s ease-in-out infinite alternate both;
+    }
+    @keyframes baymaxStroll {
+      0% { transform: translate(1178px, 616px); }
+      50% { transform: translate(1235px, 614px); }
+      100% { transform: translate(1088px, 620px); }
+    }
+
+    /* 左側史迪奇＆奇奇蒂蒂悠閒逛大街，保證任何螢幕比例都能反覆看到 */
+    .stitch-stroll {
+      transform: translate(235px, 616px);
+      animation: stitchPatrol 21s ease-in-out infinite alternate both;
+    }
+    @keyframes stitchPatrol {
+      0% { transform: translate(235px, 616px); }
+      50% { transform: translate(345px, 622px); }
+      100% { transform: translate(165px, 616px); }
+    }
+
+    .chipdale-stroll {
+      transform: translate(388px, 624px);
+      animation: chipdalePatrol 23s ease-in-out infinite alternate both;
+    }
+    @keyframes chipdalePatrol {
+      0% { transform: translate(388px, 624px); }
+      50% { transform: translate(485px, 628px); }
+      100% { transform: translate(310px, 622px); }
     }
 
     .monsters-wave {
@@ -1012,25 +1052,25 @@
       100% { transform: rotate(5deg); }
     }
 
+    /* 閃電麥坤：持續循環飛馳（取消原先 45%~100% 長時間隱身停滯，讓每次都能看到麥坤奔馳！） */
     .mcqueen-zip {
       transform: translate(-220px, 654px);
-      animation: mcqueenRace 22s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite -2s both;
+      animation: mcqueenRace 16s linear infinite -3s both;
     }
     @keyframes mcqueenRace {
       0% { transform: translate(-220px, 654px); }
-      45% { transform: translate(1620px, 654px); }
       100% { transform: translate(1620px, 654px); }
     }
 
     .hidden-mickey-sparkle {
+      transform-box: fill-box;
+      transform-origin: center;
       animation: hmGlow 4.5s ease-in-out infinite alternate;
     }
     @keyframes hmGlow {
       0% { opacity: 0.28; transform: scale(0.95); }
       100% { opacity: 0.88; transform: scale(1.06); }
     }
-
-
     .vacation-content {
       position: relative;
       z-index: 2;
@@ -1828,15 +1868,15 @@
                 <circle class="star-twinkle star-t1" cx="1310" cy="245" r="2.0"/>
               </g>
 
-              <!-- 十字閃爍星光 -->
-              <g class="star-twinkle star-t2" transform="translate(175, 185)" fill="#ffd166">
-                <polygon points="0,-11 2.8,-2.8 11,0 2.8,2.8 0,11 -2.8,2.8 -11,0 -2.8,-2.8"/>
+              <!-- 十字閃爍星光（外層定位、內層閃爍，徹底杜絕 Safari 歸零） -->
+              <g transform="translate(175, 185)" fill="#ffd166">
+                <polygon class="star-twinkle star-t2" points="0,-11 2.8,-2.8 11,0 2.8,2.8 0,11 -2.8,2.8 -11,0 -2.8,-2.8"/>
               </g>
-              <g class="star-twinkle star-t4" transform="translate(720, 56)" fill="#fff3b0">
-                <polygon points="0,-14 3.4,-3.4 14,0 3.4,3.4 0,14 -3.4,3.4 -14,0 -3.4,-3.4"/>
+              <g transform="translate(720, 56)" fill="#fff3b0">
+                <polygon class="star-twinkle star-t4" points="0,-14 3.4,-3.4 14,0 3.4,3.4 0,14 -3.4,3.4 -14,0 -3.4,-3.4"/>
               </g>
-              <g class="star-twinkle star-t1" transform="translate(1150, 178)" fill="#ffd166">
-                <polygon points="0,-10 2.6,-2.6 10,0 2.6,2.6 0,10 -2.6,2.6 -10,0 -2.6,-2.6"/>
+              <g transform="translate(1150, 178)" fill="#ffd166">
+                <polygon class="star-twinkle star-t1" points="0,-10 2.6,-2.6 10,0 2.6,2.6 0,10 -2.6,2.6 -10,0 -2.6,-2.6"/>
               </g>
 
               <!-- 劃過夜空的雙流星 -->
@@ -1854,62 +1894,48 @@
                 <circle cx="56" cy="33.5" r="1.4" fill="#fff3b0"/>
               </g>
 
-              <!-- 多層次慶典煙火綻放（5 組錯落綻放） -->
-              <!-- 煙火 1：金黃大麗花 -->
-              <g class="fw-burst" transform="translate(455, 215)" stroke="#ffd166" stroke-width="2.2" stroke-linecap="round">
-                <line x1="0" y1="-40" x2="0" y2="-14"/>
-                <line x1="0" y1="14" x2="0" y2="40"/>
-                <line x1="-40" y1="0" x2="-14" y2="0"/>
-                <line x1="14" y1="0" x2="40" y2="0"/>
-                <line x1="-28" y1="-28" x2="-10" y2="-10"/>
-                <line x1="10" y1="10" x2="28" y2="28"/>
-                <line x1="28" y1="-28" x2="10" y2="-10"/>
-                <line x1="-10" y1="10" x2="-28" y2="28"/>
-                <circle cx="0" cy="0" r="22" fill="none" stroke="#fff3b0" stroke-width="1.2" stroke-dasharray="3 6"/>
+              <!-- 多層次慶典煙火綻放（5 組錯落綻放，外層定位、內層綻放） -->
+              <g transform="translate(455, 215)" stroke="#ffd166" stroke-width="2.2" stroke-linecap="round">
+                <g class="fw-burst">
+                  <line x1="0" y1="-40" x2="0" y2="-14"/><line x1="0" y1="14" x2="0" y2="40"/>
+                  <line x1="-40" y1="0" x2="-14" y2="0"/><line x1="14" y1="0" x2="40" y2="0"/>
+                  <line x1="-28" y1="-28" x2="-10" y2="-10"/><line x1="10" y1="10" x2="28" y2="28"/>
+                  <line x1="28" y1="-28" x2="10" y2="-10"/><line x1="-10" y1="10" x2="-28" y2="28"/>
+                  <circle cx="0" cy="0" r="22" fill="none" stroke="#fff3b0" stroke-width="1.2" stroke-dasharray="3 6"/>
+                </g>
               </g>
-              <!-- 煙火 2：冰藍星爆 -->
-              <g class="fw-burst fw-burst-2" transform="translate(985, 205)" stroke="#7cc4ff" stroke-width="2.2" stroke-linecap="round">
-                <line x1="0" y1="-42" x2="0" y2="-15"/>
-                <line x1="0" y1="15" x2="0" y2="42"/>
-                <line x1="-42" y1="0" x2="-15" y2="0"/>
-                <line x1="15" y1="0" x2="42" y2="0"/>
-                <line x1="-30" y1="-30" x2="-11" y2="-11"/>
-                <line x1="11" y1="11" x2="30" y2="30"/>
-                <line x1="30" y1="-30" x2="11" y2="-11"/>
-                <line x1="-11" y1="11" x2="-30" y2="30"/>
-                <circle cx="0" cy="0" r="24" fill="none" stroke="#e0f2fe" stroke-width="1.2" stroke-dasharray="3 6"/>
+              <g transform="translate(985, 205)" stroke="#7cc4ff" stroke-width="2.2" stroke-linecap="round">
+                <g class="fw-burst fw-burst-2">
+                  <line x1="0" y1="-42" x2="0" y2="-15"/><line x1="0" y1="15" x2="0" y2="42"/>
+                  <line x1="-42" y1="0" x2="-15" y2="0"/><line x1="15" y1="0" x2="42" y2="0"/>
+                  <line x1="-30" y1="-30" x2="-11" y2="-11"/><line x1="11" y1="11" x2="30" y2="30"/>
+                  <line x1="30" y1="-30" x2="11" y2="-11"/><line x1="-11" y1="11" x2="-30" y2="30"/>
+                  <circle cx="0" cy="0" r="24" fill="none" stroke="#e0f2fe" stroke-width="1.2" stroke-dasharray="3 6"/>
+                </g>
               </g>
-              <!-- 煙火 3：玫瑰粉高空煙火 -->
-              <g class="fw-burst fw-burst-3" transform="translate(720, 152)" stroke="#ff9ebb" stroke-width="2.2" stroke-linecap="round">
-                <line x1="0" y1="-36" x2="0" y2="-12"/>
-                <line x1="0" y1="12" x2="0" y2="36"/>
-                <line x1="-36" y1="0" x2="-12" y2="0"/>
-                <line x1="12" y1="0" x2="36" y2="0"/>
-                <line x1="-25" y1="-25" x2="-9" y2="-9"/>
-                <line x1="9" y1="9" x2="25" y2="25"/>
-                <line x1="25" y1="-25" x2="9" y2="-9"/>
-                <line x1="-9" y1="9" x2="-25" y2="25"/>
+              <g transform="translate(720, 152)" stroke="#ff9ebb" stroke-width="2.2" stroke-linecap="round">
+                <g class="fw-burst fw-burst-3">
+                  <line x1="0" y1="-36" x2="0" y2="-12"/><line x1="0" y1="12" x2="0" y2="36"/>
+                  <line x1="-36" y1="0" x2="-12" y2="0"/><line x1="12" y1="0" x2="36" y2="0"/>
+                  <line x1="-25" y1="-25" x2="-9" y2="-9"/><line x1="9" y1="9" x2="25" y2="25"/>
+                  <line x1="25" y1="-25" x2="9" y2="-9"/><line x1="-9" y1="9" x2="-25" y2="25"/>
+                </g>
               </g>
-              <!-- 煙火 4 & 5：左右遠景點綴煙火 -->
-              <g class="fw-burst fw-burst-4" transform="translate(310, 265)" stroke="#c77dff" stroke-width="1.8" stroke-linecap="round">
-                <line x1="0" y1="-26" x2="0" y2="-10"/>
-                <line x1="0" y1="10" x2="0" y2="26"/>
-                <line x1="-26" y1="0" x2="-10" y2="0"/>
-                <line x1="10" y1="0" x2="26" y2="0"/>
-                <line x1="-18" y1="-18" x2="-7" y2="-7"/>
-                <line x1="7" y1="7" x2="18" y2="18"/>
-                <line x1="18" y1="-18" x2="7" y2="-7"/>
-                <line x1="-7" y1="7" x2="-18" y2="18"/>
+              <g transform="translate(310, 265)" stroke="#c77dff" stroke-width="1.8" stroke-linecap="round">
+                <g class="fw-burst fw-burst-4">
+                  <line x1="0" y1="-26" x2="0" y2="-10"/><line x1="0" y1="10" x2="0" y2="26"/>
+                  <line x1="-26" y1="0" x2="-10" y2="0"/><line x1="10" y1="0" x2="26" y2="0"/>
+                  <line x1="-18" y1="-18" x2="-7" y2="-7"/><line x1="7" y1="7" x2="18" y2="18"/>
+                  <line x1="18" y1="-18" x2="7" y2="-7"/><line x1="-7" y1="7" x2="-18" y2="18"/>
+                </g>
               </g>
-              <g class="fw-burst fw-burst-5" transform="translate(1130, 260)" stroke="#5cd65c" stroke-width="1.8" stroke-linecap="round">
-                <line x1="0" y1="-26" x2="0" y2="-10"/>
-                <line x1="0" y1="10" x2="0" y2="26"/>
-                <line x1="-26" y1="0" x2="-10" y2="0"/>
-                <line x1="10" y1="0" x2="26" y2="0"/>
-                <line x1="-18" y1="-18" x2="-7" y2="-7"/>
-                <line x1="7" y1="7" x2="18" y2="18"/>
-                <line x1="18" y1="-18" x2="7" y2="-7"/>
-                <line x1="-7" y1="7" x2="-18" y2="18"/>
+              <g transform="translate(1130, 260)" stroke="#5cd65c" stroke-width="1.8" stroke-linecap="round">
+                <g class="fw-burst fw-burst-5">
+                  <line x1="0" y1="-26" x2="0" y2="-10"/><line x1="0" y1="10" x2="0" y2="26"/>
+                  <line x1="-26" y1="0" x2="-10" y2="0"/><line x1="10" y1="0" x2="26" y2="0"/>
+                  <line x1="-18" y1="-18" x2="-7" y2="-7"/><line x1="7" y1="7" x2="18" y2="18"/>
+                  <line x1="18" y1="-18" x2="7" y2="-7"/><line x1="-7" y1="7" x2="-18" y2="18"/>
+                </g>
               </g>
 
               <!-- 不定時、一陣一陣動態煙火層 -->
@@ -1931,7 +1957,6 @@
               <path d="M0,586 Q360,548 720,582 T1440,568 L1440,760 L0,760 Z" fill="url(#hillBack)"/>
 
               <!-- ========== 左側園區地標群：EPCOT 太空船地球 + 明日世界太空山 ========== -->
-              <!-- 1. 太空山 Space Mountain -->
               <g transform="translate(395, 532)">
                 <path d="M-85,68 Q-55,-28 0,-42 Q55,-28 85,68 Z" fill="url(#spaceMtnGrad)"/>
                 <path d="M-66,68 L0,-44 L66,68" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round"/>
@@ -1940,7 +1965,6 @@
                 <circle cx="0" cy="-63" r="3.2" fill="#ffd166" class="spire-light"/>
               </g>
 
-              <!-- 2. EPCOT 太空船地球 Spaceship Earth -->
               <g transform="translate(220, 512)">
                 <line x1="-42" y1="62" x2="-58" y2="108" stroke="#29487d" stroke-width="7" stroke-linecap="round"/>
                 <line x1="42" y1="62" x2="58" y2="108" stroke="#29487d" stroke-width="7" stroke-linecap="round"/>
@@ -1957,7 +1981,6 @@
               </g>
 
               <!-- ========== 右側園區地標群：驚魂古塔 + 皮克斯太陽摩天輪 ========== -->
-              <!-- 3. 好萊塢影城驚魂古塔 Tower of Terror -->
               <g transform="translate(1035, 478)">
                 <rect x="-34" y="18" width="68" height="115" rx="3" fill="url(#towerGrad)"/>
                 <rect x="-42" y="8" width="84" height="14" rx="2" fill="#947892"/>
@@ -1968,7 +1991,6 @@
                 <rect x="19" y="40" width="7" height="14" rx="2" fill="#ffd166" opacity="0.65"/>
               </g>
 
-              <!-- 4. 皮克斯太陽摩天輪 Pixar Pal-A-Round -->
               <g transform="translate(1218, 502)">
                 <line x1="0" y1="0" x2="-62" y2="112" stroke="#243b66" stroke-width="7" stroke-linecap="round"/>
                 <line x1="0" y1="0" x2="62" y2="112" stroke="#243b66" stroke-width="7" stroke-linecap="round"/>
@@ -2023,13 +2045,11 @@
 
               <!-- ========== 護城河水景與噴泉律動 ========== -->
               <path d="M470,618 Q720,602 970,618 L1015,655 L425,655 Z" fill="url(#lakeWater)" opacity="0.88"/>
-              <!-- 護城河水面金色波光 -->
               <g fill="#ffd166">
                 <ellipse class="water-shimmer" cx="625" cy="628" rx="24" ry="2.2"/>
                 <ellipse class="water-shimmer water-shimmer-2" cx="815" cy="628" rx="24" ry="2.2"/>
                 <ellipse class="water-shimmer" cx="720" cy="636" rx="34" ry="2.6"/>
               </g>
-              <!-- 護城河左右噴泉 -->
               <g transform="translate(555, 622)">
                 <path class="fountain-jet" d="M-12,0 Q-6,-22 0,-28 Q6,-22 12,0 Z" fill="rgba(186, 230, 253, 0.72)"/>
                 <ellipse cx="0" cy="0" rx="15" ry="3.5" fill="rgba(255,255,255,0.6)"/>
@@ -2044,7 +2064,6 @@
                 <rect x="-165" y="135" width="76" height="68" rx="3" fill="url(#castleStone)"/>
                 <rect x="89" y="135" width="76" height="68" rx="3" fill="url(#castleStone)"/>
 
-                <!-- 外側小尖塔與小旗 -->
                 <rect x="-156" y="92" width="22" height="44" fill="url(#castleStone)"/>
                 <polygon points="-160,92 -145,58 -130,92" fill="url(#castleRoof)"/>
                 <polygon class="flag-wave" points="-145,58 -132,62 -145,66" fill="#ffd166"/>
@@ -2053,7 +2072,6 @@
                 <polygon points="130,92 145,58 160,92" fill="url(#castleRoof)"/>
                 <polygon class="flag-wave" points="145,58 158,62 145,66" fill="#ffd166"/>
 
-                <!-- 中側雙塔 -->
                 <rect x="-106" y="68" width="36" height="135" fill="url(#castleStone)"/>
                 <polygon points="-110,68 -88,24 -66,68" fill="url(#castleRoof)"/>
                 <polygon class="flag-wave" points="-88,24 -73,28 -88,33" fill="#ff758f"/>
@@ -2062,24 +2080,20 @@
                 <polygon points="66,68 88,24 110,68" fill="url(#castleRoof)"/>
                 <polygon class="flag-wave" points="88,24 103,28 88,33" fill="#ff758f"/>
 
-                <!-- 主殿基座與城垛 -->
                 <rect x="-74" y="98" width="148" height="105" rx="4" fill="url(#castleStone)"/>
                 <rect x="-74" y="91" width="14" height="8" fill="#ffffff"/>
                 <rect x="-48" y="91" width="14" height="8" fill="#ffffff"/>
                 <rect x="34" y="91" width="14" height="8" fill="#ffffff"/>
                 <rect x="60" y="91" width="14" height="8" fill="#ffffff"/>
 
-                <!-- 中央高聳主塔 -->
                 <rect x="-34" y="24" width="68" height="179" fill="url(#castleStone)"/>
                 <polygon points="-40,24 0,-48 40,24" fill="url(#castleRoof)"/>
                 <line x1="0" y1="-48" x2="0" y2="-74" stroke="#ffd166" stroke-width="2.6"/>
                 <polygon class="flag-wave" points="0,-74 18,-69 0,-63" fill="#ffd166"/>
                 <circle cx="0" cy="-76" r="4.8" fill="#fff3b0" class="spire-light"/>
 
-                <!-- 環繞城堡的魔法流光弧線 -->
                 <path class="magic-arc-draw" d="M-190,115 Q0,-65 190,115" fill="none" stroke="#ffd166" stroke-width="2.6" stroke-linecap="round"/>
 
-                <!-- 拱門、金色時鐘徽章與暖光窗戶 -->
                 <path d="M-18,203 L-18,156 Q0,138 18,156 L18,203 Z" fill="#1e3561"/>
                 <path d="M-13,203 L-13,161 Q0,147 13,161 L13,203 Z" fill="#ffd166" opacity="0.38"/>
                 <circle cx="0" cy="64" r="11" fill="#234582" stroke="#ffd166" stroke-width="2.5"/>
@@ -2091,45 +2105,44 @@
               </g>
 
               <!-- ========== 前景左右兩側：美國小鎮大街建築、復古路燈與米奇造型氣球束 ========== -->
-              <!-- 左側小鎮街屋與氣球束 -->
               <g transform="translate(80, 586)">
                 <rect x="-65" y="0" width="68" height="65" rx="3" fill="url(#mainStreetWarm)"/>
                 <polygon points="-70,0 -31,-22 8,0" fill="#7c4d6b"/>
                 <rect x="-52" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.85"/>
                 <rect x="-26" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.85"/>
-                <!-- 復古路燈 -->
                 <line x1="36" y1="62" x2="36" y2="8" stroke="#182238" stroke-width="3.5"/>
                 <circle cx="36" cy="4" r="13" fill="rgba(255, 214, 102, 0.36)" class="lamp-glow"/>
                 <circle cx="36" cy="4" r="4.5" fill="#fff3b0"/>
-                <!-- 漂浮米奇氣球束 -->
-                <g class="balloon-cluster" transform="translate(88, 56)">
-                  <line x1="0" y1="0" x2="-10" y2="-38" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
-                  <line x1="0" y1="0" x2="8" y2="-44" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
-                  <line x1="0" y1="0" x2="0" y2="-52" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
-                  <circle cx="-10" cy="-42" r="7" fill="#ff6b6b" opacity="0.9"/>
-                  <circle cx="8" cy="-48" r="7" fill="#5bc0ff" opacity="0.9"/>
-                  <circle cx="0" cy="-56" r="8" fill="#ffd166" opacity="0.95"/>
+                <!-- 外層定位、內層搖曳 -->
+                <g transform="translate(88, 56)">
+                  <g class="balloon-cluster">
+                    <line x1="0" y1="0" x2="-10" y2="-38" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                    <line x1="0" y1="0" x2="8" y2="-44" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                    <line x1="0" y1="0" x2="0" y2="-52" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                    <circle cx="-10" cy="-42" r="7" fill="#ff6b6b" opacity="0.9"/>
+                    <circle cx="8" cy="-48" r="7" fill="#5bc0ff" opacity="0.9"/>
+                    <circle cx="0" cy="-56" r="8" fill="#ffd166" opacity="0.95"/>
+                  </g>
                 </g>
               </g>
 
-              <!-- 右側小鎮街屋與氣球束 -->
               <g transform="translate(1355, 586)">
                 <rect x="-5" y="0" width="70" height="65" rx="3" fill="url(#mainStreetWarm)"/>
                 <polygon points="-10,0 30,-22 70,0" fill="#466995"/>
                 <rect x="10" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.85"/>
                 <rect x="36" y="14" width="14" height="22" rx="2" fill="#ffd166" opacity="0.85"/>
-                <!-- 復古路燈 -->
                 <line x1="-34" y1="62" x2="-34" y2="8" stroke="#182238" stroke-width="3.5"/>
                 <circle cx="-34" cy="4" r="13" fill="rgba(255, 214, 102, 0.36)" class="lamp-glow"/>
                 <circle cx="-34" cy="4" r="4.5" fill="#fff3b0"/>
-                <!-- 漂浮氣球束 -->
-                <g class="balloon-cluster balloon-cluster-2" transform="translate(-86, 56)">
-                  <line x1="0" y1="0" x2="-8" y2="-42" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
-                  <line x1="0" y1="0" x2="10" y2="-38" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
-                  <line x1="0" y1="0" x2="0" y2="-50" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
-                  <circle cx="-8" cy="-46" r="7" fill="#c77dff" opacity="0.9"/>
-                  <circle cx="10" cy="-42" r="7" fill="#5cd65c" opacity="0.9"/>
-                  <circle cx="0" cy="-54" r="8" fill="#ff9ebb" opacity="0.95"/>
+                <g transform="translate(-86, 56)">
+                  <g class="balloon-cluster balloon-cluster-2">
+                    <line x1="0" y1="0" x2="-8" y2="-42" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                    <line x1="0" y1="0" x2="10" y2="-38" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                    <line x1="0" y1="0" x2="0" y2="-50" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+                    <circle cx="-8" cy="-46" r="7" fill="#c77dff" opacity="0.9"/>
+                    <circle cx="10" cy="-42" r="7" fill="#5cd65c" opacity="0.9"/>
+                    <circle cx="0" cy="-54" r="8" fill="#ff9ebb" opacity="0.95"/>
+                  </g>
                 </g>
               </g>
 
@@ -2149,16 +2162,15 @@
               </g>
 
 
-              <!-- ==================== 超精緻高辨識度迪士尼＆皮克斯角色群 (39位純粹剪影角色美學版) ==================== -->
+              <!-- ==================== 超精緻高辨識度迪士尼＆皮克斯角色群 (39位全角色常駐巡迴・徹底消除左上角殘留) ==================== -->
               <g class="characters-layer">
                 <!-- 【高空奇幻飛行組 (12位)】 -->
                 <!-- 1-3. 小飛俠彼得潘、溫蒂、約翰 -->
                 <g class="peter-pan-flight">
-                  <!-- 1. 彼得潘（綠衣鋸齒下擺＋尖帽紅羽＋金色腰帶＋短劍＋修長飛行姿態） -->
+                  <!-- 1. 彼得潘 -->
                   <g transform="translate(132, -8) scale(1.52)">
                     <path d="M-19,6 L-4,2 L-17,12" fill="none" stroke="#2f9e44" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M-19,6 L-23,5 M-17,12 L-21,12" stroke="#8d5524" stroke-width="2.5" stroke-linecap="round"/>
-                    <!-- 鋸齒狀葉片上衣 -->
                     <path d="M-8,0 L7,-4 L11,3 L6,4 L4,6 L1,4 L-2,6 L-5,5 Z" fill="#51cf66" stroke="#1b5e20" stroke-width="0.9"/>
                     <line x1="-1" y1="-2" x2="1" y2="5" stroke="#8d5524" stroke-width="1.8"/>
                     <rect x="-1.5" y="0.5" width="2.4" height="2.4" fill="#ffd166"/>
@@ -2170,7 +2182,7 @@
                     <path d="M6,-10 Q1,-16.5 -2,-18.5" stroke="#fa5252" stroke-width="2.3" stroke-linecap="round"/>
                   </g>
 
-                  <!-- 2. 溫蒂（天藍飄逸睡裙＋腰間深藍絲帶＋頭頂大蝴蝶結＋棕捲髮） -->
+                  <!-- 2. 溫蒂 -->
                   <g transform="translate(68, 8) scale(1.52)">
                     <path d="M-19,6 Q-3,-5 12,-1 L10,9 Q-5,13 -21,10 Z" fill="#74c0fc" stroke="#1c7ed6" stroke-width="0.9"/>
                     <path d="M-18,8 Q-4,6 9,6" fill="none" stroke="#d0ebff" stroke-width="1"/>
@@ -2181,7 +2193,7 @@
                     <polygon points="7,-9.5 10,-7 13,-9.5 13,-6 10,-7 7,-6" fill="#339af0"/>
                   </g>
 
-                  <!-- 3. 約翰（白色長睡衣＋黑色高禮帽＋圓框眼鏡＋撐開黑雨傘） -->
+                  <!-- 3. 約翰 -->
                   <g transform="translate(6, 22) scale(1.52)">
                     <rect x="-12" y="-1" width="20" height="7.5" rx="3.5" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.9"/>
                     <line x1="-8" y1="-1" x2="-8" y2="6.5" stroke="#dee2e6" stroke-width="0.8"/>
@@ -2198,31 +2210,25 @@
                 <!-- 4. 小飛象 Dumbo（純粹角色剪影美學：無眼黑眼白，凸顯黃色馬戲團尖帽＋粉紅內耳巨耳＋紅黃領巾＋金色魔法羽毛） -->
                 <g class="dumbo-flight">
                   <g transform="scale(1.64)">
-                    <!-- 圓滾滾粉藍身軀與小尾巴 -->
                     <ellipse cx="3" cy="5" rx="15" ry="11" fill="#91a7ff" stroke="#4263eb" stroke-width="1"/>
                     <ellipse cx="3" cy="8.5" rx="9" ry="5" fill="#bac8ff" opacity="0.75"/>
                     <path d="M17,3 Q22.5,1 21.5,6" fill="none" stroke="#91a7ff" stroke-width="2.1" stroke-linecap="round"/>
-                    <!-- 馬戲團紅黃雙層小丑領巾 -->
                     <path d="M-9.5,0 Q-4,8.5 4.5,2" fill="none" stroke="#ff4d4f" stroke-width="4" stroke-linecap="round"/>
                     <path d="M-8.5,2 Q-4,9.5 3.5,4" fill="none" stroke="#ffd166" stroke-width="1.6" stroke-linecap="round"/>
-                    <!-- 頭部（純粹造型，無眼黑與眼白） -->
                     <circle cx="-11" cy="-1" r="9.2" fill="#91a7ff" stroke="#5c7cfa" stroke-width="0.8"/>
-                    <!-- 黃色馬戲團小尖帽＋紅帽帶 -->
                     <polygon points="-16,-9 -11,-21.5 -6,-9" fill="#ffd166" stroke="#f08c00" stroke-width="0.9"/>
                     <line x1="-16" y1="-9" x2="-6" y2="-9" stroke="#ff4d4f" stroke-width="2"/>
-                    <!-- 招牌粉紅內耳巨耳（含柔和粉紅內耳層次） -->
                     <g class="dumbo-ear">
                       <ellipse cx="-3" cy="-2" rx="14.8" ry="9" fill="#748ffc" stroke="#5c7cfa" stroke-width="1"/>
                       <ellipse cx="-3" cy="-2" rx="12.2" ry="6.6" fill="#ffa8a8" opacity="0.88"/>
                     </g>
-                    <!-- 俏皮捲起長鼻子＋魔法金色羽毛 -->
                     <path d="M-19,1 Q-28.5,1 -26.5,-7.5" fill="none" stroke="#91a7ff" stroke-width="4.6" stroke-linecap="round"/>
                     <path d="M-26.5,-7.5 L-35.5,-13.5" stroke="#ffd166" stroke-width="2.5" stroke-linecap="round"/>
                     <ellipse cx="-33.5" cy="-12.5" rx="4.5" ry="2" transform="rotate(30 -33.5 -12.5)" fill="#fff3b0"/>
                   </g>
                 </g>
 
-                <!-- 5. 奇妙仙子 Tinker Bell（金髮丸子頭＋層次葉片裙＋白絨球鞋＋四片薄紗精靈翅膀＋星塵魔杖） -->
+                <!-- 5. 奇妙仙子 Tinker Bell -->
                 <g class="tinkerbell-orbit">
                   <g transform="scale(1.58)">
                     <circle cx="0" cy="0" r="22" fill="rgba(255, 243, 176, 0.38)"/>
@@ -2230,7 +2236,6 @@
                     <g transform="rotate(30 7 -5)"><ellipse class="tink-wing" cx="7" cy="-5" rx="12" ry="4.8" fill="#e0f2fe" stroke="#bae6fd" stroke-width="0.9" opacity="0.92"/></g>
                     <g transform="rotate(20 -6 1)"><ellipse class="tink-wing" cx="-6" cy="1" rx="8.8" ry="3.4" fill="#e0f2fe" opacity="0.84"/></g>
                     <g transform="rotate(-20 6 1)"><ellipse class="tink-wing" cx="6" cy="1" rx="8.8" ry="3.4" fill="#e0f2fe" opacity="0.84"/></g>
-                    <!-- 鋸齒葉片小洋裝 -->
                     <polygon points="-7,7.5 -3.5,5.5 0,8 3.5,5.5 7,7.5 0,-3" fill="#69db7c" stroke="#2b8a3e" stroke-width="0.9"/>
                     <circle cx="0" cy="-6" r="3.9" fill="#ffe8cc"/>
                     <circle cx="0" cy="-10.8" r="3.1" fill="#ffd166"/>
@@ -2244,7 +2249,7 @@
                   </g>
                 </g>
 
-                <!-- 6-7. 阿拉丁與茉莉公主共乘紫金流蘇魔毯（精緻刺繡紋理與髮飾） -->
+                <!-- 6-7. 阿拉丁與茉莉公主共乘紫金流蘇魔毯 -->
                 <g class="aladdin-carpet">
                   <g transform="scale(1.56)">
                     <path d="M-33,10 Q0,2 33,10 L27,17.5 Q0,10 -27,17.5 Z" fill="#862e9c" stroke="#ffd166" stroke-width="1.8"/>
@@ -2253,7 +2258,6 @@
                     <circle cx="31" cy="13" r="2.4" fill="#ffd166"/>
                     <circle cx="-26" cy="17.5" r="2.2" fill="#ffd166"/>
                     <circle cx="26" cy="17.5" r="2.2" fill="#ffd166"/>
-                    <!-- 6. 阿拉丁 -->
                     <ellipse cx="8" cy="7" rx="6.2" ry="3.5" fill="#f8f9fa"/>
                     <rect x="3.5" y="2.5" width="9" height="2" rx="1" fill="#ffd166"/>
                     <rect x="4" y="-4" width="8" height="9.5" rx="2.5" fill="#ffffff"/>
@@ -2261,7 +2265,6 @@
                     <circle cx="8" cy="-8.5" r="4.1" fill="#e0a96d"/>
                     <path d="M4.5,-10.5 Q8,-13 11.5,-10.5" fill="#182238"/>
                     <rect x="6" y="-14.2" width="4.8" height="3.2" rx="1" fill="#fa5252"/>
-                    <!-- 7. 茉莉公主 -->
                     <ellipse cx="-10" cy="7" rx="6.8" ry="3.5" fill="#3bc9db"/>
                     <rect x="-14" y="-3.5" width="8.5" height="9.5" rx="2.5" fill="#3bc9db"/>
                     <line x1="-13.5" y1="-3" x2="-6" y2="-3" stroke="#ffd166" stroke-width="1.8"/>
@@ -2274,7 +2277,7 @@
                   </g>
                 </g>
 
-                <!-- 8. 巴斯光年 Buzz Lightyear（白綠紫三角掠翼＋雙色翼尖燈＋透明太空頭罩） -->
+                <!-- 8. 巴斯光年 Buzz Lightyear -->
                 <g class="buzz-soar">
                   <g transform="scale(1.58)">
                     <polygon points="-6,-1 15,-21 9,-1" fill="#ffffff" stroke="#adb5bd" stroke-width="0.9" stroke-linejoin="round"/>
@@ -2302,17 +2305,15 @@
                   </g>
                 </g>
 
-                <!-- 9-10. 伊芙 EVE 牽著 瓦力 WALL-E（流線光澤機身＋履帶機械細節） -->
+                <!-- 9-10. 伊芙 EVE 牽著 瓦力 WALL-E -->
                 <g class="eve-walle-drift">
                   <g transform="scale(1.58)">
-                    <!-- 9. 伊芙 EVE -->
                     <ellipse cx="24" cy="-5" rx="8.6" ry="14.2" fill="#ffffff" stroke="#dee2e6" stroke-width="1" transform="rotate(14 24 -5)"/>
                     <ellipse cx="14" cy="-3" rx="2.6" ry="8.2" fill="#ffffff" stroke="#dee2e6" stroke-width="0.7" transform="rotate(24 14 -3)"/>
                     <ellipse cx="26" cy="-9.5" rx="5.6" ry="3.5" fill="#182238" transform="rotate(14 26 -9.5)"/>
                     <ellipse cx="24.2" cy="-10" rx="1.6" ry="1.1" fill="#4dabf7"/>
                     <ellipse cx="28" cy="-9" rx="1.6" ry="1.1" fill="#4dabf7"/>
                     <line x1="4" y1="3" x2="14" y2="-1" stroke="#ffd166" stroke-width="1.6" stroke-dasharray="2.5 2"/>
-                    <!-- 10. 瓦力 WALL-E -->
                     <rect x="-15" y="1" width="15" height="13" rx="2.5" fill="#f59f00" stroke="#d9480f" stroke-width="1"/>
                     <rect x="-12" y="4" width="9" height="4" rx="1" fill="#495057"/>
                     <line x1="-7.5" y1="-2" x2="-7.5" y2="1" stroke="#868e96" stroke-width="2.2"/>
@@ -2323,7 +2324,7 @@
                   </g>
                 </g>
 
-                <!-- 11. 大英雄天團 杯麵 Baymax（紅紫超人裝甲＋火箭飛翼＋噴射尾焰＋白胖頭盔） -->
+                <!-- 11. 大英雄天團 裝甲杯麵 Baymax -->
                 <g class="baymax-fly">
                   <g transform="scale(1.6)">
                     <polygon points="-8,-6 -24.5,-20.5 -15,-2" fill="#fa5252" stroke="#c92a2a" stroke-width="0.9"/>
@@ -2341,7 +2342,7 @@
                   </g>
                 </g>
 
-                <!-- 12. 天外奇蹟 卡爾爺爺的彩色氣球屋（10顆多層次彩色氣球束＋木紋小屋＋紅磚煙囪） -->
+                <!-- 12. 天外奇蹟 卡爾爺爺的彩色氣球屋 -->
                 <g class="up-house-float">
                   <g transform="scale(1.46)">
                     <line x1="0" y1="-6" x2="-12" y2="-28" stroke="#dee2e6" stroke-width="0.9"/>
@@ -2363,213 +2364,236 @@
                   </g>
                 </g>
 
-                <!-- 【地標定點＆庭園驚喜組 (13位，清晰立於前景與城堡周圍)】 -->
-                <!-- 13. 獅子王辛巴 Simba（金黃幼獅＋淺金肚毛＋粉內耳大圓耳＋紅棕毛尖尾巴） -->
-                <g class="simba-roar" transform="translate(328, 550) scale(1.66)">
-                  <path d="M-10,15 L-7,-2 L6,-4 L11,15 Z" fill="#fcc419" stroke="#e67700" stroke-width="1"/>
-                  <ellipse cx="1" cy="7" rx="4.5" ry="6" fill="#fff3bf" opacity="0.85"/>
-                  <circle cx="6" cy="-7" r="6.6" fill="#fcc419"/>
-                  <circle cx="2" cy="-13" r="3.2" fill="#fcc419" stroke="#e67700" stroke-width="0.8"/>
-                  <circle cx="10" cy="-13" r="3.2" fill="#fcc419" stroke="#e67700" stroke-width="0.8"/>
-                  <circle cx="2" cy="-13" r="1.6" fill="#ff8787"/>
-                  <circle cx="10" cy="-13" r="1.6" fill="#ff8787"/>
-                  <polygon points="9.5,-5 12,-6 10.8,-3.8" fill="#ff8787"/>
-                  <path d="M-10,10 Q-21,2 -17,-7" fill="none" stroke="#fcc419" stroke-width="2.6" stroke-linecap="round"/>
-                  <circle cx="-17" cy="-7" r="2.8" fill="#d9480f"/>
-                </g>
-
-                <!-- 14. 愛麗絲夢遊仙境 妙妙貓 Cheshire Cat（粉紫條紋＋金色貓眼＋招牌超寬露齒微笑） -->
-                <g class="cheshire-float" transform="translate(476, 548) scale(1.66)">
-                  <ellipse cx="0" cy="0" rx="14" ry="10.5" fill="#e64980" stroke="#9c36b5" stroke-width="1.4"/>
-                  <path d="M-11,-3 Q0,-6 11,-3" fill="none" stroke="#9c36b5" stroke-width="1.8"/>
-                  <path d="M-12,1 Q0,-2 12,1" fill="none" stroke="#9c36b5" stroke-width="1.4"/>
-                  <polygon points="-11,-6 -14,-16.5 -4,-9" fill="#e64980"/>
-                  <polygon points="11,-6 14,-16.5 4,-9" fill="#e64980"/>
-                  <circle cx="-5" cy="-3" r="2.2" fill="#ffd166"/>
-                  <circle cx="5" cy="-3" r="2.2" fill="#ffd166"/>
-                  <ellipse cx="0" cy="0.2" rx="1.6" ry="1" fill="#ff8787"/>
-                  <path d="M-9.5,2.5 Q0,10.5 9.5,2.5 Z" fill="#ffffff" stroke="#182238" stroke-width="1"/>
-                  <line x1="-4" y1="4.5" x2="-4" y2="7" stroke="#182238" stroke-width="0.7"/>
-                  <line x1="0" y1="5.2" x2="0" y2="8" stroke="#182238" stroke-width="0.7"/>
-                  <line x1="4" y1="4.5" x2="4" y2="7" stroke="#182238" stroke-width="0.7"/>
-                </g>
-
-                <!-- 15. 史迪奇 Stitch（藍色外星人＋粉紅內耳巨耳＋深藍大鼻＋淺藍肚皮） -->
-                <g class="char-idle-bob" transform="translate(52, 616) scale(1.62)">
-                  <ellipse cx="0" cy="14" rx="10.5" ry="9" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
-                  <ellipse cx="0" cy="14.5" rx="6.4" ry="6.2" fill="#74c0fc"/>
-                  <ellipse cx="-6.5" cy="21.5" rx="4.2" ry="2.4" fill="#1c7ed6"/>
-                  <ellipse cx="6.5" cy="21.5" rx="4.2" ry="2.4" fill="#1c7ed6"/>
-                  <!-- 招牌粉紅內耳巨耳 -->
-                  <g transform="rotate(-26 -15 -3)">
-                    <ellipse cx="-15" cy="-3" rx="6.4" ry="14.2" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
-                    <ellipse cx="-15" cy="-3" rx="4.2" ry="11.2" fill="#ffa8a8"/>
-                  </g>
-                  <g transform="rotate(26 15 -3)">
-                    <ellipse cx="15" cy="-3" rx="6.4" ry="14.2" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
-                    <ellipse cx="15" cy="-3" rx="4.2" ry="11.2" fill="#ffa8a8"/>
-                  </g>
-                  <ellipse cx="0" cy="2" rx="12.5" ry="10.5" fill="#228be6"/>
-                  <path d="M-2,-8.5 L0,-14 L2,-8.5" fill="none" stroke="#228be6" stroke-width="2.3" stroke-linecap="round"/>
-                  <ellipse cx="-5" cy="0" rx="3.8" ry="4.4" fill="#74c0fc"/>
-                  <ellipse cx="5" cy="0" rx="3.8" ry="4.4" fill="#74c0fc"/>
-                  <circle cx="-5" cy="0" r="2.6" fill="#182238"/>
-                  <circle cx="5" cy="0" r="2.6" fill="#182238"/>
-                  <ellipse cx="0" cy="4" rx="4.1" ry="2.7" fill="#1864ab"/>
-                  <path d="M-5.5,7.5 Q0,11 5.5,7.5" fill="none" stroke="#182238" stroke-width="1.2" stroke-linecap="round"/>
-                </g>
-
-                <!-- 16-17. 奇奇與蒂蒂 Chip 'n' Dale（深棕黑鼻奇奇＋淺棕紅大鼻＋小門牙蒂蒂） -->
-                <g class="char-idle-bob char-idle-bob-2" transform="translate(178, 624) scale(1.6)">
-                  <!-- 16. 奇奇 -->
-                  <ellipse cx="-11" cy="11" rx="7.2" ry="7.5" fill="#7f4f24"/>
-                  <ellipse cx="-11" cy="11.5" rx="4.2" ry="5" fill="#e6ccb2"/>
-                  <circle cx="-11" cy="0" r="9" fill="#7f4f24"/>
-                  <circle cx="-16" cy="-8.5" r="3.8" fill="#7f4f24" stroke="#d4a373" stroke-width="0.9"/>
-                  <circle cx="-6" cy="-8.5" r="3.8" fill="#7f4f24" stroke="#d4a373" stroke-width="0.9"/>
-                  <ellipse cx="-11" cy="2" rx="6.5" ry="4.5" fill="#e6ccb2"/>
-                  <circle cx="-13.5" cy="-2" r="1.4" fill="#182238"/>
-                  <circle cx="-8.5" cy="-2" r="1.4" fill="#182238"/>
-                  <circle cx="-11" cy="1.5" r="2.5" fill="#182238"/>
-                  <!-- 17. 蒂蒂 -->
-                  <ellipse cx="12" cy="12" rx="7.2" ry="7.5" fill="#b07d4f"/>
-                  <ellipse cx="12" cy="12.5" rx="4.2" ry="5" fill="#faedcd"/>
-                  <circle cx="12" cy="1" r="9" fill="#b07d4f"/>
-                  <circle cx="7" cy="-7.5" r="3.8" fill="#b07d4f" stroke="#e6ccb2" stroke-width="0.9"/>
-                  <circle cx="17" cy="-7.5" r="3.8" fill="#b07d4f" stroke="#e6ccb2" stroke-width="0.9"/>
-                  <ellipse cx="12" cy="3" rx="6.5" ry="4.5" fill="#faedcd"/>
-                  <circle cx="9.5" cy="-1" r="1.4" fill="#182238"/>
-                  <circle cx="14.5" cy="-1" r="1.4" fill="#182238"/>
-                  <circle cx="12" cy="2.5" r="3.2" fill="#ff4d4f"/>
-                  <rect x="10.2" y="5.5" width="3.6" height="2.3" rx="0.6" fill="#ffffff"/>
-                </g>
-
-                <!-- 18-19. 怪獸電力公司 毛怪蘇利文（藍綠長毛＋紫斑點＋雙彎角）＆大眼仔麥克（亮綠圓球＋翡翠綠獨眼） -->
-                <g class="monsters-wave" transform="translate(1105, 608) scale(1.68)">
-                  <!-- 18. 毛怪 Sulley -->
-                  <path d="M-24,14 Q-36,10 -33,1" fill="none" stroke="#15aabf" stroke-width="5.6" stroke-linecap="round"/>
-                  <ellipse cx="-15" cy="3" rx="16.5" ry="20" fill="#22b8cf" stroke="#1098ad" stroke-width="1"/>
-                  <circle cx="-22" cy="-5" r="3.6" fill="#9c36b5" opacity="0.82"/>
-                  <circle cx="-8" cy="2" r="4" fill="#9c36b5" opacity="0.82"/>
-                  <circle cx="-18" cy="10" r="3.4" fill="#9c36b5" opacity="0.8"/>
-                  <circle cx="-10" cy="14" r="2.8" fill="#9c36b5" opacity="0.78"/>
-                  <path d="M-23,-13 Q-29,-22 -24,-25 Q-19,-21 -18,-15 Z" fill="#f1f3f5" stroke="#adb5bd" stroke-width="0.8"/>
-                  <path d="M-7,-13 Q-1,-22 -6,-25 Q-11,-21 -12,-15 Z" fill="#f1f3f5" stroke="#adb5bd" stroke-width="0.8"/>
-                  <path d="M-23,-8 L-17,-6.5 M-7,-8 L-13,-6.5" stroke="#0b7285" stroke-width="2" stroke-linecap="round"/>
-                  <circle cx="-19.5" cy="-4" r="2.8" fill="#ffffff"/>
-                  <circle cx="-10.5" cy="-4" r="2.8" fill="#ffffff"/>
-                  <circle cx="-19.5" cy="-4" r="1.5" fill="#182238"/>
-                  <circle cx="-10.5" cy="-4" r="1.5" fill="#182238"/>
-                  <ellipse cx="-15" cy="0.5" rx="3.4" ry="2.2" fill="#5f3dc4"/>
-                  <path d="M-20,5 Q-15,9.5 -10,5" fill="none" stroke="#182238" stroke-width="1.3" stroke-linecap="round"/>
-                  <ellipse cx="-21" cy="22" rx="5.2" ry="2.8" fill="#15aabf"/>
-                  <ellipse cx="-9" cy="22" rx="5.2" ry="2.8" fill="#15aabf"/>
-
-                  <!-- 19. 大眼仔 Mike Wazowski -->
-                  <g class="mike-jump">
-                    <line x1="11" y1="17" x2="10" y2="23" stroke="#51cf66" stroke-width="2.4" stroke-linecap="round"/>
-                    <line x1="19" y1="17" x2="20" y2="23" stroke="#51cf66" stroke-width="2.4" stroke-linecap="round"/>
-                    <ellipse cx="9" cy="23.5" rx="3.8" ry="1.8" fill="#51cf66"/>
-                    <ellipse cx="21" cy="23.5" rx="3.8" ry="1.8" fill="#51cf66"/>
-                    <line x1="3" y1="8" x2="-2" y2="3" stroke="#51cf66" stroke-width="2.2" stroke-linecap="round"/>
-                    <line x1="27" y1="8" x2="33" y2="2" stroke="#51cf66" stroke-width="2.2" stroke-linecap="round"/>
-                    <circle cx="15" cy="7" r="12.5" fill="#69db7c" stroke="#37b24d" stroke-width="1"/>
-                    <polygon points="8,-3 6,-10 12,-5" fill="#f1f3f5"/>
-                    <polygon points="22,-3 24,-10 18,-5" fill="#f1f3f5"/>
-                    <circle cx="15" cy="5.5" r="6" fill="#ffffff" stroke="#2b8a3e" stroke-width="0.8"/>
-                    <circle cx="15" cy="5.5" r="3.2" fill="#2b8a3e"/>
-                    <circle cx="15" cy="5.5" r="1.5" fill="#182238"/>
-                    <path d="M9.5,13 Q15,17.5 20.5,13 Z" fill="#182238"/>
-                    <line x1="11" y1="13.5" x2="19" y2="13.5" stroke="#ffffff" stroke-width="1.2"/>
+                <!-- 【地標定點＆庭園巡迴組 (13位，外層精準定位/巡迴、內層純相對微動，全螢幕與平板永遠清晰可見、絕不卡左上角)】 -->
+                <!-- 13. 獅子王辛巴 Simba -->
+                <g transform="translate(415, 550) scale(1.66)">
+                  <g class="simba-roar">
+                    <path d="M-10,15 L-7,-2 L6,-4 L11,15 Z" fill="#fcc419" stroke="#e67700" stroke-width="1"/>
+                    <ellipse cx="1" cy="7" rx="4.5" ry="6" fill="#fff3bf" opacity="0.85"/>
+                    <circle cx="6" cy="-7" r="6.6" fill="#fcc419"/>
+                    <circle cx="2" cy="-13" r="3.2" fill="#fcc419" stroke="#e67700" stroke-width="0.8"/>
+                    <circle cx="10" cy="-13" r="3.2" fill="#fcc419" stroke="#e67700" stroke-width="0.8"/>
+                    <circle cx="2" cy="-13" r="1.6" fill="#ff8787"/>
+                    <circle cx="10" cy="-13" r="1.6" fill="#ff8787"/>
+                    <polygon points="9.5,-5 12,-6 10.8,-3.8" fill="#ff8787"/>
+                    <path d="M-10,10 Q-21,2 -17,-7" fill="none" stroke="#fcc419" stroke-width="2.6" stroke-linecap="round"/>
+                    <circle cx="-17" cy="-7" r="2.8" fill="#d9480f"/>
                   </g>
                 </g>
 
-                <!-- 20-21. 動物方城市 茱蒂警官 Judy Hopps（灰兔長耳＋藍警服＋警徽）＆狐狸尼克 Nick Wilde（橘紅狐狸＋綠花襯衫＋紫領帶＋蓬鬆狐尾） -->
-                <g class="char-idle-bob char-idle-bob-3" transform="translate(1258, 616) scale(1.6)">
-                  <!-- 20. 茱蒂 Judy -->
-                  <rect x="-15" y="13" width="8" height="9" rx="2" fill="#1c7ed6"/>
-                  <rect x="-16" y="3" width="10" height="11" rx="2.5" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
-                  <circle cx="-13" cy="6" r="1.5" fill="#ffd166"/>
-                  <ellipse cx="-11" cy="-2" rx="5.5" ry="5.2" fill="#adb5bd"/>
-                  <ellipse cx="-13.5" cy="-11" rx="2.1" ry="7.6" transform="rotate(-10 -13.5 -11)" fill="#adb5bd" stroke="#ff8787" stroke-width="1.1"/>
-                  <ellipse cx="-8.5" cy="-11" rx="2.1" ry="7.6" transform="rotate(10 -8.5 -11)" fill="#adb5bd" stroke="#ff8787" stroke-width="1.1"/>
-                  <circle cx="-13" cy="-2.5" r="1.3" fill="#9c36b5"/>
-                  <circle cx="-9" cy="-2.5" r="1.3" fill="#9c36b5"/>
-                  <circle cx="-11" cy="-0.5" r="1.1" fill="#ff8787"/>
-                  <!-- 21. 尼克 Nick -->
-                  <path d="M15,15 Q24,12 22,5 Q17,7 14,12 Z" fill="#f76707"/>
-                  <circle cx="22" cy="5.5" r="2.2" fill="#fff3bf"/>
-                  <rect x="6" y="13" width="9" height="9" rx="2" fill="#8d5524"/>
-                  <rect x="5" y="2" width="11" height="12" rx="2.5" fill="#51cf66" stroke="#2b8a3e" stroke-width="0.8"/>
-                  <polygon points="9.5,2 11.5,2 10.5,9" fill="#5f3dc4"/>
-                  <ellipse cx="10.5" cy="-3.5" rx="6.8" ry="5.5" fill="#f76707"/>
-                  <ellipse cx="10.5" cy="-1.5" rx="5.5" ry="3.2" fill="#fff3bf"/>
-                  <polygon points="5,-7 3,-15.5 9,-9" fill="#f76707" stroke="#182238" stroke-width="0.8"/>
-                  <polygon points="16,-7 18,-15.5 12,-9" fill="#f76707" stroke="#182238" stroke-width="0.8"/>
-                  <circle cx="8.5" cy="-4.5" r="1.3" fill="#2b8a3e"/>
-                  <circle cx="12.5" cy="-4.5" r="1.3" fill="#2b8a3e"/>
-                  <circle cx="10.5" cy="-2" r="1.5" fill="#182238"/>
+                <!-- 14. 愛麗絲夢遊仙境 妙妙貓 Cheshire Cat -->
+                <g transform="translate(505, 548) scale(1.66)">
+                  <g class="cheshire-float">
+                    <ellipse cx="0" cy="0" rx="14" ry="10.5" fill="#e64980" stroke="#9c36b5" stroke-width="1.4"/>
+                    <path d="M-11,-3 Q0,-6 11,-3" fill="none" stroke="#9c36b5" stroke-width="1.8"/>
+                    <path d="M-12,1 Q0,-2 12,1" fill="none" stroke="#9c36b5" stroke-width="1.4"/>
+                    <polygon points="-11,-6 -14,-16.5 -4,-9" fill="#e64980"/>
+                    <polygon points="11,-6 14,-16.5 4,-9" fill="#e64980"/>
+                    <circle cx="-5" cy="-3" r="2.2" fill="#ffd166"/>
+                    <circle cx="5" cy="-3" r="2.2" fill="#ffd166"/>
+                    <ellipse cx="0" cy="0.2" rx="1.6" ry="1" fill="#ff8787"/>
+                    <path d="M-9.5,2.5 Q0,10.5 9.5,2.5 Z" fill="#ffffff" stroke="#182238" stroke-width="1"/>
+                    <line x1="-4" y1="4.5" x2="-4" y2="7" stroke="#182238" stroke-width="0.7"/>
+                    <line x1="0" y1="5.2" x2="0" y2="8" stroke="#182238" stroke-width="0.7"/>
+                    <line x1="4" y1="4.5" x2="4" y2="7" stroke="#182238" stroke-width="0.7"/>
+                  </g>
                 </g>
 
-                <!-- 22. 大英雄天團 療癒系原版杯麵 Baymax（白胖充氣身體＋經典連線豆豆眼＋招手小短手） -->
-                <g class="char-idle-bob" transform="translate(1386, 616) scale(1.64)">
-                  <ellipse cx="0" cy="11" rx="14" ry="12" fill="#ffffff" stroke="#ced4da" stroke-width="1.1"/>
-                  <circle cx="5.5" cy="6.5" r="1.8" fill="none" stroke="#dee2e6" stroke-width="0.9"/>
-                  <ellipse cx="-6.5" cy="21" rx="4.5" ry="3" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
-                  <ellipse cx="6.5" cy="21" rx="4.5" ry="3" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
-                  <ellipse cx="-14.5" cy="7" rx="3.8" ry="8" transform="rotate(24 -14.5 7)" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
-                  <ellipse cx="14.5" cy="9" rx="3.8" ry="8" transform="rotate(-18 14.5 9)" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
-                  <ellipse cx="0" cy="-3" rx="9.5" ry="7.2" fill="#ffffff" stroke="#ced4da" stroke-width="1.1"/>
-                  <circle cx="-4.2" cy="-3.5" r="1.8" fill="#182238"/>
-                  <circle cx="4.2" cy="-3.5" r="1.8" fill="#182238"/>
-                  <line x1="-4.2" y1="-3.5" x2="4.2" y2="-3.5" stroke="#182238" stroke-width="1.5"/>
+                <!-- 15. 史迪奇 Stitch（在左側草坡悠閒散步巡迴） -->
+                <g class="stitch-stroll">
+                  <g transform="scale(1.62)"><g class="char-idle-bob">
+                    <ellipse cx="0" cy="14" rx="10.5" ry="9" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
+                    <ellipse cx="0" cy="14.5" rx="6.4" ry="6.2" fill="#74c0fc"/>
+                    <ellipse cx="-6.5" cy="21.5" rx="4.2" ry="2.4" fill="#1c7ed6"/>
+                    <ellipse cx="6.5" cy="21.5" rx="4.2" ry="2.4" fill="#1c7ed6"/>
+                    <g transform="rotate(-26 -15 -3)">
+                      <ellipse cx="-15" cy="-3" rx="6.4" ry="14.2" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
+                      <ellipse cx="-15" cy="-3" rx="4.2" ry="11.2" fill="#ffa8a8"/>
+                    </g>
+                    <g transform="rotate(26 15 -3)">
+                      <ellipse cx="15" cy="-3" rx="6.4" ry="14.2" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
+                      <ellipse cx="15" cy="-3" rx="4.2" ry="11.2" fill="#ffa8a8"/>
+                    </g>
+                    <ellipse cx="0" cy="2" rx="12.5" ry="10.5" fill="#228be6"/>
+                    <path d="M-2,-8.5 L0,-14 L2,-8.5" fill="none" stroke="#228be6" stroke-width="2.3" stroke-linecap="round"/>
+                    <ellipse cx="-5" cy="0" rx="3.8" ry="4.4" fill="#74c0fc"/>
+                    <ellipse cx="5" cy="0" rx="3.8" ry="4.4" fill="#74c0fc"/>
+                    <circle cx="-5" cy="0" r="2.6" fill="#182238"/>
+                    <circle cx="5" cy="0" r="2.6" fill="#182238"/>
+                    <ellipse cx="0" cy="4" rx="4.1" ry="2.7" fill="#1864ab"/>
+                    <path d="M-5.5,7.5 Q0,11 5.5,7.5" fill="none" stroke="#182238" stroke-width="1.2" stroke-linecap="round"/>
+                  </g></g>
                 </g>
 
-                <!-- 23. 冰雪奇緣 艾莎 Elsa（冰藍薄紗禮服＋雪花披風＋金色長麻花辮＋施展冰雪魔法） -->
+                <!-- 16-17. 奇奇與蒂蒂 Chip 'n' Dale（在左側草坡悠閒散步巡迴） -->
+                <g class="chipdale-stroll">
+                  <g transform="scale(1.6)"><g class="char-idle-bob char-idle-bob-2">
+                    <!-- 16. 奇奇 -->
+                    <ellipse cx="-11" cy="11" rx="7.2" ry="7.5" fill="#7f4f24"/>
+                    <ellipse cx="-11" cy="11.5" rx="4.2" ry="5" fill="#e6ccb2"/>
+                    <circle cx="-11" cy="0" r="9" fill="#7f4f24"/>
+                    <circle cx="-16" cy="-8.5" r="3.8" fill="#7f4f24" stroke="#d4a373" stroke-width="0.9"/>
+                    <circle cx="-6" cy="-8.5" r="3.8" fill="#7f4f24" stroke="#d4a373" stroke-width="0.9"/>
+                    <ellipse cx="-11" cy="2" rx="6.5" ry="4.5" fill="#e6ccb2"/>
+                    <circle cx="-13.5" cy="-2" r="1.4" fill="#182238"/>
+                    <circle cx="-8.5" cy="-2" r="1.4" fill="#182238"/>
+                    <circle cx="-11" cy="1.5" r="2.5" fill="#182238"/>
+                    <!-- 17. 蒂蒂 -->
+                    <ellipse cx="12" cy="12" rx="7.2" ry="7.5" fill="#b07d4f"/>
+                    <ellipse cx="12" cy="12.5" rx="4.2" ry="5" fill="#faedcd"/>
+                    <circle cx="12" cy="1" r="9" fill="#b07d4f"/>
+                    <circle cx="7" cy="-7.5" r="3.8" fill="#b07d4f" stroke="#e6ccb2" stroke-width="0.9"/>
+                    <circle cx="17" cy="-7.5" r="3.8" fill="#b07d4f" stroke="#e6ccb2" stroke-width="0.9"/>
+                    <ellipse cx="12" cy="3" rx="6.5" ry="4.5" fill="#faedcd"/>
+                    <circle cx="9.5" cy="-1" r="1.4" fill="#182238"/>
+                    <circle cx="14.5" cy="-1" r="1.4" fill="#182238"/>
+                    <circle cx="12" cy="2.5" r="3.2" fill="#ff4d4f"/>
+                    <rect x="10.2" y="5.5" width="3.6" height="2.3" rx="0.6" fill="#ffffff"/>
+                  </g></g>
+                </g>
+
+                <!-- 18-19. 怪獸電力公司 毛怪蘇利文 ＆ 大眼仔麥克（外層定位、內層搖擺跳躍） -->
+                <g transform="translate(885, 610) scale(1.66)">
+                  <g class="monsters-wave">
+                    <!-- 18. 毛怪 Sulley -->
+                    <path d="M-24,14 Q-36,10 -33,1" fill="none" stroke="#15aabf" stroke-width="5.6" stroke-linecap="round"/>
+                    <ellipse cx="-15" cy="3" rx="16.5" ry="20" fill="#22b8cf" stroke="#1098ad" stroke-width="1"/>
+                    <circle cx="-22" cy="-5" r="3.6" fill="#9c36b5" opacity="0.82"/>
+                    <circle cx="-8" cy="2" r="4" fill="#9c36b5" opacity="0.82"/>
+                    <circle cx="-18" cy="10" r="3.4" fill="#9c36b5" opacity="0.8"/>
+                    <circle cx="-10" cy="14" r="2.8" fill="#9c36b5" opacity="0.78"/>
+                    <path d="M-23,-13 Q-29,-22 -24,-25 Q-19,-21 -18,-15 Z" fill="#f1f3f5" stroke="#adb5bd" stroke-width="0.8"/>
+                    <path d="M-7,-13 Q-1,-22 -6,-25 Q-11,-21 -12,-15 Z" fill="#f1f3f5" stroke="#adb5bd" stroke-width="0.8"/>
+                    <path d="M-23,-8 L-17,-6.5 M-7,-8 L-13,-6.5" stroke="#0b7285" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="-19.5" cy="-4" r="2.8" fill="#ffffff"/>
+                    <circle cx="-10.5" cy="-4" r="2.8" fill="#ffffff"/>
+                    <circle cx="-19.5" cy="-4" r="1.5" fill="#182238"/>
+                    <circle cx="-10.5" cy="-4" r="1.5" fill="#182238"/>
+                    <ellipse cx="-15" cy="0.5" rx="3.4" ry="2.2" fill="#5f3dc4"/>
+                    <path d="M-20,5 Q-15,9.5 -10,5" fill="none" stroke="#182238" stroke-width="1.3" stroke-linecap="round"/>
+                    <ellipse cx="-21" cy="22" rx="5.2" ry="2.8" fill="#15aabf"/>
+                    <ellipse cx="-9" cy="22" rx="5.2" ry="2.8" fill="#15aabf"/>
+
+                    <!-- 19. 大眼仔 Mike Wazowski -->
+                    <g class="mike-jump">
+                      <line x1="11" y1="17" x2="10" y2="23" stroke="#51cf66" stroke-width="2.4" stroke-linecap="round"/>
+                      <line x1="19" y1="17" x2="20" y2="23" stroke="#51cf66" stroke-width="2.4" stroke-linecap="round"/>
+                      <ellipse cx="9" cy="23.5" rx="3.8" ry="1.8" fill="#51cf66"/>
+                      <ellipse cx="21" cy="23.5" rx="3.8" ry="1.8" fill="#51cf66"/>
+                      <line x1="3" y1="8" x2="-2" y2="3" stroke="#51cf66" stroke-width="2.2" stroke-linecap="round"/>
+                      <line x1="27" y1="8" x2="33" y2="2" stroke="#51cf66" stroke-width="2.2" stroke-linecap="round"/>
+                      <circle cx="15" cy="7" r="12.5" fill="#69db7c" stroke="#37b24d" stroke-width="1"/>
+                      <polygon points="8,-3 6,-10 12,-5" fill="#f1f3f5"/>
+                      <polygon points="22,-3 24,-10 18,-5" fill="#f1f3f5"/>
+                      <circle cx="15" cy="5.5" r="6" fill="#ffffff" stroke="#2b8a3e" stroke-width="0.8"/>
+                      <circle cx="15" cy="5.5" r="3.2" fill="#2b8a3e"/>
+                      <circle cx="15" cy="5.5" r="1.5" fill="#182238"/>
+                      <path d="M9.5,13 Q15,17.5 20.5,13 Z" fill="#182238"/>
+                      <line x1="11" y1="13.5" x2="19" y2="13.5" stroke="#ffffff" stroke-width="1.2"/>
+                    </g>
+                  </g>
+                </g>
+
+                <!-- 20-21. 動物方城市 茱蒂警官 Judy Hopps ＆ 狐狸尼克 Nick Wilde（移入安全視覺主舞台並持續巡邏，保證每次全螢幕都能清晰看見！） -->
+                <g class="zootopia-patrol">
+                  <g transform="scale(1.62)"><g class="char-idle-bob char-idle-bob-3">
+                    <!-- 20. 茱蒂 Judy -->
+                    <rect x="-15" y="13" width="8" height="9" rx="2" fill="#1c7ed6"/>
+                    <rect x="-16" y="3" width="10" height="11" rx="2.5" fill="#228be6" stroke="#1864ab" stroke-width="0.8"/>
+                    <circle cx="-13" cy="6" r="1.5" fill="#ffd166"/>
+                    <ellipse cx="-11" cy="-2" rx="5.5" ry="5.2" fill="#adb5bd"/>
+                    <ellipse cx="-13.5" cy="-11" rx="2.1" ry="7.6" transform="rotate(-10 -13.5 -11)" fill="#adb5bd" stroke="#ff8787" stroke-width="1.1"/>
+                    <ellipse cx="-8.5" cy="-11" rx="2.1" ry="7.6" transform="rotate(10 -8.5 -11)" fill="#adb5bd" stroke="#ff8787" stroke-width="1.1"/>
+                    <circle cx="-13" cy="-2.5" r="1.3" fill="#9c36b5"/>
+                    <circle cx="-9" cy="-2.5" r="1.3" fill="#9c36b5"/>
+                    <circle cx="-11" cy="-0.5" r="1.1" fill="#ff8787"/>
+                    <!-- 21. 尼克 Nick -->
+                    <path d="M15,15 Q24,12 22,5 Q17,7 14,12 Z" fill="#f76707"/>
+                    <circle cx="22" cy="5.5" r="2.2" fill="#fff3bf"/>
+                    <rect x="6" y="13" width="9" height="9" rx="2" fill="#8d5524"/>
+                    <rect x="5" y="2" width="11" height="12" rx="2.5" fill="#51cf66" stroke="#2b8a3e" stroke-width="0.8"/>
+                    <polygon points="9.5,2 11.5,2 10.5,9" fill="#5f3dc4"/>
+                    <ellipse cx="10.5" cy="-3.5" rx="6.8" ry="5.5" fill="#f76707"/>
+                    <ellipse cx="10.5" cy="-1.5" rx="5.5" ry="3.2" fill="#fff3bf"/>
+                    <polygon points="5,-7 3,-15.5 9,-9" fill="#f76707" stroke="#182238" stroke-width="0.8"/>
+                    <polygon points="16,-7 18,-15.5 12,-9" fill="#f76707" stroke="#182238" stroke-width="0.8"/>
+                    <circle cx="8.5" cy="-4.5" r="1.3" fill="#2b8a3e"/>
+                    <circle cx="12.5" cy="-4.5" r="1.3" fill="#2b8a3e"/>
+                    <circle cx="10.5" cy="-2" r="1.5" fill="#182238"/>
+                  </g></g>
+                </g>
+
+                <!-- 22. 大英雄天團 療癒系原版杯麵 Baymax（移入安全視覺主舞台右側並悠閒招手巡迴） -->
+                <g class="baymax-ground-stroll">
+                  <g transform="scale(1.64)"><g class="char-idle-bob">
+                    <ellipse cx="0" cy="11" rx="14" ry="12" fill="#ffffff" stroke="#ced4da" stroke-width="1.1"/>
+                    <circle cx="5.5" cy="6.5" r="1.8" fill="none" stroke="#dee2e6" stroke-width="0.9"/>
+                    <ellipse cx="-6.5" cy="21" rx="4.5" ry="3" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
+                    <ellipse cx="6.5" cy="21" rx="4.5" ry="3" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
+                    <ellipse cx="-14.5" cy="7" rx="3.8" ry="8" transform="rotate(24 -14.5 7)" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
+                    <ellipse cx="14.5" cy="9" rx="3.8" ry="8" transform="rotate(-18 14.5 9)" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
+                    <ellipse cx="0" cy="-3" rx="9.5" ry="7.2" fill="#ffffff" stroke="#ced4da" stroke-width="1.1"/>
+                    <circle cx="-4.2" cy="-3.5" r="1.8" fill="#182238"/>
+                    <circle cx="4.2" cy="-3.5" r="1.8" fill="#182238"/>
+                    <line x1="-4.2" y1="-3.5" x2="4.2" y2="-3.5" stroke="#182238" stroke-width="1.5"/>
+                  </g></g>
+                </g>
+
+                <!-- 23. 冰雪奇緣 艾莎 Elsa（外層定位、內層純相對魔法動畫，徹底杜絕左上角定位偏移） -->
                 <g transform="translate(756, 518) scale(1.62)">
                   <path d="M-2,3 Q-13,11 -17,20 L-5,19 Z" fill="rgba(165, 216, 255, 0.76)"/>
                   <polygon points="-6.5,19 6.5,19 2.8,2 -2.8,2" fill="#4dabf7" stroke="#d0ebff" stroke-width="0.9"/>
                   <circle cx="0" cy="-1.8" r="3.8" fill="#ffe8cc"/>
                   <path d="M-2.2,-4.8 Q3,-6.2 4.5,-2.5 Q5.5,3 3.5,9.5" fill="none" stroke="#fff3bf" stroke-width="2.7" stroke-linecap="round"/>
-                  <g class="elsa-arm-cast" transform="translate(2.5, 3.2)">
-                    <line x1="0" y1="0" x2="10" y2="-5.5" stroke="#ffe8cc" stroke-width="2.1" stroke-linecap="round"/>
-                    <circle cx="10.5" cy="-5.8" r="1.6" fill="#e7f5ff"/>
+                  <g transform="translate(2.5, 3.2)">
+                    <g class="elsa-arm-cast">
+                      <line x1="0" y1="0" x2="10" y2="-5.5" stroke="#ffe8cc" stroke-width="2.1" stroke-linecap="round"/>
+                      <circle cx="10.5" cy="-5.8" r="1.6" fill="#e7f5ff"/>
+                    </g>
                   </g>
                   <path class="elsa-ice-blast" d="M12,-3 Q22,-12 34,-18" fill="none" stroke="#a5d8ff" stroke-width="2.6" stroke-linecap="round"/>
                   <path class="elsa-ice-blast" d="M13,-1 Q24,-7 36,-11" fill="none" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round"/>
-                  <g class="elsa-snow-swirl" transform="translate(15, -5)">
-                    <polygon points="0,-5 1.3,-1.3 5,0 1.3,1.3 0,5 -1.3,1.3 -5,0 -1.3,-1.3" fill="#ffffff"/>
-                    <circle cx="6" cy="-4" r="1.4" fill="#a5d8ff"/>
-                    <circle cx="-4" cy="-6" r="1.2" fill="#e7f5ff"/>
+                  <g transform="translate(15, -5)">
+                    <g class="elsa-snow-swirl">
+                      <polygon points="0,-5 1.3,-1.3 5,0 1.3,1.3 0,5 -1.3,1.3 -5,0 -1.3,-1.3" fill="#ffffff"/>
+                      <circle cx="6" cy="-4" r="1.4" fill="#a5d8ff"/>
+                      <circle cx="-4" cy="-6" r="1.2" fill="#e7f5ff"/>
+                    </g>
                   </g>
-                  <g class="elsa-snow-swirl elsa-snow-swirl-2" transform="translate(18, -9)">
-                    <polygon points="0,-4 1.1,-1.1 4,0 1.1,1.1 0,4 -1.1,1.1 -4,0 -1.1,-1.1" fill="#74c0fc"/>
-                    <circle cx="5" cy="3" r="1.3" fill="#ffffff"/>
+                  <g transform="translate(18, -9)">
+                    <g class="elsa-snow-swirl elsa-snow-swirl-2">
+                      <polygon points="0,-4 1.1,-1.1 4,0 1.1,1.1 0,4 -1.1,1.1 -4,0 -1.1,-1.1" fill="#74c0fc"/>
+                      <circle cx="5" cy="3" r="1.3" fill="#ffffff"/>
+                    </g>
                   </g>
                 </g>
 
-                <!-- 24. 冰雪奇緣 安娜 Anna（深藍花紋裙＋玫瑰紅披風＋雙麻花辮） -->
-                <g class="char-idle-bob char-idle-bob-2" transform="translate(718, 520) scale(1.6)">
-                  <polygon points="-6,18 6,18 3,3 -3,3" fill="#1c7ed6" stroke="#74c0fc" stroke-width="0.7"/>
-                  <line x1="-4" y1="16" x2="4" y2="16" stroke="#ffd166" stroke-width="0.9"/>
-                  <polygon points="-5.5,11 5.5,11 3,2 -3,2" fill="#e64980"/>
-                  <rect x="-2.8" y="2" width="5.6" height="4" fill="#182238"/>
-                  <circle cx="0" cy="-1.8" r="3.7" fill="#ffe8cc"/>
-                  <path d="M-3.5,-3 Q0,-6 3.5,-3" fill="#b07d4f"/>
-                  <line x1="-3.5" y1="-1" x2="-4.5" y2="7" stroke="#b07d4f" stroke-width="2" stroke-linecap="round"/>
-                  <line x1="3.5" y1="-1" x2="4.5" y2="7" stroke="#b07d4f" stroke-width="2" stroke-linecap="round"/>
+                <!-- 24. 冰雪奇緣 安娜 Anna（外層定位、內層搖擺） -->
+                <g transform="translate(718, 520) scale(1.6)">
+                  <g class="char-idle-bob char-idle-bob-2">
+                    <polygon points="-6,18 6,18 3,3 -3,3" fill="#1c7ed6" stroke="#74c0fc" stroke-width="0.7"/>
+                    <line x1="-4" y1="16" x2="4" y2="16" stroke="#ffd166" stroke-width="0.9"/>
+                    <polygon points="-5.5,11 5.5,11 3,2 -3,2" fill="#e64980"/>
+                    <rect x="-2.8" y="2" width="5.6" height="4" fill="#182238"/>
+                    <circle cx="0" cy="-1.8" r="3.7" fill="#ffe8cc"/>
+                    <path d="M-3.5,-3 Q0,-6 3.5,-3" fill="#b07d4f"/>
+                    <line x1="-3.5" y1="-1" x2="-4.5" y2="7" stroke="#b07d4f" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="3.5" y1="-1" x2="4.5" y2="7" stroke="#b07d4f" stroke-width="2" stroke-linecap="round"/>
+                  </g>
                 </g>
 
-                <!-- 25. 魔髮奇緣 樂佩公主 Rapunzel（薰衣草紫禮服＋金色王冠＋長長金色花朵辮髮） -->
-                <g class="char-idle-bob" transform="translate(658, 522) scale(1.6)">
-                  <polygon points="-6.5,18 6.5,18 3,2 -3,2" fill="#9775fa" stroke="#e5dbff" stroke-width="0.8"/>
-                  <polygon points="-3,2 3,2 0,7" fill="#f783ac"/>
-                  <circle cx="0" cy="-2" r="3.7" fill="#ffe8cc"/>
-                  <polygon points="-2,-5.5 0,-7.5 2,-5.5" fill="#ffd166"/>
-                  <path d="M-3,-4 Q-8,2 -9,14 Q-11,18 -16,17" fill="none" stroke="#ffd43b" stroke-width="3.3" stroke-linecap="round"/>
-                  <circle cx="-7" cy="4" r="1.2" fill="#ff8787"/>
-                  <circle cx="-9" cy="10" r="1.2" fill="#74c0fc"/>
-                  <circle cx="-12" cy="16" r="1.2" fill="#ff8787"/>
+                <!-- 25. 魔髮奇緣 樂佩公主 Rapunzel（外層定位、內層搖擺） -->
+                <g transform="translate(658, 522) scale(1.6)">
+                  <g class="char-idle-bob">
+                    <polygon points="-6.5,18 6.5,18 3,2 -3,2" fill="#9775fa" stroke="#e5dbff" stroke-width="0.8"/>
+                    <polygon points="-3,2 3,2 0,7" fill="#f783ac"/>
+                    <circle cx="0" cy="-2" r="3.7" fill="#ffe8cc"/>
+                    <polygon points="-2,-5.5 0,-7.5 2,-5.5" fill="#ffd166"/>
+                    <path d="M-3,-4 Q-8,2 -9,14 Q-11,18 -16,17" fill="none" stroke="#ffd43b" stroke-width="3.3" stroke-linecap="round"/>
+                    <circle cx="-7" cy="4" r="1.2" fill="#ff8787"/>
+                    <circle cx="-9" cy="10" r="1.2" fill="#74c0fc"/>
+                    <circle cx="-12" cy="16" r="1.2" fill="#ff8787"/>
+                  </g>
                 </g>
 
                 <!-- 【前景草坡大遊行組 1：經典米奇家族＆百畝森林夥伴向右散步 (7位)】 -->
@@ -2643,7 +2667,7 @@
                     <circle cx="5.2" cy="-3.8" r="1.4" fill="#182238"/>
                   </g></g>
 
-                  <!-- 31. 小豬 Piglet（粉紅條紋衣＋長長粉紅尖耳） -->
+                  <!-- 31. 小豬 Piglet -->
                   <g transform="translate(232, -21) scale(1.64)"><g class="char-bob char-bob-3">
                     <ellipse cx="0" cy="5.5" rx="5.2" ry="6.5" fill="#ff8787"/>
                     <line x1="-4.5" y1="3.5" x2="4.5" y2="3.5" stroke="#e64980" stroke-width="1.4"/>
@@ -2737,7 +2761,7 @@
                     <polygon points="-4.8,-12 0,-9.5 4.8,-12 4.8,-7.5 0,-9.5 -4.8,-7.5" fill="#ff6b6b"/>
                   </g></g>
 
-                  <!-- 38. 星黛露 StellaLou（薰衣草紫芭蕾兔＋修長紫兔耳＋水藍芭蕾蓬蓬裙＋蝴蝶結） -->
+                  <!-- 38. 星黛露 StellaLou -->
                   <g transform="translate(252, -26) scale(1.66)"><g class="char-bob char-bob-3">
                     <polygon points="-8,12 8,12 4.5,2 -4.5,2" fill="#74c0fc" stroke="#339af0" stroke-width="0.8"/>
                     <ellipse cx="0" cy="1" rx="5.5" ry="6.5" fill="#b197fc"/>
@@ -2750,7 +2774,7 @@
                   </g></g>
                 </g>
 
-                <!-- 39. 汽車總動員 閃電麥坤 Lightning McQueen（亮紅賽車＋95號塗裝＋招牌黃色閃電） -->
+                <!-- 39. 汽車總動員 閃電麥坤 Lightning McQueen -->
                 <g class="mcqueen-zip">
                   <g transform="scale(1.6)">
                     <path d="M-28,0 L-22,-11 L10,-11 L24,-2 L28,0 Z" fill="#fa5252" stroke="#ffd166" stroke-width="1.4"/>
@@ -2764,17 +2788,21 @@
                 </g>
               </g>
 
-              <!-- 隱藏米奇微光剪影 (Hidden Mickeys) -->
-              <g class="hidden-mickey-sparkle" fill="rgba(255, 243, 176, 0.52)">
+              <!-- 隱藏米奇微光剪影 (Hidden Mickeys，外層定位、內層呼吸閃爍) -->
+              <g fill="rgba(255, 243, 176, 0.52)">
                 <g transform="translate(268, 634)">
-                  <circle cx="0" cy="0" r="5.5"/>
-                  <circle cx="-5.5" cy="-5" r="3.3"/>
-                  <circle cx="5.5" cy="-5" r="3.3"/>
+                  <g class="hidden-mickey-sparkle">
+                    <circle cx="0" cy="0" r="5.5"/>
+                    <circle cx="-5.5" cy="-5" r="3.3"/>
+                    <circle cx="5.5" cy="-5" r="3.3"/>
+                  </g>
                 </g>
                 <g transform="translate(1195, 636)">
-                  <circle cx="0" cy="0" r="5.5"/>
-                  <circle cx="-5.5" cy="-5" r="3.3"/>
-                  <circle cx="5.5" cy="-5" r="3.3"/>
+                  <g class="hidden-mickey-sparkle">
+                    <circle cx="0" cy="0" r="5.5"/>
+                    <circle cx="-5.5" cy="-5" r="3.3"/>
+                    <circle cx="5.5" cy="-5" r="3.3"/>
+                  </g>
                 </g>
               </g>
 
@@ -3167,9 +3195,6 @@
 
       document.getElementById("btn-home").classList.toggle("active", pageId === "resort");
       document.getElementById("btn-settings").classList.toggle("active", pageId === "settings");
-      if (pageId === "vacation" || pageId === "resort") {
-        requestAnimationFrame(stabilizeSafariFullscreenLayout);
-      }
     }
 
     function renderResortMain() {
@@ -3630,108 +3655,6 @@
         state.vacDate = p.date;
         saveState();
     
-    fillSettingsForm();
-        refreshVacationHeader();
-      updateTimers();
-      });
-    });
-
-    document.getElementById("inpHolidayPreset").addEventListener("change", (e) => {
-      const p = PRESETS[e.target.value];
-      if (p) {
-        document.getElementById("inpVacTitle").value = p.title;
-        document.getElementById("inpVacDate").value = p.date;
-      }
-    });
-
-    document.getElementById("btnSaveSettings").addEventListener("click", () => {
-      state = {
-        ...state,
-        welcomeLabel: document.getElementById("inpWelcomeLabel").value.trim() || "WELCOME",
-        familyName: document.getElementById("inpFamilyName").value.trim() || "Smith Family",
-        dateLocale: document.getElementById("inpDateLocale").value,
-        holidayPreset: document.getElementById("inpHolidayPreset").value,
-        vacTitle: document.getElementById("inpVacTitle").value.trim() || "距離下一次迪士尼假期還有",
-        vacDate: document.getElementById("inpVacDate").value || DEFAULT_DATA.vacDate,
-        resortYtUrl: document.getElementById("inpResortYt").value.trim(),
-        terraceYt1: document.getElementById("inpTerraceYt1").value.trim(),
-        terraceYt2: document.getElementById("inpTerraceYt2").value.trim(),
-        terraceYt3: document.getElementById("inpTerraceYt3").value.trim(),
-        terraceYt4: document.getElementById("inpTerraceYt4").value.trim(),
-        fireworksTime: document.getElementById("inpFireworksTime").value || "21:00"
-      };
-      saveState();
-      updateTopBar();
-      refreshVacationHeader();
-      updateTimers();
-      renderResortMain();
-      renderTerrace();
-
-      const msg = document.getElementById("saveMsg");
-      msg.textContent = "✅ 設定已儲存並套用！";
-      setTimeout(() => (msg.textContent = ""), 3000);
-    });
-
-    document.getElementById("btnResetSettings").addEventListener("click", () => {
-      state = structuredClone(DEFAULT_DATA);
-      saveState();
-  
-    fillSettingsForm();
-      updateTopBar();
-      refreshVacationHeader();
-      updateTimers();
-      renderChecklist();
-      renderResortMain();
-      renderTerrace();
-
-      const msg = document.getElementById("saveMsg");
-      msg.textContent = "已恢復預設值。";
-      setTimeout(() => (msg.textContent = ""), 2500);
-    });
-
-    document.querySelectorAll("[data-terrace-idx]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll("[data-terrace-idx]").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentTerraceIdx = Number(btn.dataset.terraceIdx);
-        renderTerrace();
-      });
-    });
-
-    document.querySelectorAll("[data-park]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll("[data-park]").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentParkKey = btn.dataset.park;
-        renderParks(false);
-        syncParkLiveWaitTimes(currentParkKey, true);
-      });
-    });
-
-    document.getElementById("btnManualRefreshRides").addEventListener("click", () => {
-      syncParkLiveWaitTimes(currentParkKey, true);
-    });
-
-
-    fillSettingsForm();
-    updateTopBar();
-    refreshVacationHeader();
-      updateTimers();
-    renderChecklist();
-    renderResortMain();
-    renderTerrace();
-    renderParks(false);
-    syncParkLiveWaitTimes(currentParkKey, false);
-
-    setInterval(() => {
-      updateTopBar();
-    }, 1000);
-    requestAnimationFrame(smoothCountdownLoop);
-
-    setInterval(() => {
-      syncParkLiveWaitTimes(currentParkKey, false);
-    }, 180000);
-
     // 螢幕比例自適應引擎：iPad / 橫式平板顯示 1440px 全景視野；手機直式自動聚焦中央城堡與角色主舞台
     function adaptStageToViewport() {
       const svg = document.getElementById("resortPanoramaSvg");
@@ -3749,7 +3672,7 @@
       }
     }
 
-    // 輕量安全的視口同步（僅調整 viewBox 與外框高寬，絕不修改 SVG transform 或 display，避免觸發 iPad/Safari 渲染卡死）
+    // 修復 Safari / iPadOS 全螢幕切換、旋轉或返回前景時視口尺寸同步（絕不切換 display:none 破壞 SVG 動畫座標！）
     function stabilizeSafariFullscreenLayout() {
       const shell = document.querySelector(".tv-shell");
       adaptStageToViewport();
@@ -3787,12 +3710,12 @@
       if (!layer) return;
 
       const PALETTES = [
-        { main: "#ffd166", sub: "#fff3b0" }, // 皇家暖金
-        { main: "#7cc4ff", sub: "#e0f2fe" }, // 仙履奇緣冰藍
-        { main: "#ff8fab", sub: "#ffe5ec" }, // 玫瑰粉
-        { main: "#c77dff", sub: "#f3d9fa" }, // 魔法紫
-        { main: "#69db7c", sub: "#d3f9d8" }, // 精靈翠綠
-        { main: "#ff922b", sub: "#ffe8cc" }  // 暖陽橘金
+        { main: "#ffd166", sub: "#fff3b0" },
+        { main: "#7cc4ff", sub: "#e0f2fe" },
+        { main: "#ff8fab", sub: "#ffe5ec" },
+        { main: "#c77dff", sub: "#f3d9fa" },
+        { main: "#69db7c", sub: "#d3f9d8" },
+        { main: "#ff922b", sub: "#ffe8cc" }
       ];
 
       function spawnSingleFirework() {
