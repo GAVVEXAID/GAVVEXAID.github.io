@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V15（線性滑順倒數＋超精緻角色大遊行）</title>
+  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V16（60fps零卡頓＋修復左上角角色定位）</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -501,6 +501,8 @@
       pointer-events: none;
       z-index: 1;
       overflow: hidden;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     /* 閃爍星星與十字星芒 */
@@ -584,7 +586,9 @@
 
     /* 單軌列車沿高架滑行（精準貼齊 y=576 高架梁軌道） */
     .monorail-glide {
-      animation: monorailRun 18s linear infinite;
+      transform: translate(-340px, 563px);
+      will-change: transform;
+      animation: monorailRun 18s linear infinite both;
     }
     @keyframes monorailRun {
       0% { transform: translate(-340px, 563px); }
@@ -649,7 +653,9 @@
 
     /* 飛越城堡的奇幻飛艇／飛行船與魔法光軌 */
     .airship-cruise {
-      animation: airshipFly 34s linear infinite;
+      transform: translate(-220px, 165px);
+      will-change: transform;
+      animation: airshipFly 34s linear infinite both;
     }
     @keyframes airshipFly {
       0% { transform: translate(-220px, 165px); }
@@ -718,7 +724,9 @@
 
     /* 小鎮大街復古蒸汽火車／接駁車緩行 */
     .trolley-ride {
-      animation: trolleyMove 26s linear infinite;
+      transform: translate(-180px, 646px);
+      will-change: transform;
+      animation: trolleyMove 26s linear infinite both;
     }
     @keyframes trolleyMove {
       0% { transform: translate(-180px, 646px); }
@@ -729,10 +737,12 @@
     .fw-burst-4 { animation-delay: 0.9s; }
     .fw-burst-5 { animation-delay: 2.6s; }
 
-    /* ================= 26位迪士尼角色小彩蛋專屬動畫 ================= */
-    /* 1. 空中飛翔群：小飛俠彼得潘一行人、小飛象、奇妙仙子、魔毯阿拉丁、巴斯光年、瓦力伊芙 */
+    /* ================= 31位迪士尼角色小彩蛋專屬動畫（GPU 加速＋零左上角堆積） ================= */
+    /* 1. 空中飛翔群：全部預先定位在畫面外並啟用 both，絕不會在延遲期間出現在左上角 (0,0) */
     .peter-pan-flight {
-      animation: peterPanFly 32s linear infinite;
+      transform: translate(-260px, 118px) rotate(-6deg);
+      will-change: transform;
+      animation: peterPanFly 32s linear infinite -4s both;
     }
     @keyframes peterPanFly {
       0% { transform: translate(-260px, 118px) rotate(-6deg); }
@@ -741,7 +751,9 @@
     }
 
     .dumbo-flight {
-      animation: dumboFly 38s linear infinite 6s;
+      transform: translate(1580px, 178px);
+      will-change: transform;
+      animation: dumboFly 38s linear infinite -12s both;
     }
     @keyframes dumboFly {
       0% { transform: translate(1580px, 178px); }
@@ -759,7 +771,9 @@
     }
 
     .tinkerbell-orbit {
-      animation: tinkFlutter 16s ease-in-out infinite;
+      transform: translate(555px, 415px);
+      will-change: transform;
+      animation: tinkFlutter 16s ease-in-out infinite both;
     }
     @keyframes tinkFlutter {
       0% { transform: translate(555px, 415px); }
@@ -779,7 +793,9 @@
     }
 
     .aladdin-carpet {
-      animation: carpetGlide 42s linear infinite 14s;
+      transform: translate(-200px, 232px) rotate(3deg);
+      will-change: transform;
+      animation: carpetGlide 42s linear infinite -18s both;
     }
     @keyframes carpetGlide {
       0% { transform: translate(-200px, 232px) rotate(3deg); }
@@ -788,7 +804,9 @@
     }
 
     .buzz-soar {
-      animation: buzzFly 29s linear infinite 11s;
+      transform: translate(1600px, 278px) rotate(12deg);
+      will-change: transform;
+      animation: buzzFly 29s linear infinite -7s both;
     }
     @keyframes buzzFly {
       0% { transform: translate(1600px, 278px) rotate(12deg); }
@@ -797,7 +815,9 @@
     }
 
     .eve-walle-drift {
-      animation: eveDrift 35s linear infinite 20s;
+      transform: translate(-180px, 315px);
+      will-change: transform;
+      animation: eveDrift 35s linear infinite -24s both;
     }
     @keyframes eveDrift {
       0% { transform: translate(-180px, 315px); }
@@ -805,9 +825,11 @@
       100% { transform: translate(1620px, 318px); }
     }
 
-    /* 2. 前景地面巡遊大隊：米奇、米妮、唐老鴨、黛絲、高飛、布魯托、維尼小豬跳跳虎、雪寶、胡迪翠絲三眼怪、達菲雪莉玫 */
+    /* 2. 前景地面巡遊大隊 */
     .parade-group-1 {
-      animation: paradeWalkRight 54s linear infinite;
+      transform: translate(-560px, 644px);
+      will-change: transform;
+      animation: paradeWalkRight 54s linear infinite -14s both;
     }
     @keyframes paradeWalkRight {
       0% { transform: translate(-560px, 644px); }
@@ -815,7 +837,9 @@
     }
 
     .parade-group-2 {
-      animation: paradeWalkLeft 58s linear infinite 6s;
+      transform: translate(1540px, 654px);
+      will-change: transform;
+      animation: paradeWalkLeft 58s linear infinite -22s both;
     }
     @keyframes paradeWalkLeft {
       0% { transform: translate(1540px, 654px); }
@@ -890,7 +914,9 @@
     }
 
     .mcqueen-zip {
-      animation: mcqueenRace 22s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 4s;
+      transform: translate(-220px, 654px);
+      will-change: transform;
+      animation: mcqueenRace 22s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite -2s both;
     }
     @keyframes mcqueenRace {
       0% { transform: translate(-220px, 654px); }
@@ -2024,15 +2050,7 @@
 
 
               <!-- ==================== 超精緻高辨識度迪士尼＆皮克斯角色群 ==================== -->
-              <defs>
-                <!-- 角色專屬柔和發光外框濾鏡，讓角色在夜空與草坡上輪廓超立體、一眼辨識 -->
-                <filter id="charPopGlow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="1.5" stdDeviation="1.6" flood-color="#050d21" flood-opacity="0.75"/>
-                  <feDropShadow dx="0" dy="0" stdDeviation="2.2" flood-color="#fff6cc" flood-opacity="0.32"/>
-                </filter>
-              </defs>
-
-              <g filter="url(#charPopGlow)">
+              <g class="characters-layer">
                 <!-- 【高空飛行組】 -->
                 <!-- 1-3. 小飛俠彼得潘（綠衣尖帽紅羽毛＋金色腰帶）、溫蒂（天藍睡裙蝴蝶結＋捲髮）、約翰（黑高禮帽＋白睡衣＋撐開黑雨傘） -->
                 <g class="peter-pan-flight">
@@ -3219,13 +3237,6 @@
       }
     }
 
-    function setLinearBarScale(barId, ratio) {
-      const bar = document.getElementById(barId);
-      if (!bar) return;
-      const clamped = Math.max(0, Math.min(1, ratio));
-      bar.style.transform = `scaleX(${clamped.toFixed(4)})`;
-    }
-
     function applyFlipDigit(elId, newVal, key) {
       const el = document.getElementById(elId);
       if (!el) return;
@@ -3240,7 +3251,10 @@
       }
     }
 
-    function updateTimers() {
+    let cachedTargetMs = 0;
+    const barEls = {};
+
+    function refreshVacationHeader() {
       const presetInfo = PRESETS[state.holidayPreset] || PRESETS.summer;
       document.getElementById("vacBadge").textContent = presetInfo.badge;
       document.getElementById("vacTitle").textContent = state.vacTitle || presetInfo.title;
@@ -3250,9 +3264,28 @@
         chip.classList.toggle("active", chip.dataset.preset === state.holidayPreset);
       });
 
-      const target = new Date(state.vacDate);
+      const parsed = new Date(state.vacDate).getTime();
+      cachedTargetMs = isNaN(parsed) ? 0 : parsed;
+
+      const fw = state.fireworksTime || "21:00";
+      document.getElementById("vipFireworksHeadline").textContent = `今晚煙火秀：${fw} 準時登場`;
+    }
+
+    function setLinearBarScale(barId, ratio) {
+      let bar = barEls[barId];
+      if (!bar) {
+        bar = document.getElementById(barId);
+        if (!bar) return;
+        barEls[barId] = bar;
+      }
+      const clamped = ratio < 0 ? 0 : (ratio > 1 ? 1 : ratio);
+      bar.style.transform = `scale3d(${clamped.toFixed(4)}, 1, 1)`;
+    }
+
+    function updateTimers() {
+      if (!cachedTargetMs) refreshVacationHeader();
       const nowMs = Date.now();
-      const diff = isNaN(target.getTime()) ? 0 : Math.max(0, target.getTime() - nowMs);
+      const diff = cachedTargetMs > nowMs ? (cachedTargetMs - nowMs) : 0;
 
       const d = String(Math.floor(diff / 86400000)).padStart(2, "0");
       const h = String(Math.floor((diff / 3600000) % 24)).padStart(2, "0");
@@ -3274,12 +3307,10 @@
       setLinearBarScale("barMins", minRatio);
       setLinearBarScale("barHours", hrRatio);
       setLinearBarScale("barDays", dayRatio);
-
-      const fw = state.fireworksTime || "21:00";
-      document.getElementById("vipFireworksHeadline").textContent = `今晚煙火秀：${fw} 準時登場`;
     }
 
     function smoothCountdownLoop() {
+      refreshVacationHeader();
       updateTimers();
       requestAnimationFrame(smoothCountdownLoop);
     }
@@ -3361,7 +3392,8 @@
     adaptStageToViewport();
 
     fillSettingsForm();
-        updateTimers();
+        refreshVacationHeader();
+      updateTimers();
       });
     });
 
@@ -3391,6 +3423,7 @@
       };
       saveState();
       updateTopBar();
+      refreshVacationHeader();
       updateTimers();
       renderResortMain();
       renderTerrace();
@@ -3429,6 +3462,7 @@
 
     fillSettingsForm();
       updateTopBar();
+      refreshVacationHeader();
       updateTimers();
       renderChecklist();
       renderResortMain();
@@ -3488,7 +3522,8 @@
 
     fillSettingsForm();
     updateTopBar();
-    updateTimers();
+    refreshVacationHeader();
+      updateTimers();
     renderChecklist();
     renderResortMain();
     renderTerrace();
