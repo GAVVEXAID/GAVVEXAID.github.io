@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad 即時排隊整合版 V9</title>
+  <title>Resort Wait Display - iPad 官方即時排隊穩定版 V10</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -1657,12 +1657,42 @@
     };
 
     const PARK_META = {
-      mk: { id: 6, name: "Magic Kingdom 魔幻王國", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 1/4）" },
-      epcot: { id: 5, name: "EPCOT 未來世界", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 2/4）" },
-      hs: { id: 7, name: "Hollywood Studios 好萊塢影城", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 3/4）" },
-      ak: { id: 8, name: "Animal Kingdom 動物王國", region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 4/4）" },
-      dlr: { id: 16, name: "Disneyland Park 加州迪士尼樂園", region: "CALIFORNIA · DISNEYLAND RESORT（加州園區 1/2）" },
-      dca: { id: 17, name: "Disney California Adventure 加州冒險樂園", region: "CALIFORNIA · DISNEYLAND RESORT（加州園區 2/2）" }
+      mk: {
+        id: 6,
+        wikiId: "75ea578a-adc8-4116-a54d-dccb60765ef9",
+        name: "Magic Kingdom 魔幻王國",
+        region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 1/4）"
+      },
+      epcot: {
+        id: 5,
+        wikiId: "47f90d2c-e191-4239-a466-5892ef59a88b",
+        name: "EPCOT 未來世界",
+        region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 2/4）"
+      },
+      hs: {
+        id: 7,
+        wikiId: "288747d1-8b4f-4a64-867e-ea7c9b27bad8",
+        name: "Hollywood Studios 好萊塢影城",
+        region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 3/4）"
+      },
+      ak: {
+        id: 8,
+        wikiId: "1c84a229-8862-4648-9c71-378ddd2c7693",
+        name: "Animal Kingdom 動物王國",
+        region: "FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區 4/4）"
+      },
+      dlr: {
+        id: 16,
+        wikiId: "7340550b-c14d-4def-80bb-acdb51d49a66",
+        name: "Disneyland Park 加州迪士尼樂園",
+        region: "CALIFORNIA · DISNEYLAND RESORT（加州園區 1/2）"
+      },
+      dca: {
+        id: 17,
+        wikiId: "832fcd51-ea19-4e77-85c7-75d5843b227c",
+        name: "Disney California Adventure 加州冒險樂園",
+        region: "CALIFORNIA · DISNEYLAND RESORT（加州園區 2/2）"
+      }
     };
 
     const INITIAL_RIDES = {
@@ -1722,6 +1752,7 @@
     let currentParkKey = "mk";
     let lastSimTime = new Date();
     let liveSyncMode = "connecting"; // "live" | "fallback" | "connecting"
+    let activeApiSource = "ThemeParks.wiki";
     let prevDigits = { d: "", h: "", m: "", s: "" };
 
     function loadState() {
@@ -1857,59 +1888,73 @@
       }
     }
 
-    async function fetchQueueTimesWithFallback(parkId) {
-      const targetUrl = `https://queue-times.com/parks/${parkId}/queue_times.json`;
-      const endpoints = [
-        targetUrl,
-        `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`,
-        `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`
+    async function fetchLiveParkRides(meta) {
+      // 1. 第一優先：ThemeParks.wiki 官方級免費開放 API（原生支援 CORS、無需代理）
+      try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 6500);
+        const wikiUrl = `https://api.themeparks.wiki/v1/entity/${meta.wikiId}/live`;
+        const res = await fetch(wikiUrl, { signal: controller.signal, cache: "no-store" });
+        clearTimeout(timer);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && Array.isArray(data.liveData) && data.liveData.length > 0) {
+            const rides = data.liveData
+              .filter(item => item.entityType === "ATTRACTION")
+              .map(item => {
+                const isOpen = item.status === "OPERATING";
+                const standby = item.queue && item.queue.STANDBY ? item.queue.STANDBY.waitTime : null;
+                return {
+                  name: item.name,
+                  land: isOpen ? "OPERATING · STANDBY" : (item.status || "CLOSED"),
+                  wait: typeof standby === "number" ? standby : 0,
+                  isOpen
+                };
+              });
+            if (rides.length > 0) {
+              return { source: "ThemeParks.wiki", rides };
+            }
+          }
+        }
+      } catch (e) {}
+
+      // 2. 第二備援：Queue-Times 透過 CORS 代理通道
+      const qtTarget = `https://queue-times.com/parks/${meta.id}/queue_times.json`;
+      const qtProxies = [
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(qtTarget)}`,
+        `https://corsproxy.io/?${encodeURIComponent(qtTarget)}`
       ];
 
-      for (const url of endpoints) {
+      for (const proxyUrl of qtProxies) {
         try {
           const controller = new AbortController();
-          const timer = setTimeout(() => controller.abort(), 5500);
-          const res = await fetch(url, { signal: controller.signal, cache: "no-store" });
+          const timer = setTimeout(() => controller.abort(), 6000);
+          const res = await fetch(proxyUrl, { signal: controller.signal, cache: "no-store" });
           clearTimeout(timer);
           if (!res.ok) continue;
-          const data = await res.json();
-          if (data && (Array.isArray(data.lands) || Array.isArray(data.rides))) {
-            return data;
-          }
-        } catch (err) {
-          // 繼續嘗試下一個通道
-        }
-      }
-      throw new Error("All endpoints unreachable");
-    }
-
-    function extractAllRidesFromQueueTimes(apiData) {
-      const collected = [];
-      if (Array.isArray(apiData.lands)) {
-        apiData.lands.forEach(land => {
-          if (Array.isArray(land.rides)) {
-            land.rides.forEach(r => {
-              collected.push({
-                name: r.name,
-                land: land.name || "Park Area",
-                wait: Number(r.wait_time) || 0,
-                isOpen: Boolean(r.is_open)
-              });
+          const apiData = await res.json();
+          const collected = [];
+          if (Array.isArray(apiData.lands)) {
+            apiData.lands.forEach(land => {
+              if (Array.isArray(land.rides)) {
+                land.rides.forEach(r => {
+                  collected.push({
+                    name: r.name,
+                    land: land.name || "Park Area",
+                    wait: Number(r.wait_time) || 0,
+                    isOpen: Boolean(r.is_open)
+                  });
+                });
+              }
             });
           }
-        });
+          if (collected.length > 0) {
+            return { source: "Queue-Times.com", rides: collected };
+          }
+        } catch (err) {}
       }
-      if (Array.isArray(apiData.rides)) {
-        apiData.rides.forEach(r => {
-          collected.push({
-            name: r.name,
-            land: "Park Area",
-            wait: Number(r.wait_time) || 0,
-            isOpen: Boolean(r.is_open)
-          });
-        });
-      }
-      return collected;
+
+      throw new Error("All live endpoints unreachable");
     }
 
     function simulateFallbackRides(parkKey, forceChange = false) {
@@ -1932,14 +1977,15 @@
 
       if (manual && badgeText) {
         badgeIcon.textContent = "🔄";
-        badgeText.textContent = "正在同步 Queue-Times 即時資料...";
+        badgeText.textContent = "正在同步即時排隊資料...";
       }
 
       try {
-        const apiJson = await fetchQueueTimesWithFallback(meta.id);
-        const liveList = extractAllRidesFromQueueTimes(apiJson);
+        const result = await fetchLiveParkRides(meta);
+        const liveList = result.rides;
 
         if (liveList.length > 0) {
+          activeApiSource = result.source;
           const prevList = ridesData[parkKey] || [];
           const prevMap = new Map(prevList.map(item => [item.name.toLowerCase(), item.wait]));
 
@@ -2007,8 +2053,8 @@
         badge.style.borderColor = "rgba(92, 214, 92, 0.55)";
         badge.style.color = "#8ef08e";
         badgeIcon.textContent = "🟢";
-        badgeText.textContent = "Queue-Times 即時連線中";
-        noticeText.textContent = "資料來源：Queue-Times.com 即時排隊資料（每 3 分鐘自動更新，休園時段或設施維護會顯示 CLOSED）。";
+        badgeText.textContent = `${activeApiSource} 即時連線中`;
+        noticeText.textContent = `Powered by ${activeApiSource} · 即時排隊時間（每 3 分鐘自動同步，當地休園時段或設施維護會顯示 CLOSED）。`;
       } else if (liveSyncMode === "fallback") {
         badge.style.background = "rgba(255, 209, 102, 0.16)";
         badge.style.borderColor = "rgba(255, 209, 102, 0.45)";
