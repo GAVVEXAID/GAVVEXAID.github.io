@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V17（徹底消除左上角殘留＋不定時煙火盛典）</title>
+  <title>Resort Wait Display - iPad & 手機雙版自適應全屏版 V18（巴斯經典三角飛翼＋艾莎施展冰雪魔法動畫）</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -898,6 +898,44 @@
     @keyframes cheshireAppear {
       0%, 25%, 75%, 100% { opacity: 0; }
       40%, 60% { opacity: 0.92; }
+    }
+
+
+    /* 艾莎 Elsa 施展冰雪魔法與雪花漩渦動畫 */
+    .elsa-arm-cast {
+      transform-box: fill-box;
+      transform-origin: 0% 50%;
+      animation: elsaArmWave 3.2s ease-in-out infinite alternate;
+    }
+    @keyframes elsaArmWave {
+      0% { transform: rotate(10deg); }
+      100% { transform: rotate(-22deg); }
+    }
+
+    .elsa-ice-blast {
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: elsaIceShoot 3.2s ease-in-out infinite;
+    }
+    @keyframes elsaIceShoot {
+      0%, 15% { stroke-dashoffset: 48; opacity: 0; }
+      45% { stroke-dashoffset: 0; opacity: 0.95; }
+      80% { stroke-dashoffset: -48; opacity: 0.5; }
+      100% { stroke-dashoffset: -48; opacity: 0; }
+    }
+
+    .elsa-snow-swirl {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: elsaSnowBurst 3.2s ease-out infinite;
+    }
+    .elsa-snow-swirl-2 {
+      animation-delay: 1.6s;
+    }
+    @keyframes elsaSnowBurst {
+      0%, 20% { transform: translate(0px, 0px) scale(0.3) rotate(0deg); opacity: 0; }
+      55% { transform: translate(12px, -10px) scale(1.1) rotate(120deg); opacity: 0.95; }
+      100% { transform: translate(24px, -22px) scale(0.6) rotate(240deg); opacity: 0; }
     }
 
     .simba-roar {
@@ -2181,24 +2219,39 @@
                   </g>
                 </g>
 
-                <!-- 8. 巴斯光年 Buzz Lightyear（白綠紫太空裝＋透明太空罩＋紅綠翼尖閃燈） -->
+                <!-- 8. 巴斯光年 Buzz Lightyear（白綠紫經典三角掠翼＋透明太空罩＋紅綠翼尖閃燈） -->
                 <g class="buzz-soar" transform="translate(-9999, -9999)">
-                  <g transform="scale(1.5)">
-                    <!-- 綠紫雙色飛行翼＋紅綠燈號 -->
-                    <polygon points="-4,0 20,-16 17,2" fill="#69db7c" stroke="#862e9c" stroke-width="1.5"/>
-                    <polygon points="-4,4 20,20 17,2" fill="#69db7c" stroke="#862e9c" stroke-width="1.5"/>
-                    <circle cx="18" cy="-14" r="2.1" fill="#ff4d4f"/>
-                    <circle cx="18" cy="18" r="2.1" fill="#51cf66"/>
-                    <!-- 白色太空裝軀幹＋綠色胸甲＋紅藍按鈕 -->
-                    <ellipse cx="-3" cy="2" rx="15" ry="7" fill="#ffffff" stroke="#adb5bd" stroke-width="1"/>
-                    <rect x="-9" y="-3.5" width="8" height="11" rx="2" fill="#69db7c"/>
-                    <circle cx="-7" cy="-1.5" r="1" fill="#fa5252"/>
-                    <circle cx="-7" cy="1.5" r="1" fill="#339af0"/>
-                    <circle cx="-7" cy="4.5" r="1" fill="#51cf66"/>
-                    <!-- 透明太空頭罩＋紫色頭套＋經典下巴 -->
-                    <circle cx="-16" cy="2" r="6.8" fill="rgba(165, 216, 255, 0.62)" stroke="#74c0fc" stroke-width="1.4"/>
-                    <circle cx="-16" cy="2" r="4.3" fill="#862e9c"/>
-                    <circle cx="-17" cy="2" r="3.2" fill="#ffd8a8"/>
+                  <g transform="scale(1.52)">
+                    <!-- 經典白底綠尖紫紋三角形飛翼（上方與下方各一片利落後掠三角翼） -->
+                    <polygon points="-6,-1 15,-21 9,-1" fill="#ffffff" stroke="#adb5bd" stroke-width="0.9" stroke-linejoin="round"/>
+                    <polygon points="8,-14 15,-21 12,-9" fill="#51cf66"/>
+                    <line x1="1" y1="-7" x2="11" y2="-16" stroke="#862e9c" stroke-width="1.5"/>
+                    <circle cx="15" cy="-21" r="2" fill="#ff4d4f"/>
+
+                    <polygon points="-6,5 15,25 9,5" fill="#ffffff" stroke="#adb5bd" stroke-width="0.9" stroke-linejoin="round"/>
+                    <polygon points="8,18 15,25 12,13" fill="#51cf66"/>
+                    <line x1="1" y1="11" x2="11" y2="20" stroke="#862e9c" stroke-width="1.5"/>
+                    <circle cx="15" cy="25" r="2" fill="#51cf66"/>
+
+                    <!-- 紫色噴射背包與噴焰 -->
+                    <rect x="6" y="-2.5" width="7" height="9" rx="2" fill="#862e9c"/>
+                    <polygon points="13,-1 19,2 13,5" fill="#74c0fc" opacity="0.85"/>
+
+                    <!-- 白色太空裝軀幹＋綠色胸甲＋紅藍綠按鈕 -->
+                    <ellipse cx="-4" cy="2" rx="13" ry="6.5" fill="#ffffff" stroke="#adb5bd" stroke-width="1"/>
+                    <rect x="-10" y="-3.2" width="7.5" height="10.4" rx="2" fill="#69db7c"/>
+                    <circle cx="-8" cy="-1.2" r="0.9" fill="#fa5252"/>
+                    <circle cx="-8" cy="1.8" r="0.9" fill="#339af0"/>
+                    <circle cx="-8" cy="4.6" r="0.9" fill="#40c057"/>
+
+                    <!-- 向前伸展飛行的白綠太空手臂 -->
+                    <path d="M-10,-3 L-23,-6" stroke="#ffffff" stroke-width="3.6" stroke-linecap="round"/>
+                    <circle cx="-24" cy="-6" r="2.2" fill="#69db7c"/>
+
+                    <!-- 透明太空頭罩＋紫色頭套＋經典方下巴 -->
+                    <circle cx="-16" cy="2" r="6.6" fill="rgba(165, 216, 255, 0.58)" stroke="#74c0fc" stroke-width="1.4"/>
+                    <circle cx="-16" cy="2" r="4.2" fill="#862e9c"/>
+                    <circle cx="-17.2" cy="2" r="3.1" fill="#ffd8a8"/>
                   </g>
                 </g>
 
@@ -2330,12 +2383,33 @@
                   <line x1="-6.5" y1="3.5" x2="6.5" y2="3.5" stroke="#182238" stroke-width="1.8"/>
                 </g>
 
-                <!-- 19. 冰雪奇緣 艾莎 Elsa（冰藍薄紗禮服＋金色長麻花辮＋揮灑冰晶） -->
-                <g transform="translate(758, 518) scale(1.52)">
-                  <polygon points="-7,19 7,19 3,2 -3,2" fill="#74c0fc" stroke="#d0ebff" stroke-width="0.9"/>
-                  <circle cx="0" cy="-1.5" r="3.9" fill="#ffe8cc"/>
-                  <path d="M-2,-4.5 Q6,-3.5 7,8" fill="none" stroke="#fff3bf" stroke-width="3" stroke-linecap="round"/>
-                  <circle cx="13" cy="-6" r="4" fill="#a5d8ff" class="star-twinkle star-t1"/>
+                <!-- 19. 冰雪奇緣 艾莎 Elsa（冰藍薄紗禮服＋金色長麻花辮＋動態施展冰雪魔法） -->
+                <g transform="translate(756, 518) scale(1.56)">
+                  <!-- 冰藍閃亮拖尾披風 -->
+                  <path d="M-2,3 Q-12,11 -16,20 L-5,19 Z" fill="rgba(165, 216, 255, 0.72)"/>
+                  <!-- 冰藍長禮服 -->
+                  <polygon points="-6.5,19 6.5,19 2.8,2 -2.8,2" fill="#4dabf7" stroke="#d0ebff" stroke-width="0.9"/>
+                  <!-- 臉龐與淡金色長麻花辮 -->
+                  <circle cx="0" cy="-1.8" r="3.8" fill="#ffe8cc"/>
+                  <path d="M-2.2,-4.8 Q3,-6.2 4.5,-2.5 Q5.5,3 3.5,9.5" fill="none" stroke="#fff3bf" stroke-width="2.7" stroke-linecap="round"/>
+                  <!-- 動態揮動施法的手臂 -->
+                  <g class="elsa-arm-cast" transform="translate(2.5, 3.2)">
+                    <line x1="0" y1="0" x2="10" y2="-5.5" stroke="#ffe8cc" stroke-width="2.1" stroke-linecap="round"/>
+                    <circle cx="10.5" cy="-5.8" r="1.6" fill="#e7f5ff"/>
+                  </g>
+                  <!-- 噴射而出的冰霜魔法光束 -->
+                  <path class="elsa-ice-blast" d="M12,-3 Q22,-12 34,-18" fill="none" stroke="#a5d8ff" stroke-width="2.6" stroke-linecap="round"/>
+                  <path class="elsa-ice-blast" d="M13,-1 Q24,-7 36,-11" fill="none" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round"/>
+                  <!-- 旋轉飛舞的雪花與冰晶 -->
+                  <g class="elsa-snow-swirl" transform="translate(15, -5)">
+                    <polygon points="0,-5 1.3,-1.3 5,0 1.3,1.3 0,5 -1.3,1.3 -5,0 -1.3,-1.3" fill="#ffffff"/>
+                    <circle cx="6" cy="-4" r="1.4" fill="#a5d8ff"/>
+                    <circle cx="-4" cy="-6" r="1.2" fill="#e7f5ff"/>
+                  </g>
+                  <g class="elsa-snow-swirl elsa-snow-swirl-2" transform="translate(18, -9)">
+                    <polygon points="0,-4 1.1,-1.1 4,0 1.1,1.1 0,4 -1.1,1.1 -4,0 -1.1,-1.1" fill="#74c0fc"/>
+                    <circle cx="5" cy="3" r="1.3" fill="#ffffff"/>
+                  </g>
                 </g>
 
                 <!-- 【前景草坡大遊行組 1：經典米奇家族＆百畝森林夥伴向右散步 (6位)】 -->
@@ -2425,13 +2499,18 @@
 
                 <!-- 【前景草坡大遊行組 2：冰雪奇緣＋玩具總動員＋達菲家族向左散步 (5位)】 -->
                 <g class="parade-group-2" transform="translate(-9999, -9999)">
-                  <!-- 26. 雪寶 Olaf（三節雪球＋黑煤球鈕扣＋橘色長紅蘿蔔鼻子＋樹枝呆毛） -->
+                  <!-- 26. 雪寶 Olaf（三節雪球＋黑煤球鈕扣＋橘色紅蘿蔔長鼻＋樹枝雙手與呆毛） -->
                   <g transform="translate(0, -25) scale(1.62)"><g class="char-bob">
+                    <!-- 樹枝小手 -->
+                    <line x1="-4.5" y1="0.5" x2="-10.5" y2="-4.5" stroke="#5c4033" stroke-width="1.3" stroke-linecap="round"/>
+                    <line x1="4.5" y1="0.5" x2="10.5" y2="-3.5" stroke="#5c4033" stroke-width="1.3" stroke-linecap="round"/>
                     <circle cx="0" cy="9.5" r="6.5" fill="#ffffff"/>
                     <circle cx="0" cy="1.5" r="5" fill="#ffffff"/>
                     <circle cx="-1.5" cy="1.5" r="1.2" fill="#182238"/>
-                    <circle cx="-1.5" cy="8.5" r="1.3" fill="#182238"/>
+                    <circle cx="-1.5" cy="7.5" r="1.3" fill="#182238"/>
+                    <circle cx="-1.5" cy="11" r="1.3" fill="#182238"/>
                     <ellipse cx="0" cy="-5.8" rx="4.4" ry="5.2" fill="#ffffff"/>
+                    <circle cx="-1.8" cy="-7.2" r="1" fill="#182238"/>
                     <polygon points="-3.8,-5.8 -11.5,-4.8 -3.8,-3.4" fill="#ff922b"/>
                     <line x1="0" y1="-11" x2="0" y2="-16" stroke="#5c4033" stroke-width="1.4"/>
                     <line x1="-2" y1="-11" x2="-4" y2="-15" stroke="#5c4033" stroke-width="1.2"/>
