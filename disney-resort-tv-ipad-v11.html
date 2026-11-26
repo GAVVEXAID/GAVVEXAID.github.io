@@ -2330,6 +2330,33 @@
       .welcome-block::after, .datetime-block::after { right: -4px; }
     }
     @media (prefers-reduced-motion: reduce) { .bar-orn { animation: none !important; } }
+
+    /* ===== v12：全部設施排隊清單 ===== */
+    .parks-stage > * { flex-shrink: 0; }
+    .parks-tools { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+    .tool-group { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tool-chip {
+      background: rgba(10, 30, 76, 0.75);
+      color: #ffe9a0;
+      border: 1px solid rgba(255, 209, 102, 0.4);
+      border-radius: 999px;
+      padding: 4px 13px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .tool-chip:active { transform: scale(0.96); }
+    .tool-chip.active {
+      color: #231500;
+      background: linear-gradient(180deg, #fff3b0, #ffd166 60%, #e8a935);
+      border-color: #fff3b0;
+      box-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
+    }
+    .tools-count { margin-left: auto; font-size: 0.78rem; color: #cfe0ff; font-variant-numeric: tabular-nums; }
+    .ride-star { color: #ffd166; margin-right: 4px; }
+    @media (min-width: 1180px) { .rides-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 740px) { .rides-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -2397,6 +2424,19 @@
           <div class="parks-notice-bar">
             <span id="parksNoticeText">資料來源：ThemeParks.wiki（主）與 Queue-Times.com（備援）即時排隊 API，每 3 分鐘自動同步；連線失敗時不會顯示假數據。</span>
             <span id="parksLastSimTime" style="color:#ffd166;font-weight:700;font-variant-numeric:tabular-nums;"></span>
+          </div>
+
+          <div class="parks-tools" id="parksTools">
+            <div class="tool-group" id="parksSortGroup">
+              <button type="button" class="tool-chip active" data-sort="featured">★ 精選優先</button>
+              <button type="button" class="tool-chip" data-sort="wait">⏱ 等候最久</button>
+              <button type="button" class="tool-chip" data-sort="name">A–Z 名稱</button>
+            </div>
+            <div class="tool-group">
+              <button type="button" class="tool-chip" id="chipOpenOnly" data-toggle="openOnly">只看營運中</button>
+              <button type="button" class="tool-chip" id="chipMeet" data-toggle="showMeet">含角色見面會</button>
+            </div>
+            <span class="tools-count" id="parksCount"></span>
           </div>
 
           <div class="region-label" id="parksRegionLabel">FLORIDA · WALT DISNEY WORLD RESORT（奧蘭多園區）</div>
@@ -4223,7 +4263,7 @@
        - 不再使用任何隨機／模擬數字；失敗時顯示上次成功資料或「--」
        - 不送任何自訂標頭，避免瀏覽器 CORS 預檢（preflight）被拒
        ===================================================================== */
-    const LIVE_CACHE_KEY = "disney_live_wait_cache_v1";
+    const LIVE_CACHE_KEY = "disney_live_wait_cache_v2";
     const LIVE_STALE_LIMIT_MS = 6 * 3600 * 1000;
     let liveCache = {};
     try { liveCache = JSON.parse(localStorage.getItem(LIVE_CACHE_KEY) || "{}") || {}; } catch (e) { liveCache = {}; }
@@ -4255,6 +4295,12 @@
       } finally { clearTimeout(timer); }
     }
 
+    const PARKS_UI_KEY = "disney_parks_ui_v1";
+    const parksUI = (() => {
+      try { return { sort: "featured", openOnly: false, showMeet: false, ...(JSON.parse(localStorage.getItem(PARKS_UI_KEY) || "{}") || {}) }; }
+      catch (e) { return { sort: "featured", openOnly: false, showMeet: false }; }
+    })();
+    function saveParksUI() { try { localStorage.setItem(PARKS_UI_KEY, JSON.stringify(parksUI)); } catch (e) {} }
     const TP_BASE = "https://api.themeparks.wiki/v1";
     const TP_IDS_KEY = "disney_themeparks_ids_v1";
     const TP_NAME_RULES = {
@@ -4353,37 +4399,31 @@
       throw err;
     }
 
-    function buildFeatured(parkKey, liveList) {
+    const MEET_RE = /\bmeet\b|greet|character (?:greeting|experience)|photo ?pass|walk ?around|\btour\b/i;
+    function buildAll(parkKey, liveList) {
       const featured = INITIAL_RIDES[parkKey] || [];
       const prev = (liveCache[parkKey] && liveCache[parkKey].rides) || [];
       const prevMap = new Map(prev.map(r => [normName(r.name), r.wait]));
       const pool = liveList.filter(r => !/single rider/i.test(r.name));
-      const used = new Set();
-      const picked = [];
-      const take = (r, landFb) => {
-        used.add(r);
-        const oldW = prevMap.get(normName(r.name));
-        const delta = (typeof oldW === "number" && typeof r.wait === "number") ? r.wait - oldW : 0;
-        picked.push({ ...r, land: r.land || landFb || "", delta });
-      };
-      featured.forEach(f => {
+      const featMap = new Map();      // 設施 -> 精選順序與區域
+      featured.forEach((f, idx) => {
         const k = normName(f.name);
-        let found = pool.find(r => !used.has(r) && normName(r.name) === k);
+        let found = pool.find(r => !featMap.has(r) && normName(r.name) === k);
         if (!found && k.length >= 8) {
           found = pool.find(r => {
-            if (used.has(r)) return false;
+            if (featMap.has(r)) return false;
             const n = normName(r.name);
             return n.length >= 8 && (n.includes(k) || k.includes(n));
           });
         }
-        if (found) take(found, f.land);
+        if (found) featMap.set(found, { idx, land: f.land });
       });
-      if (picked.length < 6) {
-        const rest = pool.filter(r => !used.has(r))
-          .sort((a, b) => ((b.isOpen ? 1 : 0) - (a.isOpen ? 1 : 0)) || ((b.wait || 0) - (a.wait || 0)));
-        for (const r of rest) { if (picked.length >= 6) break; take(r, ""); }
-      }
-      return picked;
+      return pool.map(r => {
+        const oldW = prevMap.get(normName(r.name));
+        const delta = (typeof oldW === "number" && typeof r.wait === "number") ? r.wait - oldW : 0;
+        const ft = featMap.get(r);
+        return { ...r, land: r.land || (ft ? ft.land : ""), delta, featured: ft ? ft.idx : -1, meet: MEET_RE.test(r.name) };
+      });
     }
 
     function fmtAgo(ms) {
@@ -4408,7 +4448,7 @@
 
       try {
         const result = await fetchLiveParkRides(meta, parkKey);
-        const picked = buildFeatured(parkKey, result.rides);
+        const picked = buildAll(parkKey, result.rides);
         if (!picked.length) throw new Error("沒有可顯示的設施");
         const upd = result.rides.map(r => Date.parse(r.updated)).filter(n => !isNaN(n));
         liveCache[parkKey] = {
@@ -4474,9 +4514,27 @@
       timeEl.textContent = timeLabel;
 
       const grid = document.getElementById("ridesGrid");
-      const rides = (mode === "live" || mode === "stale")
-        ? cache.rides
-        : (INITIAL_RIDES[currentParkKey] || []).map(r => ({ name: r.name, land: r.land, isOpen: true, wait: null, status: "OPERATING", delta: 0, placeholder: true }));
+      let rides = (mode === "live" || mode === "stale")
+        ? cache.rides.slice()
+        : (INITIAL_RIDES[currentParkKey] || []).map((r, i) => ({ name: r.name, land: r.land, isOpen: true, wait: null, status: "OPERATING", delta: 0, placeholder: true, featured: i }));
+      const totalCount = rides.length;
+      if (!parksUI.showMeet) rides = rides.filter(r => !r.meet);
+      if (parksUI.openOnly) rides = rides.filter(r => r.isOpen !== false);
+      const w = r => (typeof r.wait === "number" ? r.wait : -1);
+      const openRank = r => (r.isOpen === false ? 1 : 0);
+      if (parksUI.sort === "wait") rides.sort((a, b) => openRank(a) - openRank(b) || w(b) - w(a) || a.name.localeCompare(b.name));
+      else if (parksUI.sort === "name") rides.sort((a, b) => a.name.localeCompare(b.name));
+      else rides.sort((a, b) => {
+        const fa = a.featured >= 0 ? 0 : 1, fb = b.featured >= 0 ? 0 : 1;
+        if (fa !== fb) return fa - fb;
+        if (fa === 0) return a.featured - b.featured;
+        return openRank(a) - openRank(b) || w(b) - w(a) || a.name.localeCompare(b.name);
+      });
+      const countEl = document.getElementById("parksCount");
+      if (countEl) countEl.textContent = (mode === "live" || mode === "stale") ? `共 ${rides.length} / ${totalCount} 項設施` : "";
+      document.querySelectorAll("#parksSortGroup .tool-chip").forEach(c => c.classList.toggle("active", c.dataset.sort === parksUI.sort));
+      document.getElementById("chipOpenOnly").classList.toggle("active", !!parksUI.openOnly);
+      document.getElementById("chipMeet").classList.toggle("active", !!parksUI.showMeet);
 
       grid.innerHTML = rides.map(r => {
         const isOpen = r.isOpen !== false;
@@ -4495,7 +4553,7 @@
         return `
           <div class="ride-card ${flash} ${mode === "stale" ? "is-stale" : ""}">
             <div>
-              <div class="ride-name">${escapeHtml(r.name)}</div>
+              <div class="ride-name">${r.featured >= 0 ? '<span class="ride-star">★</span>' : ""}${escapeHtml(r.name)}</div>
               <div class="ride-land">${escapeHtml(r.land || STATUS_LABEL_ZH[r.status] || "")}</div>
             </div>
             <div class="ride-right">
@@ -5379,6 +5437,9 @@
       scheduleExactSecondTick();
 
       // 首次同步園區即時排隊時間，並每 3 分鐘自動背景更新
+      document.querySelectorAll("#parksSortGroup .tool-chip").forEach(c => c.addEventListener("click", () => { parksUI.sort = c.dataset.sort; saveParksUI(); renderParks(false); }));
+      document.getElementById("chipOpenOnly").addEventListener("click", () => { parksUI.openOnly = !parksUI.openOnly; saveParksUI(); renderParks(false); });
+      document.getElementById("chipMeet").addEventListener("click", () => { parksUI.showMeet = !parksUI.showMeet; saveParksUI(); renderParks(false); });
       window.addEventListener("online", () => syncParkLiveWaitTimes(currentParkKey, true));
       document.addEventListener("visibilitychange", () => { if (!document.hidden) maybeResyncParks(); });
       setInterval(() => {
