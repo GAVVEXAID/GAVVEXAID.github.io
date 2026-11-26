@@ -2357,9 +2357,164 @@
     .ride-star { color: #ffd166; margin-right: 4px; }
     @media (min-width: 1180px) { .rides-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (max-width: 740px) { .rides-grid { grid-template-columns: 1fr; } }
+
+    /* =====================================================================
+       v13：原創電影感開場動畫 ＋ 倒數頁原創飛船
+       ===================================================================== */
+    .film { position: fixed; inset: 0; z-index: 99999; background: #02040f; display: none; overflow: hidden; opacity: 1; }
+    .film.show { display: block; }
+    .film.fade-out { opacity: 0; transition: opacity 1.1s ease; pointer-events: none; }
+    .film-sky { position: absolute; inset: 0; background: linear-gradient(180deg, #02061c 0%, #0a1250 60%, #16227a 100%); }
+    .film-layer { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+    .film-layer svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    #fiCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .film-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 8, 0.55) 100%); }
+    .film-skip {
+      position: absolute; top: max(16px, env(safe-area-inset-top)); right: 18px; z-index: 5;
+      background: rgba(10, 22, 60, 0.6); color: #ffe9a0; border: 1px solid rgba(255, 209, 102, 0.55);
+      border-radius: 999px; padding: 7px 16px; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer;
+      opacity: 0; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
+    .film.playing .film-skip { animation: fiIn 0.8s ease 1s both; }
+    .fi-twk { animation: fiTwinkle 3.2s ease-in-out infinite; }
+    @keyframes fiTwinkle { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+    @keyframes fiIn { to { opacity: 1; } }
+
+    /* Act 1：夜空與一顆亮星（0–3.6s） */
+    .film.playing .film-act1 { animation: fiAct1 3.9s ease-in-out 0.3s both; }
+    @keyframes fiAct1 { 0% { opacity: 0; transform: scale(1); } 18% { opacity: 1; } 78% { opacity: 1; } 100% { opacity: 0; transform: scale(1.28); } }
+    .fi-cloud { position: absolute; border-radius: 50%; filter: blur(34px); opacity: 0.5; background: radial-gradient(circle, rgba(110, 140, 255, 0.55), rgba(110, 140, 255, 0)); }
+    .fi-cloud.c1 { width: 70vmax; height: 26vmax; left: -10vmax; top: 22%; animation: fiDriftR 9s linear infinite alternate; }
+    .fi-cloud.c2 { width: 60vmax; height: 22vmax; right: -12vmax; top: 48%; background: radial-gradient(circle, rgba(200, 120, 200, 0.4), rgba(200, 120, 200, 0)); animation: fiDriftL 11s linear infinite alternate; }
+    .fi-cloud.c3 { width: 50vmax; height: 18vmax; left: 20%; top: 6%; animation: fiDriftR 13s linear infinite alternate; }
+    @keyframes fiDriftR { to { transform: translateX(12vmax); } }
+    @keyframes fiDriftL { to { transform: translateX(-12vmax); } }
+    .fi-hero { left: 50%; top: 32%; width: 15vmin; height: 15vmin; margin: -7.5vmin 0 0 -7.5vmin; position: absolute; transform-origin: center; animation: fiHero 2.6s ease-in-out 0.9s infinite; }
+    @keyframes fiHero { 0%, 100% { opacity: 0.55; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.1) rotate(8deg); } }
+
+    /* Act 2：空拍山河（3.2–7.4s） */
+    .film.playing .film-act2 { animation: fiAct2 4.6s ease-in-out 3.2s both; }
+    @keyframes fiAct2 { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+    .fi-aerial-svg { transform-origin: 50% 0; }
+    .film.playing .fi-aerial-svg { animation: fiPan 4.8s linear 3.2s both; }
+    @keyframes fiPan { 0% { transform: translateY(2%) scale(1.25); } 100% { transform: translateY(-34%) scale(1.05); } }
+
+    /* Act 3：城堡拉遠＋煙火（6.8–12.6s） */
+    .film.playing .film-act3 { animation: fiAct3 6.6s ease-in-out 6.8s both; }
+    @keyframes fiAct3 { 0% { opacity: 0; } 14% { opacity: 1; } 100% { opacity: 1; } }
+    .fi-castle-cam { transform-origin: 800px 160px; }
+    .film.playing .fi-castle-cam { animation: fiCastleCam 6.2s cubic-bezier(0.55, 0.05, 0.25, 1) 6.9s both; }
+    @keyframes fiCastleCam { 0% { transform: translateY(300px) scale(1.9); } 100% { transform: translateY(0) scale(1); } }
+    .fi-flag { transform-box: fill-box; transform-origin: left center; animation: fiFlag 1.3s ease-in-out infinite alternate; }
+    @keyframes fiFlag { 0% { transform: skewY(-6deg) scaleX(1); } 100% { transform: skewY(7deg) scaleX(0.9); } }
+    .fi-lake-lines { animation: fiLake 3s ease-in-out infinite alternate; }
+    @keyframes fiLake { to { transform: translateX(10px); opacity: 0.15; } }
+
+    /* Act 4：彗星弧線＋金色標題（11.8–18s） */
+    .film.playing .film-act4 { animation: fiIn 0.5s ease 11.6s both; }
+    .fi-comet-path { stroke-dasharray: 1900; stroke-dashoffset: 1900; }
+    .film.playing .fi-comet-path { animation: fiDraw 2.4s ease-out 11.8s forwards, fiFadeLine 1.6s ease 14.4s forwards; }
+    @keyframes fiDraw { to { stroke-dashoffset: 0; } }
+    @keyframes fiFadeLine { to { opacity: 0; } }
+    .fi-comet-head { opacity: 0; }
+    .film.playing .fi-comet-head { animation: fiCometHead 2.4s ease-out 11.8s both; filter: drop-shadow(0 0 10px #fff3b0); }
+    @keyframes fiCometHead { 0% { opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { opacity: 0; } }
+    .film.playing .fi-castle-svg { animation: fiLift 1.8s ease-in-out 12.4s both; }
+    @keyframes fiLift { to { transform: translateY(-11%) scale(0.92); } }
+    .fi-title { position: absolute; left: 0; right: 0; top: 66%; text-align: center; padding: 0 5vw; }
+    .fi-eyebrow { font-size: clamp(0.72rem, 1.9vw, 1.1rem); font-weight: 700; letter-spacing: 0.5em; color: #dbe6ff; opacity: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    .fi-main {
+      font-family: "Snell Roundhand", "Segoe Script", "Brush Script MT", "Apple Chancery", "Lucida Handwriting", cursive;
+      font-size: clamp(2.6rem, 10vw, 6.4rem); line-height: 1.1; margin: 0.1em 0;
+      background: linear-gradient(180deg, #ffffff 0%, #fff0b3 40%, #ffc94d 75%, #e89a2e 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+      filter: drop-shadow(0 0 18px rgba(255, 200, 90, 0.65)) drop-shadow(0 3px 0 rgba(90, 50, 0, 0.5));
+      opacity: 0; letter-spacing: 0.02em;
+    }
+    .fi-sub { font-size: clamp(0.8rem, 2vw, 1.15rem); letter-spacing: 0.18em; color: #ffe9a0; opacity: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    .film.playing .fi-eyebrow { animation: fiUp 1.2s ease 12.5s both; }
+    .film.playing .fi-main { animation: fiTitleIn 2s cubic-bezier(0.2, 0.8, 0.2, 1) 13.1s both; }
+    .film.playing .fi-sub { animation: fiUp 1.2s ease 14.6s both; }
+    @keyframes fiUp { 0% { opacity: 0; transform: translateY(14px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes fiTitleIn { 0% { opacity: 0; transform: scale(1.18); filter: blur(10px) drop-shadow(0 0 18px rgba(255,200,90,.65)); } 100% { opacity: 1; transform: scale(1); } }
+
+    /* 設定頁：開場動畫區塊 */
+    .intro-row { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+    .btn-intro {
+      background: linear-gradient(180deg, #fff3b0, #ffd166 60%, #e8a935); color: #231500; border: 1px solid #fff3b0;
+      border-radius: 10px; padding: 9px 18px; font-weight: 800; cursor: pointer; box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
+    }
+    .intro-check { display: flex; gap: 8px; align-items: center; font-size: 0.9rem; color: #dbe6ff; cursor: pointer; }
+    .intro-check input { width: 18px; height: 18px; accent-color: #ffd166; }
+
+    /* 原創飛船 */
+    .ship-skiff-fly { transform: translate(-300px, 190px); animation: shipSkiff 36s linear infinite -9s both; }
+    @keyframes shipSkiff {
+      0%   { transform: translate3d(-300px, 200px, 0) rotate(-4deg); }
+      50%  { transform: translate3d(780px, 150px, 0) rotate(2deg); }
+      100% { transform: translate3d(1800px, 206px, 0) rotate(-3deg); }
+    }
+    .ship-cruiser-fly { transform: translate(1900px, 92px); animation: shipCruiser 78s linear infinite -30s both; }
+    @keyframes shipCruiser {
+      0%   { transform: translate3d(1950px, 84px, 0) rotate(1.5deg); }
+      100% { transform: translate3d(-520px, 120px, 0) rotate(-1.5deg); }
+    }
+    .ship-bob { animation: shipBob 3.4s ease-in-out infinite alternate; }
+    @keyframes shipBob { 0% { transform: translateY(-5px); } 100% { transform: translateY(6px); } }
+    .thruster { transform-box: fill-box; transform-origin: right center; animation: thrust 0.22s ease-in-out infinite alternate; }
+    @keyframes thrust { 0% { transform: scaleX(0.82); opacity: 0.8; } 100% { transform: scaleX(1.12); opacity: 1; } }
+    .ship-light { animation: shipBlink 1.6s steps(1, end) infinite; }
+    .ship-light:nth-of-type(2n) { animation-delay: -0.8s; }
+    @keyframes shipBlink { 0% { opacity: 1; } 50% { opacity: 0.2; } }
+    @media (prefers-reduced-motion: reduce) { .ship-skiff-fly, .ship-cruiser-fly { animation: none !important; } }
   </style>
 </head>
 <body>
+
+  <!-- ========== 原創電影感開場動畫 ========== -->
+  <div class="film" id="introFilm" aria-hidden="true">
+    <div class="film-sky"></div>
+    <div class="film-layer film-act1">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" class="fi-stars-svg"><circle cx="723.8" cy="347.1" r="2" fill="#fff" class="fi-twk" style="animation-delay:-1.8s"/><circle cx="1368.1" cy="117.7" r="2" fill="#fff" class="fi-twk" style="animation-delay:-2.5s"/><circle cx="1268.8" cy="58.4" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-0.6s"/><circle cx="861.9" cy="552" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.4s"/><circle cx="633.9" cy="280.9" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-2.5s"/><circle cx="1330.7" cy="39.2" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.8s"/><circle cx="387.1" cy="18.7" r="2" fill="#fff" class="fi-twk" style="animation-delay:-1.3s"/><circle cx="945.5" cy="121.1" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-2.6s"/><circle cx="799.6" cy="410.7" r="2" fill="#fff" class="fi-twk" style="animation-delay:-2.6s"/><circle cx="650.8" cy="341.8" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.8s"/><circle cx="504.4" cy="142.4" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-0.1s"/><circle cx="901" cy="66.9" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.4s"/><circle cx="618.4" cy="594" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.9s"/><circle cx="1483.3" cy="32.4" r="2" fill="#fff" class="fi-twk" style="animation-delay:-3.9s"/><circle cx="635.9" cy="45.3" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-3.1s"/><circle cx="431.6" cy="54" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-0.1s"/><circle cx="656.1" cy="572.2" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-1.0s"/><circle cx="161.7" cy="37.1" r="2" fill="#fff" class="fi-twk" style="animation-delay:-0.7s"/><circle cx="894.9" cy="277.4" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-3.9s"/><circle cx="1231.2" cy="259.9" r="2" fill="#fff" class="fi-twk" style="animation-delay:-0.5s"/><circle cx="673.2" cy="132" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-3.5s"/><circle cx="1559.8" cy="367.5" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.8s"/><circle cx="630.8" cy="529.7" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.2s"/><circle cx="234.2" cy="273.8" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.1s"/><circle cx="526.3" cy="183.7" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.3s"/><circle cx="334" cy="394.7" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.4s"/><circle cx="594.7" cy="281" r="2" fill="#fff" class="fi-twk" style="animation-delay:-3.3s"/><circle cx="217.2" cy="239.4" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-1.2s"/><circle cx="365.4" cy="378.5" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-0.6s"/><circle cx="1006.4" cy="343.4" r="2" fill="#fff" class="fi-twk" style="animation-delay:-3.5s"/><circle cx="965.7" cy="261.3" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.4s"/><circle cx="819.8" cy="158.2" r="2" fill="#fff" class="fi-twk" style="animation-delay:-1.0s"/><circle cx="1317.9" cy="369.8" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-2.1s"/><circle cx="1486.8" cy="605.9" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-0.9s"/><circle cx="895" cy="528.5" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.1s"/><circle cx="1467.8" cy="126.5" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.3s"/><circle cx="658.3" cy="154.4" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.7s"/><circle cx="590.1" cy="354.7" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-0.4s"/><circle cx="221.5" cy="279.2" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-2.6s"/><circle cx="1106" cy="362.4" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-2.4s"/><circle cx="1477.7" cy="294.4" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-2.8s"/><circle cx="1540.4" cy="13.2" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.9s"/><circle cx="1168.8" cy="197.7" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.3s"/><circle cx="873.8" cy="456.9" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-3.2s"/><circle cx="1464" cy="218.1" r="2" fill="#fff" class="fi-twk" style="animation-delay:-3.6s"/><circle cx="1393.8" cy="258.6" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.5s"/><circle cx="916.5" cy="387.5" r="2" fill="#fff" class="fi-twk" style="animation-delay:-1.5s"/><circle cx="19.9" cy="44.8" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.6s"/><circle cx="1589.3" cy="545.5" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-1.6s"/><circle cx="1176.1" cy="360.2" r="2" fill="#fff" class="fi-twk" style="animation-delay:-1.9s"/><circle cx="866" cy="321.6" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.2s"/><circle cx="140.4" cy="13.8" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.0s"/><circle cx="983.2" cy="570.7" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-3.6s"/><circle cx="588.7" cy="88.8" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-2.1s"/><circle cx="1206" cy="212.4" r="2" fill="#fff" class="fi-twk" style="animation-delay:-2.0s"/><circle cx="386.4" cy="250.9" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-0.8s"/><circle cx="689.4" cy="499.7" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-3.5s"/><circle cx="615.1" cy="361.5" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-0.8s"/><circle cx="215.3" cy="217.5" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.8s"/><circle cx="1520" cy="171.6" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-0.5s"/><circle cx="754.2" cy="574" r="2" fill="#fff" class="fi-twk" style="animation-delay:-1.5s"/><circle cx="832" cy="416.7" r="2" fill="#fff" class="fi-twk" style="animation-delay:-1.3s"/><circle cx="1326" cy="172.4" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.7s"/><circle cx="449.7" cy="219.6" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.6s"/><circle cx="648.3" cy="117.7" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-0.9s"/><circle cx="225.4" cy="29.1" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.8s"/><circle cx="1007.9" cy="406.1" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-3.8s"/><circle cx="1095.2" cy="123.6" r="2" fill="#fff" class="fi-twk" style="animation-delay:-1.0s"/><circle cx="1142.8" cy="468.1" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.7s"/><circle cx="435.8" cy="214.4" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-1.6s"/><circle cx="1267.1" cy="561.9" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.6s"/><circle cx="1428.2" cy="240.5" r="2" fill="#fff" class="fi-twk" style="animation-delay:-1.8s"/><circle cx="1000.9" cy="564.2" r="2" fill="#fff" class="fi-twk" style="animation-delay:-2.2s"/><circle cx="1044.3" cy="311.6" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-1.9s"/><circle cx="1042.1" cy="127" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.9s"/><circle cx="1440" cy="607.9" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-2.1s"/><circle cx="1265.3" cy="198.6" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.4s"/><circle cx="132.4" cy="273.4" r="2" fill="#fff" class="fi-twk" style="animation-delay:-3.1s"/><circle cx="779.9" cy="17.6" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.7s"/><circle cx="56.2" cy="330.5" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-1.9s"/><circle cx="1599.7" cy="558.4" r="2" fill="#fff" class="fi-twk" style="animation-delay:-3.8s"/><circle cx="788.1" cy="588.5" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.0s"/><circle cx="703.1" cy="346.4" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-2.1s"/><circle cx="1349.8" cy="347.2" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-2.7s"/><circle cx="1527.7" cy="539.4" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-1.2s"/><circle cx="225.8" cy="337.7" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-2.3s"/><circle cx="321.5" cy="332.3" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.4s"/><circle cx="44.4" cy="601" r="2" fill="#fff" class="fi-twk" style="animation-delay:-2.2s"/><circle cx="1583" cy="75.6" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.8s"/><circle cx="105.4" cy="334" r="2" fill="#fff" class="fi-twk" style="animation-delay:-3.7s"/><circle cx="1280.6" cy="250.6" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-1.9s"/><circle cx="203.1" cy="268.9" r="2" fill="#fff" class="fi-twk" style="animation-delay:-2.1s"/><circle cx="173.8" cy="260.1" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.7s"/><circle cx="207.1" cy="483.2" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.1s"/><circle cx="248.8" cy="7.3" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-1.3s"/><circle cx="568.6" cy="384.3" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-2.0s"/><circle cx="931.6" cy="528.2" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-2.9s"/><circle cx="1122.2" cy="544.8" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.5s"/><circle cx="661.4" cy="328.2" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-2.2s"/><circle cx="1382.1" cy="331.1" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-2.1s"/><circle cx="1362" cy="379.3" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-0.9s"/><circle cx="1185.2" cy="502.5" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-1.3s"/><circle cx="504" cy="572.1" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-3.1s"/><circle cx="311.3" cy="60.1" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-0.5s"/><circle cx="141" cy="240.5" r="2" fill="#fff" class="fi-twk" style="animation-delay:-3.3s"/><circle cx="674.6" cy="489.8" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-0.8s"/><circle cx="1004.8" cy="495.3" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.8s"/><circle cx="1091.8" cy="565.1" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-0.5s"/><circle cx="809.1" cy="470.1" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-3.2s"/><circle cx="771.3" cy="15.1" r="2" fill="#fff" class="fi-twk" style="animation-delay:-0.6s"/><circle cx="295.3" cy="126.4" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-4.0s"/><circle cx="1483" cy="59.1" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.5s"/><circle cx="1089.5" cy="48.1" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.3s"/><circle cx="747.1" cy="319.5" r="2" fill="#fff" class="fi-twk" style="animation-delay:-0.8s"/><circle cx="597" cy="393.1" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.4s"/><circle cx="290" cy="281.4" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-1.6s"/><circle cx="312.2" cy="102.3" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.3s"/><circle cx="135.7" cy="522" r="2" fill="#fff" class="fi-twk" style="animation-delay:-2.3s"/><circle cx="305.5" cy="362.5" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-3.2s"/><circle cx="413.2" cy="565" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-3.3s"/><circle cx="649" cy="555.9" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-3.1s"/><circle cx="1224.4" cy="251.6" r="1.1" fill="#fff" class="fi-twk" style="animation-delay:-0.3s"/><circle cx="546.7" cy="290.7" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.6s"/><circle cx="1584.9" cy="559.7" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-0.9s"/><circle cx="1511.5" cy="413" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-0.9s"/><circle cx="649.8" cy="112.8" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-1.6s"/><circle cx="1599.8" cy="398.2" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.0s"/><circle cx="1568.1" cy="14.1" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.0s"/><circle cx="410.6" cy="249" r="0.8" fill="#fff" class="fi-twk" style="animation-delay:-3.0s"/><circle cx="1036.8" cy="6.7" r="1.5" fill="#fff" class="fi-twk" style="animation-delay:-1.0s"/></svg>
+      <div class="fi-cloud c1"></div><div class="fi-cloud c2"></div><div class="fi-cloud c3"></div>
+      <svg class="fi-hero" viewBox="0 0 100 100"><g transform="translate(50,50)"><circle r="3.4" fill="#fff"/><path d="M0,-30 Q0,0 30,0 Q0,0 0,30 Q0,0 -30,0 Q0,0 0,-30Z" fill="#fff6c9"/></g></svg>
+    </div>
+    <div class="film-layer film-act2"><svg viewBox="0 0 1600 1300" preserveAspectRatio="xMidYMin slice" class="fi-aerial-svg"><defs><linearGradient id="fiAeSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1450"/><stop offset=".5" stop-color="#2a3a88"/><stop offset="1" stop-color="#6a4a98"/></linearGradient><linearGradient id="fiShaft" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="1600" height="1300" fill="url(#fiAeSky)"/><polygon points="180,0 330,0 490,640 220,640" fill="url(#fiShaft)"/><polygon points="520,0 640,0 730,640 490,640" fill="url(#fiShaft)"/><polygon points="900,0 1060,0 1210,640 930,640" fill="url(#fiShaft)"/><polygon points="1280,0 1410,0 1490,640 1240,640" fill="url(#fiShaft)"/><polygon points="0,520 220,420 420,500 640,400 900,510 1180,410 1420,500 1600,430 1600,760 0,760" fill="#27357c"/><polygon points="0,640 260,560 520,640 800,540 1080,650 1340,560 1600,640 1600,900 0,900" fill="#1c2a66"/><polygon points="0,780 300,700 620,790 960,690 1300,800 1600,730 1600,1300 0,1300" fill="#173a55"/><path d="M1500,700 C1200,760 1320,860 1000,900 C760,930 880,1010 640,1040 C420,1066 520,1150 300,1180 C180,1196 120,1240 60,1300" fill="none" stroke="#8aa4e8" stroke-width="34" stroke-linecap="round" opacity=".55"/><path d="M1500,700 C1200,760 1320,860 1000,900 C760,930 880,1010 640,1040 C420,1066 520,1150 300,1180 C180,1196 120,1240 60,1300" fill="none" stroke="#dbe6ff" stroke-width="5" stroke-linecap="round" opacity=".5"/><circle cx="1400.4" cy="1046" r="2" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="900.6" cy="1277.5" r="2.2" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="172.8" cy="1070.7" r="2.4" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="631.9" cy="1248.1" r="1.8" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1326.4" cy="1041.8" r="2.2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1459" cy="978.8" r="2" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="522.3" cy="1035.8" r="2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="889.8" cy="907.4" r="2.3" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="99.8" cy="1161.7" r="2.1" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="291.7" cy="1152.4" r="1.8" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1167.6" cy="786.1" r="2.8" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="168.8" cy="1230.9" r="1.9" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="431.4" cy="1152.9" r="1.3" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1447.2" cy="1135.8" r="1.9" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="953.4" cy="819.8" r="2.2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="234.6" cy="1207.8" r="1.8" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="244" cy="990.3" r="2.3" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="949.6" cy="1092.6" r="2.3" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1211.4" cy="1036" r="2.8" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1146.7" cy="884" r="1.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1220.8" cy="1085" r="1.8" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="962.5" cy="1137" r="2.3" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="997" cy="1151.7" r="1.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="803.2" cy="1099.5" r="1.5" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="118.5" cy="791.6" r="1.6" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="99.8" cy="779.8" r="1.6" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="167.3" cy="804.9" r="2.3" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="407.4" cy="1270.4" r="2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="371.7" cy="938.7" r="2.4" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1247.3" cy="992.6" r="2.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="717.6" cy="1148.6" r="1.8" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="606" cy="1099.9" r="2.8" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="490.5" cy="1154.7" r="2.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="692.9" cy="952" r="1.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="176.2" cy="803.2" r="2.1" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1266.6" cy="1001" r="2.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="172.6" cy="870.9" r="2.3" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1088.8" cy="1017.3" r="2.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="478.7" cy="834.3" r="1.8" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="544.1" cy="1231.3" r="1.7" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="902.5" cy="1237.6" r="2.7" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="708.2" cy="1177.6" r="1.7" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="387.4" cy="1263.2" r="2.4" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="427.5" cy="948.1" r="1.8" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1062" cy="1064.1" r="2.5" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="894.4" cy="1174.5" r="2.1" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="892.9" cy="851.8" r="2.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1261.5" cy="875" r="1.3" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="899.8" cy="1262.5" r="2.2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="154.8" cy="1044.3" r="2.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="555.1" cy="902.3" r="1.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="185.4" cy="1089.7" r="1.4" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="1268.1" cy="979.5" r="2.3" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1192.7" cy="1031.2" r="2.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="578.7" cy="1179.8" r="1.7" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="790.6" cy="1039.4" r="2.4" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="974.9" cy="784" r="2.4" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="576.8" cy="762" r="1.8" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1375.2" cy="1258" r="2.2" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="595.8" cy="765.3" r="1.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1415" cy="887.8" r="1.5" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="615.8" cy="847.2" r="1.5" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="843" cy="902.5" r="2.6" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="516.5" cy="819.7" r="2.2" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1410" cy="1151.6" r="1.2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1405.8" cy="778.9" r="1.4" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="591.8" cy="1065.9" r="2.2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="940.3" cy="876.5" r="1.5" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="655.7" cy="1233.6" r="2.7" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="871.4" cy="1184.9" r="2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="777.4" cy="969.4" r="2.7" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="870.1" cy="1257.7" r="2" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="651.1" cy="873.1" r="1.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1504.5" cy="1173.2" r="2.4" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1033.2" cy="883.6" r="1.2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1399.7" cy="994" r="1.6" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="957" cy="841.8" r="1.5" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="274.2" cy="1232.2" r="2.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1002.7" cy="1276.4" r="1.6" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="138.4" cy="1057.4" r="1.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1275.7" cy="1200" r="2.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="580.6" cy="1079.7" r="2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1086.7" cy="803.1" r="2.4" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="1328.9" cy="917.9" r="2.5" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="345.7" cy="1114.8" r="2.5" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="368.4" cy="1042.6" r="2" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1461" cy="1261.2" r="1.7" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="172.5" cy="919" r="1.9" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="159.2" cy="798.7" r="1.4" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="643.5" cy="1000.1" r="2.7" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1027.8" cy="766.4" r="1.8" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="763.4" cy="912.6" r="1.4" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1327" cy="1199.1" r="2.4" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="285.2" cy="1086.4" r="2.7" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="501.3" cy="935.4" r="1.8" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="188.7" cy="858.1" r="1.8" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="547.5" cy="1251.4" r="2.1" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="1007.7" cy="992.4" r="1.8" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="268.4" cy="809.1" r="2.3" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="325.3" cy="860.4" r="1.3" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="937.3" cy="806.9" r="1.6" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1521.4" cy="985.6" r="2.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="1422.5" cy="982" r="2" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="364.1" cy="836.9" r="2.3" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="550.5" cy="974.3" r="1.2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="967.4" cy="925.2" r="2.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="1037.1" cy="1076.5" r="1.2" fill="#ffd98a" opacity="0.7" class="fi-twk"/><circle cx="339.4" cy="919.5" r="1.9" fill="#ffd98a" opacity="0.9" class="fi-twk"/><circle cx="618.9" cy="1024.9" r="2.5" fill="#ffd98a" opacity="0.5" class="fi-twk"/><circle cx="964.9" cy="842.3" r="2.4" fill="#ffd98a" opacity="0.7" class="fi-twk"/><ellipse cx="800" cy="720" rx="900" ry="90" fill="rgba(180,170,255,.2)"/></svg></div>
+    <div class="film-layer film-act3">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" class="fi-castle-svg">
+        <defs>
+          <linearGradient id="fiDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060c3a"/><stop offset=".5" stop-color="#1f2f8a"/><stop offset=".78" stop-color="#8a4aa0"/><stop offset="1" stop-color="#f08aa8"/></linearGradient>
+          <radialGradient id="fiGlow" cx="50%" cy="55%" r="50%"><stop offset="0" stop-color="#ffb866" stop-opacity=".55"/><stop offset="1" stop-color="#ffb866" stop-opacity="0"/></radialGradient>
+          <linearGradient id="fiBase" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a4a" stop-opacity="0"/><stop offset="1" stop-color="#ffb347" stop-opacity=".85"/></linearGradient>
+          <linearGradient id="fiLake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c0709c"/><stop offset=".25" stop-color="#3a3a8a"/><stop offset="1" stop-color="#070b30"/></linearGradient>
+          <linearGradient id="fiStreak" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7eb6" stop-opacity="0"/><stop offset=".5" stop-color="#ff9ccc" stop-opacity=".85"/><stop offset="1" stop-color="#ff7eb6" stop-opacity="0"/></linearGradient>
+          <clipPath id="fiLakeClip"><rect x="0" y="664" width="1600" height="236"/></clipPath>
+        </defs>
+        <rect width="1600" height="900" fill="url(#fiDusk)"/>
+        <g class="fi-streaks"><ellipse cx="300" cy="470" rx="320" ry="14" fill="url(#fiStreak)" transform="rotate(-9 300 470)"/><ellipse cx="1280" cy="430" rx="300" ry="12" fill="url(#fiStreak)" transform="rotate(8 1280 430)"/><ellipse cx="560" cy="380" rx="240" ry="9" fill="url(#fiStreak)" transform="rotate(-7 560 380)"/></g>
+        <polygon points="0,664 260,630 520,660 1100,660 1340,628 1600,660 1600,664" fill="#15153f"/>
+        <g class="fi-castle-cam"><ellipse cx="800" cy="560" rx="420" ry="230" fill="url(#fiGlow)"/><g id="fiCastle"><rect x="520" y="560" width="560" height="104" fill="#1a1745"/><rect x="520" y="548" width="12" height="14" fill="#1a1745"/><rect x="540" y="548" width="12" height="14" fill="#1a1745"/><rect x="560" y="548" width="12" height="14" fill="#1a1745"/><rect x="580" y="548" width="12" height="14" fill="#1a1745"/><rect x="600" y="548" width="12" height="14" fill="#1a1745"/><rect x="620" y="548" width="12" height="14" fill="#1a1745"/><rect x="640" y="548" width="12" height="14" fill="#1a1745"/><rect x="660" y="548" width="12" height="14" fill="#1a1745"/><rect x="680" y="548" width="12" height="14" fill="#1a1745"/><rect x="700" y="548" width="12" height="14" fill="#1a1745"/><rect x="720" y="548" width="12" height="14" fill="#1a1745"/><rect x="740" y="548" width="12" height="14" fill="#1a1745"/><rect x="760" y="548" width="12" height="14" fill="#1a1745"/><rect x="780" y="548" width="12" height="14" fill="#1a1745"/><rect x="800" y="548" width="12" height="14" fill="#1a1745"/><rect x="820" y="548" width="12" height="14" fill="#1a1745"/><rect x="840" y="548" width="12" height="14" fill="#1a1745"/><rect x="860" y="548" width="12" height="14" fill="#1a1745"/><rect x="880" y="548" width="12" height="14" fill="#1a1745"/><rect x="900" y="548" width="12" height="14" fill="#1a1745"/><rect x="920" y="548" width="12" height="14" fill="#1a1745"/><rect x="940" y="548" width="12" height="14" fill="#1a1745"/><rect x="960" y="548" width="12" height="14" fill="#1a1745"/><rect x="980" y="548" width="12" height="14" fill="#1a1745"/><rect x="1000" y="548" width="12" height="14" fill="#1a1745"/><rect x="1020" y="548" width="12" height="14" fill="#1a1745"/><rect x="1040" y="548" width="12" height="14" fill="#1a1745"/><rect x="1060" y="548" width="12" height="14" fill="#1a1745"/><path d="M768,664 L768,610 Q800,572 832,610 L832,664 Z" fill="#ffb347"/><path d="M780,664 L780,616 Q800,590 820,616 L820,664 Z" fill="#fff0b0"/><rect x="538.0" y="514" width="44" height="150" fill="#1c1a4e"/><polygon points="532.0,514 560,436 588.0,514" fill="#243a6e"/><polygon points="532.0,514 560,436 560,514" fill="rgba(255,190,120,0.18)"/><circle cx="560" cy="432" r="3" fill="#ffd166"/><rect x="556" y="536" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="556" y="574" width="8" height="15" rx="4" fill="#ffd98a" opacity="0.7"/><rect x="556" y="612" width="8" height="15" rx="4" fill="#ffd98a" opacity="0.9"/><rect x="630.0" y="464" width="40" height="200" fill="#1c1a4e"/><polygon points="624.0,464 650,386 676.0,464" fill="#243a6e"/><polygon points="624.0,464 650,386 650,464" fill="rgba(255,190,120,0.18)"/><circle cx="650" cy="382" r="3" fill="#ffd166"/><rect x="646" y="486" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="646" y="524" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="646" y="562" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="646" y="600" width="8" height="15" rx="4" fill="#ffd98a" opacity="0.7"/><rect x="646" y="638" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="930.0" y="464" width="40" height="200" fill="#1c1a4e"/><polygon points="924.0,464 950,386 976.0,464" fill="#243a6e"/><polygon points="924.0,464 950,386 950,464" fill="rgba(255,190,120,0.18)"/><circle cx="950" cy="382" r="3" fill="#ffd166"/><rect x="946" y="486" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="946" y="524" width="8" height="15" rx="4" fill="#ffd98a" opacity="0.7"/><rect x="946" y="562" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="946" y="600" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="946" y="638" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="1018.0" y="514" width="44" height="150" fill="#1c1a4e"/><polygon points="1012.0,514 1040,436 1068.0,514" fill="#243a6e"/><polygon points="1012.0,514 1040,436 1040,514" fill="rgba(255,190,120,0.18)"/><circle cx="1040" cy="432" r="3" fill="#ffd166"/><rect x="1036" y="536" width="8" height="15" rx="4" fill="#ffd98a" opacity="0.7"/><rect x="1036" y="574" width="8" height="15" rx="4" fill="#ffd98a" opacity="1"/><rect x="1036" y="612" width="8" height="15" rx="4" fill="#ffd98a" opacity="0.7"/><rect x="715" y="430" width="170" height="234" fill="#1e1c55"/><rect x="715" y="418" width="14" height="14" fill="#1e1c55"/><rect x="737" y="418" width="14" height="14" fill="#1e1c55"/><rect x="759" y="418" width="14" height="14" fill="#1e1c55"/><rect x="781" y="418" width="14" height="14" fill="#1e1c55"/><rect x="803" y="418" width="14" height="14" fill="#1e1c55"/><rect x="825" y="418" width="14" height="14" fill="#1e1c55"/><rect x="847" y="418" width="14" height="14" fill="#1e1c55"/><rect x="869" y="418" width="14" height="14" fill="#1e1c55"/><rect x="713" y="290" width="34" height="150" fill="#201e5c"/><polygon points="708,290 730,170 752,290" fill="#2a4a7c"/><circle cx="730" cy="166" r="3.4" fill="#ffd166"/><rect x="726" y="320" width="8" height="18" rx="4" fill="#ffd98a" opacity="0.95"/><rect x="726" y="360" width="8" height="18" rx="4" fill="#ffd98a" opacity="0.95"/><rect x="726" y="400" width="8" height="18" rx="4" fill="#ffd98a" opacity="0.95"/><rect x="853" y="290" width="34" height="150" fill="#201e5c"/><polygon points="848,290 870,170 892,290" fill="#2a4a7c"/><circle cx="870" cy="166" r="3.4" fill="#ffd166"/><rect x="866" y="320" width="8" height="18" rx="4" fill="#ffd98a" opacity="0.95"/><rect x="866" y="360" width="8" height="18" rx="4" fill="#ffd98a" opacity="0.95"/><rect x="866" y="400" width="8" height="18" rx="4" fill="#ffd98a" opacity="0.95"/><rect x="780" y="190" width="40" height="250" fill="#24216a"/><polygon points="772,190 800,40 828,190" fill="#2f5a8a"/><polygon points="772,190 800,40 800,190" fill="rgba(255,190,120,0.22)"/><rect x="768" y="186" width="64" height="8" fill="#ffd166"/><line x1="800" y1="40" x2="800" y2="-6" stroke="#ffd166" stroke-width="3"/><g class="fi-flag"><path d="M800,-4 q22,-8 44,0 q-10,10 0,20 q-22,-8 -44,0 Z" fill="#ffd166"/><path d="M822,6 l2.4,5 5.4,.7 -4,3.7 1,5.4 -4.8,-2.7 -4.8,2.7 1,-5.4 -4,-3.7 5.4,-.7Z" fill="#7a3df0" transform="translate(-4,-9) scale(.9)"/></g><rect x="796" y="230" width="8" height="20" rx="4" fill="#ffe9a8"/><rect x="796" y="280" width="8" height="20" rx="4" fill="#ffe9a8"/><rect x="796" y="330" width="8" height="20" rx="4" fill="#ffe9a8"/><rect x="796" y="380" width="8" height="20" rx="4" fill="#ffe9a8"/><rect x="735" y="460" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="0.65"/><rect x="735" y="510" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="0.65"/><rect x="735" y="560" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="735" y="610" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="0.85"/><rect x="759" y="460" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="0.85"/><rect x="759" y="510" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="0.65"/><rect x="759" y="560" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="759" y="610" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="783" y="460" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="783" y="510" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="0.85"/><rect x="783" y="560" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="807" y="510" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="0.65"/><rect x="807" y="610" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="831" y="510" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="831" y="560" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="0.65"/><rect x="831" y="610" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="855" y="510" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="0.85"/><rect x="855" y="560" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="855" y="610" width="9" height="18" rx="4.5" fill="#ffd98a" opacity="1"/><rect x="520" y="640" width="560" height="24" fill="url(#fiBase)"/></g></g>
+        <rect x="0" y="664" width="1600" height="236" fill="url(#fiLake)"/>
+        <g clip-path="url(#fiLakeClip)" opacity=".2"><use href="#fiCastle" transform="translate(0,1328) scale(1,-1)"/></g>
+        <path d="M0,664 L0,900 L520,900 Q640,780 700,664 Z" fill="#0e2a30"/><path d="M1600,664 L1600,900 L1080,900 Q960,780 900,664 Z" fill="#0e2a30"/>
+        <g class="fi-lake-lines" stroke="#fff3b0" stroke-width="1.4" opacity=".4"><line x1="740" y1="700" x2="860" y2="700"/><line x1="720" y1="730" x2="880" y2="730"/><line x1="700" y1="768" x2="900" y2="768"/></g>
+      </svg>
+      <canvas id="fiCanvas"></canvas>
+    </div>
+    <div class="film-layer film-act4">
+      <svg class="fi-comet" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice"><defs><linearGradient id="fiCometG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fff3b0" stop-opacity="0"/><stop offset="1" stop-color="#ffffff"/></linearGradient></defs>
+        <path class="fi-comet-path" d="M260,520 C420,150 1180,110 1360,470" fill="none" stroke="url(#fiCometG)" stroke-width="6" stroke-linecap="round"/>
+        <circle class="fi-comet-head" id="fiCometHead" r="9" fill="#fff" cx="260" cy="520"/></svg>
+      <div class="fi-title">
+        <div class="fi-eyebrow" id="fiEyebrow">SMITH FAMILY PRESENTS</div>
+        <div class="fi-main">Magical Resort</div>
+        <div class="fi-sub">Where every moment becomes a memory ✦</div>
+      </div>
+    </div>
+    <div class="film-vignette"></div>
+    <button type="button" class="film-skip" id="filmSkip">跳過 ›</button>
+  </div>
+  <script>try{var _l=window.localStorage;if(!_l.getItem("disney_intro_seen_v1")||_l.getItem("disney_intro_always_v1")==="1")document.getElementById("introFilm").classList.add("show");}catch(e){document.getElementById("introFilm").classList.add("show");}</script>
   <div class="tv-shell">
     <!-- ========== 1. 最上方：WELCOME 家庭名稱 + 時間與年月日星期 ========== -->
     <header class="top-bar">
@@ -2619,6 +2774,14 @@
                   <stop offset="100%" stop-color="#e67700"/>
                 </linearGradient>
               
+                
+                <!-- ===== 千年鷹號 & 帝國鈦戰機漸層 ===== -->
+                <linearGradient id="falconHull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6eaf0"/><stop offset="0.55" stop-color="#bcc4cf"/><stop offset="1" stop-color="#8b95a3"/></linearGradient>
+                <linearGradient id="falconShade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c8594"/><stop offset="1" stop-color="#a5aebc"/></linearGradient>
+                <linearGradient id="falconEngine" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="0.3" stop-color="#7be3ff"/><stop offset="0.75" stop-color="#2998ff" stop-opacity="0.7"/><stop offset="1" stop-color="#1d6ce0" stop-opacity="0"/></linearGradient>
+                <linearGradient id="tieWingPanel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f293a"/><stop offset="0.5" stop-color="#0f1522"/><stop offset="1" stop-color="#1b2436"/></linearGradient>
+                <radialGradient id="tiePodGrad" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#cfd6e0"/><stop offset="0.6" stop-color="#8d97a6"/><stop offset="1" stop-color="#4e5663"/></radialGradient>
+                <linearGradient id="tieIonGrad" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#eafff5"/><stop offset="0.4" stop-color="#4ade80"/><stop offset="1" stop-color="#16a34a" stop-opacity="0"/></linearGradient>
                 <!-- ===== v10 節點燈光 ===== -->
                 <radialGradient id="nodeGlowGold" cx="50%" cy="50%" r="50%">
                   <stop offset="0%" stop-color="#fff3b0" stop-opacity="0.95"/><stop offset="45%" stop-color="#ffc94d" stop-opacity="0.45"/><stop offset="100%" stop-color="#ffb347" stop-opacity="0"/>
@@ -2983,6 +3146,114 @@
 
               <!-- ==================== 極致精修高辨識度迪士尼＆皮克斯角色群 (39位全角色·純粹無眼藝術剪影版) ==================== -->
               <g class="characters-layer">
+
+                <!-- 星際大戰飛船：千年鷹號 (Millennium Falcon) & 帝國鈦戰機 (TIE Fighter) -->
+                <!-- 1. 千年鷹號（由左向右飛越夜空，帶經典弧形藍色亞光速引擎尾焰與右側圓筒駕駛艙） -->
+                <g class="ship-skiff-fly"><g class="ship-bob" transform="scale(1.08)">
+                  <!-- 弧形藍色亞光速引擎推進尾焰 -->
+                  <path class="thruster" d="M-54,-18 C-78,-22 -118,-15 -148,-11 C-118,-7 -78,-6 -58,-4 Z" fill="url(#falconEngine)"/>
+                  <path class="thruster" d="M-58,4 C-78,6 -118,7 -148,11 C-118,15 -78,22 -54,18 Z" fill="url(#falconEngine)"/>
+                  <path class="thruster" d="M-60,-8 C-90,-9 -132,-4 -162,0 C-132,4 -90,9 -60,8 Z" fill="url(#falconEngine)"/>
+                  <!-- 船尾弧形引擎格柵發光條 -->
+                  <path d="M-52,-19 A58,34 0 0,0 -52,19" fill="none" stroke="#93e9ff" stroke-width="3.6" stroke-linecap="round"/>
+                  <path d="M-52,-19 A58,34 0 0,0 -52,19" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+
+                  <!-- 千年鷹號圓盤主船體（3/4 俯視經典碟形） -->
+                  <ellipse cx="-6" cy="0" rx="54" ry="33" fill="url(#falconHull)" stroke="#5c6472" stroke-width="1.1"/>
+                  <!-- 船體裝甲分區線與舊化陰影 -->
+                  <path d="M-50,-14 L-12,-4 M-50,14 L-12,4 M-26,-29 L-8,-8 M-26,29 L-8,8 M10,-31 L6,-9 M10,31 L6,9" stroke="#646e7d" stroke-width="0.95" opacity="0.8"/>
+                  <ellipse cx="-6" cy="0" rx="34" ry="20" fill="none" stroke="#687282" stroke-width="0.9" stroke-dasharray="6 3"/>
+
+                  <!-- 前方雙叉型貨運夾鉗 (Forward Mandibles) -->
+                  <polygon points="24,-25 86,-13 86,-5 32,-9" fill="url(#falconHull)" stroke="#5c6472" stroke-width="1"/>
+                  <polygon points="24,25 86,13 86,5 32,9" fill="url(#falconHull)" stroke="#5c6472" stroke-width="1"/>
+                  <!-- 夾鉗中央凹槽陰影與紅色塗裝點綴 -->
+                  <polygon points="34,-8 82,-5 82,-3 34,-4" fill="#a83232" opacity="0.85"/>
+                  <polygon points="34,8 82,5 82,3 34,4" fill="#a83232" opacity="0.85"/>
+                  <circle cx="56" cy="-14" r="2.2" fill="#525b69"/>
+                  <circle cx="56" cy="14" r="2.2" fill="#525b69"/>
+                  <!-- 夾鉗前端雙探照燈 -->
+                  <circle cx="87" cy="-9" r="2" fill="#fff3b0" class="ship-light"/>
+                  <circle cx="87" cy="9" r="2" fill="#fff3b0" class="ship-light"/>
+
+                  <!-- 兩側圓形對接艙環 (Side Docking Rings) -->
+                  <g transform="translate(-4,-33)">
+                    <rect x="-8" y="-3" width="16" height="6" rx="2" fill="url(#falconShade)" stroke="#4f5663" stroke-width="0.9"/>
+                    <circle cx="0" cy="0" r="2.4" fill="#3a414d"/>
+                  </g>
+                  <g transform="translate(-4,33)">
+                    <rect x="-8" y="-3" width="16" height="6" rx="2" fill="url(#falconShade)" stroke="#4f5663" stroke-width="0.9"/>
+                    <circle cx="0" cy="0" r="2.4" fill="#3a414d"/>
+                  </g>
+
+                  <!-- 右側標誌性懸臂圓筒駕駛艙 (Starboard Cockpit Tube & Cone) -->
+                  <g transform="translate(22, 23) rotate(16)">
+                    <rect x="-12" y="-5" width="32" height="10" rx="3" fill="url(#falconHull)" stroke="#525b69" stroke-width="1"/>
+                    <line x1="4" y1="-5" x2="4" y2="5" stroke="#525b69" stroke-width="0.9"/>
+                    <!-- 錐形駕駛艙玻璃窗 -->
+                    <polygon points="20,-5 33,-2.5 33,2.5 20,5" fill="#233147" stroke="#9aa5b4" stroke-width="0.9"/>
+                    <line x1="20" y1="-2" x2="33" y2="-1" stroke="#b8d4f5" stroke-width="0.8"/>
+                    <line x1="20" y1="2" x2="33" y2="1" stroke="#b8d4f5" stroke-width="0.8"/>
+                  </g>
+
+                  <!-- 頂部雷達天線 (Sensor Dish) 與中央四聯裝雷射砲塔 -->
+                  <g transform="translate(-14, -14)">
+                    <ellipse cx="0" cy="0" rx="7.5" ry="4.5" transform="rotate(-24)" fill="#e2e8f0" stroke="#5c6472" stroke-width="0.9"/>
+                    <line x1="0" y1="0" x2="3" y2="-3" stroke="#475569" stroke-width="1"/>
+                  </g>
+                  <circle cx="-6" cy="0" r="8" fill="#9aa4b2" stroke="#4f5663" stroke-width="1"/>
+                  <circle cx="-6" cy="0" r="4" fill="#475569"/>
+                  <line x1="-6" y1="-2" x2="4" y2="-2" stroke="#dce3ec" stroke-width="1.2"/>
+                  <line x1="-6" y1="2" x2="4" y2="2" stroke="#dce3ec" stroke-width="1.2"/>
+                </g></g>
+
+                <!-- 2. 帝國鈦戰機（由右向左巡航，雙六角形太陽能翼板＋球形駕駛艙＋綠色雙離子推進光） -->
+                <g class="ship-cruiser-fly"><g transform="scale(-1.05,1.05)"><g class="ship-bob">
+                  <!-- 雙離子引擎微光尾焰 (Twin Ion Engines) -->
+                  <path class="thruster" d="M-16,-4 Q-36,-7 -58,-4 Q-36,-1 -16,-4Z" fill="url(#tieIonGrad)"/>
+                  <path class="thruster" d="M-16,4 Q-36,1 -58,4 Q-36,7 -16,4Z" fill="url(#tieIonGrad)"/>
+
+                  <!-- 遠側（左舷）六角形太陽能翼板（透視微縮增加立體感） -->
+                  <g transform="translate(-7, -8) scale(0.88)">
+                    <polygon points="-24,-40 16,-40 34,-12 34,12 16,40 -24,40 -36,12 -36,-12" fill="url(#tieWingPanel)" stroke="#7b8798" stroke-width="1.4"/>
+                    <line x1="-36" y1="0" x2="34" y2="0" stroke="#647082" stroke-width="1.2"/>
+                    <line x1="-24" y1="-40" x2="16" y2="40" stroke="#647082" stroke-width="1.1"/>
+                    <line x1="16" y1="-40" x2="-24" y2="40" stroke="#647082" stroke-width="1.1"/>
+                  </g>
+
+                  <!-- 機翼連接桁架 (Wing Pylon) -->
+                  <rect x="-7" y="-22" width="14" height="44" rx="2" fill="#6b7585" stroke="#3f4754" stroke-width="1"/>
+
+                  <!-- 中央球形駕駛艙 (Spherical Cockpit Pod) -->
+                  <circle cx="2" cy="0" r="15.5" fill="url(#tiePodGrad)" stroke="#3f4754" stroke-width="1.2"/>
+                  <!-- 駕駛艙頂部艙蓋框線 -->
+                  <ellipse cx="1" cy="-11" rx="7" ry="2.6" fill="none" stroke="#475161" stroke-width="1"/>
+                  <!-- 標誌性八角輻射狀前觀察窗 (Octagonal Viewport) -->
+                  <g transform="translate(11, 0)">
+                    <ellipse cx="0" cy="0" rx="6.5" ry="9.5" fill="#111827" stroke="#b8c2d1" stroke-width="1.3"/>
+                    <circle cx="0" cy="0" r="3" fill="none" stroke="#9aa5b4" stroke-width="0.9"/>
+                    <line x1="-6" y1="0" x2="6" y2="0" stroke="#9aa5b4" stroke-width="0.8"/>
+                    <line x1="0" y1="-9" x2="0" y2="9" stroke="#9aa5b4" stroke-width="0.8"/>
+                    <line x1="-4.5" y1="-6.5" x2="4.5" y2="6.5" stroke="#9aa5b4" stroke-width="0.8"/>
+                    <line x1="-4.5" y1="6.5" x2="4.5" y2="-6.5" stroke="#9aa5b4" stroke-width="0.8"/>
+                  </g>
+                  <!-- 艙底雙雷射砲管 (Chin Laser Cannons) -->
+                  <line x1="10" y1="10" x2="21" y2="11" stroke="#cbd5e1" stroke-width="1.6" stroke-linecap="round"/>
+                  <circle cx="22" cy="11" r="1.4" fill="#4ade80" class="ship-light"/>
+
+                  <!-- 近側（右舷）六角形太陽能翼板 -->
+                  <g transform="translate(7, 8)">
+                    <polygon points="-24,-40 16,-40 34,-12 34,12 16,40 -24,40 -36,12 -36,-12" fill="url(#tieWingPanel)" stroke="#9aa5b4" stroke-width="1.6"/>
+                    <!-- 太陽能電池板銀灰色骨架輻條 -->
+                    <line x1="-36" y1="0" x2="34" y2="0" stroke="#8592a6" stroke-width="1.5"/>
+                    <line x1="-24" y1="-40" x2="16" y2="40" stroke="#8592a6" stroke-width="1.4"/>
+                    <line x1="16" y1="-40" x2="-24" y2="40" stroke="#8592a6" stroke-width="1.4"/>
+                    <!-- 中央六角輪轂蓋 -->
+                    <polygon points="-6,-7 6,-7 10,0 6,7 -6,7 -10,0" fill="#7c8798" stroke="#3f4754" stroke-width="1"/>
+                    <circle cx="0" cy="0" r="3" fill="#3a4352"/>
+                  </g>
+                </g></g></g>
+
                 <!-- 【高空奇幻飛行組 (12位) — 精修層次服飾、飄逸動態與無眼藝術剪影】 -->
                 <!-- 1-3. 小飛俠彼得潘、溫蒂、約翰 -->
                 <g class="peter-pan-flight"><g class="fly-bob fly-bob-2">
@@ -3831,6 +4102,14 @@
               <div class="s-field">
                 <label for="inpVacDate">目標倒數日期與時間</label>
                 <input type="datetime-local" id="inpVacDate" />
+              </div>
+            </div>
+
+            <div class="s-box" style="grid-column: 1 / -1;">
+              <h3>🎬 開場動畫</h3>
+              <div class="intro-row">
+                <button type="button" class="btn-intro" id="btnReplayIntro">▶ 重新播放開場動畫</button>
+                <label class="intro-check"><input type="checkbox" id="chkIntroAlways" /> 每次開啟或重新載入都播放（預設只播放第一次）</label>
               </div>
             </div>
 
@@ -5416,8 +5695,131 @@
       }
     }
 
+
+    /* =====================================================================
+       開場動畫控制：預設只播放一次；設定頁可重播或改成每次都播
+       ===================================================================== */
+    window.IntroFilm = (function () {
+      const film = document.getElementById("introFilm");
+      const canvas = document.getElementById("fiCanvas");
+      const ctx = canvas.getContext("2d");
+      const SEEN = "disney_intro_seen_v1", ALWAYS = "disney_intro_always_v1";
+      const TOTAL = 18.2;
+      let raf = 0, running = false, t0 = 0, last = 0, W = 0, H = 0, dpr = 1, endTimer = 0, hideTimer = 0;
+      let shells = [], sparks = [], twinkles = [], nextBurst = 0, shapeIdx = 0, started = false;
+      const rand = (a, b) => a + Math.random() * (b - a);
+      const pick = a => a[(Math.random() * a.length) | 0];
+      const PAL = [["#ffd166", "#fff1b8", "#ffb347"], ["#ff7eb6", "#ffc2dd", "#ff4f9a"], ["#5bc0ff", "#b9e6ff", "#2f9bff"], ["#c77dff", "#e6c6ff", "#9b4dff"], ["#7ef0c0", "#c9ffe8", "#3fd9a0"], ["#ffffff", "#ffe7a3", "#ffd166"]];
+      const SHAPES = ["circle", "heart", "star", "ring", "circle", "heart"];
+      const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+      const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = film.clientWidth; H = film.clientHeight;
+        canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function launch(x, ty, shape) {
+        shells.push({ x, y: H + 8, px: x, py: H + 8, vx: rand(-10, 10), vy: -((H + 8 - ty) / rand(0.6, 0.85)), ty, shape: shape || pick(SHAPES), pal: pick(PAL) });
+      }
+      function explode(s) {
+        const S = Math.min(W, H) * 0.62, n = 90;
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * Math.PI * 2; let vx, vy;
+          if (s.shape === "heart") { const k = S / 17; vx = 16 * Math.pow(Math.sin(a), 3) * k; vy = -(13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a)) * k; }
+          else if (s.shape === "star") { const p = ((a / (Math.PI * 2)) * 5) % 1, tri = 1 - Math.abs(p * 2 - 1), r = (0.42 + 0.58 * tri) * S, g = a - Math.PI / 2; vx = Math.cos(g) * r; vy = Math.sin(g) * r; }
+          else if (s.shape === "ring") { const r = S * 0.85 * rand(0.97, 1.03); vx = Math.cos(a) * r; vy = Math.sin(a) * r; }
+          else { const r = S * rand(0.3, 1); vx = Math.cos(a) * r; vy = Math.sin(a) * r; }
+          if (sparks.length < 1300) sparks.push({ x: s.x, y: s.y, px: s.x, py: s.y, vx, vy, life: 0, max: rand(1.1, 1.9), color: pick(s.pal), size: rand(1.4, 2.5) });
+        }
+        twinkles.push({ x: s.x, y: s.y, s: Math.min(W, H) * 0.05, life: 0, max: 0.5 });
+      }
+      function star4(x, y, s, a) {
+        ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = "#fff7d1"; ctx.shadowColor = "#ffd166"; ctx.shadowBlur = s;
+        ctx.beginPath(); ctx.moveTo(x, y - s); ctx.quadraticCurveTo(x, y, x + s, y); ctx.quadraticCurveTo(x, y, x, y + s); ctx.quadraticCurveTo(x, y, x - s, y); ctx.quadraticCurveTo(x, y, x, y - s); ctx.fill(); ctx.restore();
+      }
+      function frame(now) {
+        if (!running) return;
+        const dt = Math.min(0.05, (now - last) / 1000); last = now;
+        const t = (now - t0) / 1000;
+        if (t > 7.2 && t < 13.4) {
+          if (!started) { started = true; launch(W * 0.5, H * 0.3, "heart"); nextBurst = t + 0.5; }
+          else if (t >= nextBurst) {
+            const n = Math.random() < 0.35 ? 2 : 1;
+            for (let i = 0; i < n; i++) launch(rand(0.12, 0.88) * W, rand(0.1, 0.42) * H, SHAPES[shapeIdx++ % SHAPES.length]);
+            nextBurst = t + rand(0.3, 0.6);
+          }
+        }
+        const cp = document.querySelector(".fi-comet-path"), ch = document.getElementById("fiCometHead");
+        if (cp && ch && t >= 11.8 && t <= 14.2) {
+          const pr = Math.min(1, (t - 11.8) / 2.4), e = 1 - Math.pow(1 - pr, 2);
+          const pt = cp.getPointAtLength(cp.getTotalLength() * e);
+          ch.setAttribute("cx", pt.x); ch.setAttribute("cy", pt.y);
+        }
+        ctx.clearRect(0, 0, W, H);
+        ctx.globalCompositeOperation = "lighter"; ctx.lineCap = "round";
+        for (let i = shells.length - 1; i >= 0; i--) {
+          const s = shells[i]; s.px = s.x; s.py = s.y; s.x += s.vx * dt; s.y += s.vy * dt;
+          ctx.strokeStyle = "rgba(255,235,170,0.9)"; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(s.px, s.py); ctx.lineTo(s.x, s.y); ctx.stroke();
+          if (s.y <= s.ty) { explode(s); shells.splice(i, 1); }
+        }
+        for (let i = sparks.length - 1; i >= 0; i--) {
+          const p = sparks[i]; p.life += dt;
+          if (p.life >= p.max) { sparks.splice(i, 1); continue; }
+          p.px = p.x; p.py = p.y; p.vx *= 0.982; p.vy = p.vy * 0.982 + 90 * dt; p.x += p.vx * dt; p.y += p.vy * dt;
+          const k = 1 - p.life / p.max; ctx.globalAlpha = Math.max(0, k * (k < 0.35 && Math.random() < 0.35 ? 0.35 : 1));
+          ctx.strokeStyle = p.color; ctx.lineWidth = p.size * (0.5 + k * 0.7); ctx.beginPath(); ctx.moveTo(p.px, p.py); ctx.lineTo(p.x, p.y); ctx.stroke();
+        }
+        ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+        for (let i = twinkles.length - 1; i >= 0; i--) {
+          const w = twinkles[i]; w.life += dt; if (w.life >= w.max) { twinkles.splice(i, 1); continue; }
+          const k = Math.sin((w.life / w.max) * Math.PI); star4(w.x, w.y, w.s * (0.4 + k * 0.8), k);
+        }
+        raf = requestAnimationFrame(frame);
+      }
+      function play() {
+        clearTimeout(endTimer); clearTimeout(hideTimer); cancelAnimationFrame(raf);
+        const fam = document.getElementById("topFamilyName");
+        const name = (fam && fam.textContent.trim()) || "Our Family";
+        document.getElementById("fiEyebrow").textContent = name.toUpperCase() + " PRESENTS";
+        film.classList.remove("playing", "fade-out");
+        film.classList.add("show");
+        void film.offsetWidth;
+        resize();
+        shells = []; sparks = []; twinkles = []; started = false; shapeIdx = 0; nextBurst = 0;
+        film.classList.add("playing");
+        running = true; t0 = last = performance.now();
+        raf = requestAnimationFrame(frame);
+        endTimer = setTimeout(finish, TOTAL * 1000);
+        lsSet(SEEN, "1");
+      }
+      function finish() {
+        if (!film.classList.contains("show")) return;
+        clearTimeout(endTimer); running = false; cancelAnimationFrame(raf);
+        film.classList.add("fade-out");
+        hideTimer = setTimeout(() => { film.classList.remove("show", "playing", "fade-out"); ctx.clearRect(0, 0, W, H); }, 1200);
+      }
+      function init() {
+        document.getElementById("filmSkip").addEventListener("click", e => { e.stopPropagation(); finish(); });
+        film.addEventListener("click", () => { if (running && performance.now() - t0 > 1200) finish(); });
+        document.addEventListener("keydown", e => { if (e.key === "Escape" && running) finish(); });
+        window.addEventListener("resize", () => { if (running) resize(); });
+        const chk = document.getElementById("chkIntroAlways");
+        if (chk) { chk.checked = lsGet(ALWAYS) === "1"; chk.addEventListener("change", () => lsSet(ALWAYS, chk.checked ? "1" : "0")); }
+        const btn = document.getElementById("btnReplayIntro");
+        if (btn) btn.addEventListener("click", play);
+        if (film.classList.contains("show")) {
+          const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (reduce) { film.classList.remove("show"); lsSet(SEEN, "1"); } else play();
+        }
+      }
+      return { init, play, finish };
+    })();
+
     function initApp() {
       bindAllEvents();
+      window.IntroFilm.init();
       const btnPrev = document.getElementById("btnPreviewSurprise");
       if (btnPrev) btnPrev.addEventListener("click", () => window.SurpriseVacation.play({ persist: false }));
       fillSettingsForm();
