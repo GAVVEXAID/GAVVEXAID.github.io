@@ -1189,16 +1189,17 @@
       text-shadow: 0 2px 8px rgba(255, 209, 102, 0.25);
       display: inline-block;
       will-change: transform, opacity;
-      transition: opacity 0.24s linear, transform 0.24s linear;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     .cd-num.smooth-glide {
-      animation: linearGlideDigit 0.28s linear;
+      animation: linearGlideDigit 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     @keyframes linearGlideDigit {
-      0% { transform: translateY(5px); opacity: 0.45; }
-      100% { transform: translateY(0px); opacity: 1; }
+      0% { transform: translate3d(0, 4px, 0); opacity: 0.55; }
+      100% { transform: translate3d(0, 0, 0); opacity: 1; }
     }
 
     .cd-linear-track {
@@ -1217,7 +1218,10 @@
       width: 100%;
       background: linear-gradient(90deg, rgba(91, 192, 255, 0.85), rgba(255, 209, 102, 0.95));
       transform-origin: left center;
-      transform: scaleX(1);
+      transform: scale3d(1, 1, 1);
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     .cd-lbl {
@@ -2485,13 +2489,18 @@
                   </g>
                 </g>
 
-                <!-- 9-10. 伊芙 EVE 牽著 瓦力 WALL-E（無眼睛，保留伊芙流線感測面罩＋藍光胸標與瓦力雙筒鏡框＋履帶） -->
+                <!-- 9-10. 伊芙 EVE 牽著 瓦力 WALL-E（含伊芙發光藍眼與瓦力雙筒望遠鏡眼睛） -->
                 <g class="eve-walle-drift">
                   <g transform="scale(1.62)">
                     <!-- 伊芙 EVE -->
                     <ellipse cx="24" cy="-5" rx="9" ry="14.6" fill="url(#baymaxBody)" stroke="#ced4da" stroke-width="1" transform="rotate(14 24 -5)"/>
                     <ellipse cx="13.8" cy="-3" rx="2.8" ry="8.6" fill="#ffffff" stroke="#dee2e6" stroke-width="0.7" transform="rotate(24 13.8 -3)"/>
                     <ellipse cx="26.2" cy="-9.6" rx="5.8" ry="3.6" fill="#182238" transform="rotate(14 26.2 -9.6)"/>
+                    <!-- 伊芙招牌發光藍眼 -->
+                    <ellipse cx="24.4" cy="-10" rx="1.5" ry="1.05" fill="#4dabf7" transform="rotate(14 24.4 -10)"/>
+                    <ellipse cx="28.1" cy="-9.1" rx="1.5" ry="1.05" fill="#4dabf7" transform="rotate(14 28.1 -9.1)"/>
+                    <circle cx="24.7" cy="-10.3" r="0.45" fill="#ffffff"/>
+                    <circle cx="28.4" cy="-9.4" r="0.45" fill="#ffffff"/>
                     <circle cx="22.5" cy="-2.2" r="1.4" fill="#51cf66" opacity="0.85"/>
                     <!-- 牽手星光連線 -->
                     <line x1="4" y1="3" x2="14" y2="-1" stroke="#ffd166" stroke-width="1.8" stroke-dasharray="2.5 2"/>
@@ -2503,13 +2512,17 @@
                     <polygon points="-17.8,18.2 -13.6,12 -0.8,12 2.8,18.2" fill="#343a40" stroke="#adb5bd" stroke-width="0.95" stroke-linejoin="round"/>
                     <circle cx="-13" cy="15.4" r="1.7" fill="#868e96"/>
                     <circle cx="-2" cy="15.4" r="1.7" fill="#868e96"/>
-                    <!-- 雙筒望遠鏡頭框（純金屬鏡框，內部無眼睛） -->
+                    <!-- 瓦力雙筒望遠鏡與可愛眼睛 -->
                     <rect x="-12.4" y="-7.2" width="11.4" height="5.6" rx="2.6" fill="#dee2e6" stroke="#868e96" stroke-width="0.95"/>
                     <line x1="-6.7" y1="-7.2" x2="-6.7" y2="-1.6" stroke="#868e96" stroke-width="1.2"/>
+                    <circle cx="-9.6" cy="-4.4" r="1.7" fill="#182238"/>
+                    <circle cx="-3.8" cy="-4.4" r="1.7" fill="#182238"/>
+                    <circle cx="-9.1" cy="-4.9" r="0.65" fill="#ffffff"/>
+                    <circle cx="-3.3" cy="-4.9" r="0.65" fill="#ffffff"/>
                   </g>
                 </g>
 
-                <!-- 11. 大英雄天團 裝甲杯麵 Baymax（無眼睛，純白圓潤頭盔與紅紫飛行裝甲＋噴射尾焰） -->
+                <!-- 11. 大英雄天團 裝甲杯麵 Baymax（含經典圓點連線雙眼） -->
                 <g class="baymax-fly">
                   <g transform="scale(1.64)">
                     <polygon points="-8,-6 -25,-21 -15,-2" fill="#fa5252" stroke="#c92a2a" stroke-width="0.95" stroke-linejoin="round"/>
@@ -2522,6 +2535,10 @@
                     <path d="M8,-4 L23,-7.2" stroke="#fa5252" stroke-width="5.3" stroke-linecap="round"/>
                     <circle cx="24" cy="-7.2" r="3" fill="#862e9c"/>
                     <ellipse cx="14.2" cy="1" rx="8.8" ry="7.3" fill="url(#baymaxBody)" stroke="#adb5bd" stroke-width="1"/>
+                    <!-- 裝甲杯麵雙眼與連線 -->
+                    <circle cx="11.2" cy="0.6" r="1.15" fill="#182238"/>
+                    <circle cx="17.2" cy="0.6" r="1.15" fill="#182238"/>
+                    <line x1="12.35" y1="0.6" x2="16.05" y2="0.6" stroke="#182238" stroke-width="0.85"/>
                   </g>
                 </g>
 
@@ -2693,7 +2710,7 @@
                   </g></g>
                 </g>
 
-                <!-- 22. 大英雄天團 療癒系原版杯麵 Baymax（無眼睛，純白胖嘟嘟輪廓與胸口充電環） -->
+                <!-- 22. 大英雄天團 療癒系原版杯麵 Baymax（含經典圓點連線雙眼） -->
                 <g class="baymax-ground-stroll">
                   <g transform="scale(1.68)"><g class="char-idle-bob">
                     <ellipse cx="0" cy="11" rx="14.4" ry="12.4" fill="url(#baymaxBody)" stroke="#ced4da" stroke-width="1.1"/>
@@ -2703,6 +2720,10 @@
                     <ellipse cx="-14.6" cy="7" rx="3.9" ry="8.2" transform="rotate(24 -14.6 7)" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
                     <ellipse cx="14.6" cy="9" rx="3.9" ry="8.2" transform="rotate(-18 14.6 9)" fill="#ffffff" stroke="#ced4da" stroke-width="1"/>
                     <ellipse cx="0" cy="-3" rx="9.8" ry="7.5" fill="url(#baymaxBody)" stroke="#ced4da" stroke-width="1.1"/>
+                    <!-- 療癒系杯麵雙眼與連線 -->
+                    <circle cx="-3.3" cy="-3.2" r="1.25" fill="#182238"/>
+                    <circle cx="3.3" cy="-3.2" r="1.25" fill="#182238"/>
+                    <line x1="-2.05" y1="-3.2" x2="2.05" y2="-3.2" stroke="#182238" stroke-width="0.9"/>
                   </g></g>
                 </g>
 
@@ -3759,22 +3780,35 @@
       }
     }
 
+    const cdNumEls = {};
+    const barEls = {};
+    let cachedTargetMs = 0;
+    let lastBarQuantized = -1;
+    let rafCountdownId = null;
+
+    function getCdNumEl(elId) {
+      if (!cdNumEls[elId]) {
+        cdNumEls[elId] = document.getElementById(elId);
+      }
+      return cdNumEls[elId];
+    }
+
     function applyFlipDigit(elId, newVal, key) {
-      const el = document.getElementById(elId);
+      const el = getCdNumEl(elId);
       if (!el) return;
       if (prevDigits[key] !== newVal) {
         el.textContent = newVal;
         prevDigits[key] = newVal;
+        el.classList.remove("smooth-glide");
+        // 透過雙層 rAF 觸發重新播放動畫，避免同步讀取 offsetWidth 引發版面抖動
         requestAnimationFrame(() => {
-          el.classList.remove("smooth-glide");
-          void el.offsetWidth;
-          el.classList.add("smooth-glide");
+          const target = getCdNumEl(elId);
+          if (target && prevDigits[key] === newVal) {
+            target.classList.add("smooth-glide");
+          }
         });
       }
     }
-
-    let cachedTargetMs = 0;
-    const barEls = {};
 
     function refreshVacationHeader() {
       const presetInfo = PRESETS[state.holidayPreset] || PRESETS.summer;
@@ -3788,6 +3822,7 @@
 
       const parsed = new Date(state.vacDate).getTime();
       cachedTargetMs = isNaN(parsed) ? 0 : parsed;
+      lastBarQuantized = -1;
 
       const fw = state.fireworksTime || "21:00";
       document.getElementById("vipFireworksHeadline").textContent = `今晚煙火秀：${fw} 準時登場`;
@@ -3801,7 +3836,7 @@
         barEls[barId] = bar;
       }
       const clamped = ratio < 0 ? 0 : (ratio > 1 ? 1 : ratio);
-      bar.style.transform = `scale3d(${clamped.toFixed(4)}, 1, 1)`;
+      bar.style.transform = `scale3d(${clamped.toFixed(3)}, 1, 1)`;
     }
 
     function updateTimers() {
@@ -3819,15 +3854,20 @@
       applyFlipDigit("cdMins", m, "m");
       applyFlipDigit("cdSecs", s, "s");
 
-      const subSecRatio = diff > 0 ? ((diff % 1000) / 1000) : 0;
-      const minRatio = diff > 0 ? ((diff % 60000) / 60000) : 0;
-      const hrRatio = diff > 0 ? ((diff % 3600000) / 3600000) : 0;
-      const dayRatio = diff > 0 ? ((diff % 86400000) / 86400000) : 0;
+      // 以 20ms 步進量化進度條，兼顧視覺滑順與 GPU 負擔降低
+      const quantized = Math.floor(nowMs / 20);
+      if (quantized !== lastBarQuantized) {
+        lastBarQuantized = quantized;
+        const subSecRatio = diff > 0 ? ((diff % 1000) / 1000) : 0;
+        const minRatio = diff > 0 ? ((diff % 60000) / 60000) : 0;
+        const hrRatio = diff > 0 ? ((diff % 3600000) / 3600000) : 0;
+        const dayRatio = diff > 0 ? ((diff % 86400000) / 86400000) : 0;
 
-      setLinearBarScale("barSecs", subSecRatio);
-      setLinearBarScale("barMins", minRatio);
-      setLinearBarScale("barHours", hrRatio);
-      setLinearBarScale("barDays", dayRatio);
+        setLinearBarScale("barSecs", subSecRatio);
+        setLinearBarScale("barMins", minRatio);
+        setLinearBarScale("barHours", hrRatio);
+        setLinearBarScale("barDays", dayRatio);
+      }
     }
 
     function smoothCountdownLoop() {
@@ -3835,7 +3875,7 @@
       if (vacPage && vacPage.classList.contains("active")) {
         updateTimers();
       }
-      requestAnimationFrame(smoothCountdownLoop);
+      rafCountdownId = requestAnimationFrame(smoothCountdownLoop);
     }
 
     function renderChecklist() {
