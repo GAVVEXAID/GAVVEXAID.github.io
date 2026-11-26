@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Resort Wait Display - iPad 奇幻動態全景版 V11</title>
+  <title>Resort Wait Display - iPad 奇幻動態全景版 V12（26位角色全明星彩蛋）</title>
   <style>
     :root {
       --bar-bg: #1c222e;
@@ -725,6 +725,184 @@
     /* 煙火次波與多層綻放 */
     .fw-burst-4 { animation-delay: 0.9s; }
     .fw-burst-5 { animation-delay: 2.6s; }
+
+    /* ================= 26位迪士尼角色小彩蛋專屬動畫 ================= */
+    /* 1. 空中飛翔群：小飛俠彼得潘一行人、小飛象、奇妙仙子、魔毯阿拉丁、巴斯光年、瓦力伊芙 */
+    .peter-pan-flight {
+      animation: peterPanFly 32s linear infinite;
+    }
+    @keyframes peterPanFly {
+      0% { transform: translate(-260px, 118px) rotate(-6deg); }
+      45% { transform: translate(680px, 78px) rotate(-2deg); }
+      100% { transform: translate(1620px, 108px) rotate(-5deg); }
+    }
+
+    .dumbo-flight {
+      animation: dumboFly 38s linear infinite 6s;
+    }
+    @keyframes dumboFly {
+      0% { transform: translate(1580px, 178px); }
+      50% { transform: translate(720px, 152px); }
+      100% { transform: translate(-220px, 182px); }
+    }
+    .dumbo-ear {
+      transform-box: fill-box;
+      transform-origin: right center;
+      animation: earFlap 0.65s ease-in-out infinite alternate;
+    }
+    @keyframes earFlap {
+      0% { transform: rotate(-18deg) scaleY(0.85); }
+      100% { transform: rotate(22deg) scaleY(1.1); }
+    }
+
+    .tinkerbell-orbit {
+      animation: tinkFlutter 16s ease-in-out infinite;
+    }
+    @keyframes tinkFlutter {
+      0% { transform: translate(555px, 415px); }
+      25% { transform: translate(665px, 345px); }
+      50% { transform: translate(865px, 375px); }
+      75% { transform: translate(775px, 455px); }
+      100% { transform: translate(555px, 415px); }
+    }
+    .tink-wing {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: wingBuzz 0.16s ease-in-out infinite alternate;
+    }
+    @keyframes wingBuzz {
+      0% { transform: scaleX(0.5); }
+      100% { transform: scaleX(1.15); }
+    }
+
+    .aladdin-carpet {
+      animation: carpetGlide 42s linear infinite 14s;
+    }
+    @keyframes carpetGlide {
+      0% { transform: translate(-200px, 232px) rotate(3deg); }
+      50% { transform: translate(720px, 204px) rotate(-2deg); }
+      100% { transform: translate(1640px, 228px) rotate(3deg); }
+    }
+
+    .buzz-soar {
+      animation: buzzFly 29s linear infinite 11s;
+    }
+    @keyframes buzzFly {
+      0% { transform: translate(1600px, 278px) rotate(12deg); }
+      50% { transform: translate(740px, 236px) rotate(4deg); }
+      100% { transform: translate(-220px, 268px) rotate(10deg); }
+    }
+
+    .eve-walle-drift {
+      animation: eveDrift 35s linear infinite 20s;
+    }
+    @keyframes eveDrift {
+      0% { transform: translate(-180px, 315px); }
+      50% { transform: translate(700px, 292px); }
+      100% { transform: translate(1620px, 318px); }
+    }
+
+    /* 2. 前景地面巡遊大隊：米奇、米妮、唐老鴨、黛絲、高飛、布魯托、維尼小豬跳跳虎、雪寶、胡迪翠絲三眼怪、達菲雪莉玫 */
+    .parade-group-1 {
+      animation: paradeWalkRight 46s linear infinite;
+    }
+    @keyframes paradeWalkRight {
+      0% { transform: translate(-380px, 646px); }
+      100% { transform: translate(1580px, 646px); }
+    }
+
+    .parade-group-2 {
+      animation: paradeWalkLeft 52s linear infinite 8s;
+    }
+    @keyframes paradeWalkLeft {
+      0% { transform: translate(1560px, 652px); }
+      100% { transform: translate(-420px, 652px); }
+    }
+
+    .char-bob {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: charWalkBob 0.55s ease-in-out infinite alternate;
+    }
+    .char-bob-2 { animation-delay: 0.18s; }
+    .char-bob-3 { animation-delay: 0.36s; }
+    @keyframes charWalkBob {
+      0% { transform: translateY(0px) rotate(-3deg); }
+      100% { transform: translateY(-4.5px) rotate(3deg); }
+    }
+
+    .tigger-bounce {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: tiggerSpring 0.72s cubic-bezier(0.28, 0.84, 0.42, 1) infinite alternate;
+    }
+    @keyframes tiggerSpring {
+      0% { transform: translateY(0px) scaleY(0.92); }
+      100% { transform: translateY(-13px) scaleY(1.06); }
+    }
+
+    /* 3. 驚喜探頭與定點彩蛋：史迪奇、奇奇蒂蒂、大眼仔毛怪、杯麵、妙妙貓、白雪愛麗絲、辛巴、愛莎、閃電麥坤 */
+    .peek-stitch {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: peekPop 11s ease-in-out infinite;
+    }
+    .peek-chipdale {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: peekPop 13s ease-in-out infinite 3.5s;
+    }
+    .peek-monsters {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: peekPop 14s ease-in-out infinite 7s;
+    }
+    .peek-baymax {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: peekPop 12s ease-in-out infinite 5s;
+    }
+    @keyframes peekPop {
+      0%, 18%, 100% { transform: translateY(28px) scale(0.92); opacity: 0; }
+      26%, 54% { transform: translateY(0px) scale(1); opacity: 1; }
+      62% { transform: translateY(28px) scale(0.92); opacity: 0; }
+    }
+
+    .cheshire-fade {
+      animation: cheshireAppear 15s ease-in-out infinite 2s;
+    }
+    @keyframes cheshireAppear {
+      0%, 25%, 75%, 100% { opacity: 0; }
+      40%, 60% { opacity: 0.92; }
+    }
+
+    .simba-roar {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      animation: simbaHead 6s ease-in-out infinite alternate;
+    }
+    @keyframes simbaHead {
+      0% { transform: rotate(-3deg); }
+      100% { transform: rotate(5deg); }
+    }
+
+    .mcqueen-zip {
+      animation: mcqueenRace 22s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 4s;
+    }
+    @keyframes mcqueenRace {
+      0% { transform: translate(-220px, 654px); }
+      45% { transform: translate(1620px, 654px); }
+      100% { transform: translate(1620px, 654px); }
+    }
+
+    .hidden-mickey-sparkle {
+      animation: hmGlow 4.5s ease-in-out infinite alternate;
+    }
+    @keyframes hmGlow {
+      0% { opacity: 0.28; transform: scale(0.95); }
+      100% { opacity: 0.88; transform: scale(1.06); }
+    }
+
 
     .vacation-content {
       position: relative;
@@ -1625,6 +1803,288 @@
                 <rect x="50" y="-13" width="10" height="7" rx="1.5" fill="#fff3b0"/>
                 <circle cx="14" cy="2" r="4" fill="#182238" stroke="#ffd166" stroke-width="1.2"/>
                 <circle cx="52" cy="2" r="4" fill="#182238" stroke="#ffd166" stroke-width="1.2"/>
+              </g>
+
+
+              <!-- ==================== 26位迪士尼＆皮克斯經典角色小彩蛋 ==================== -->
+              <!-- 【高空飛行組】 -->
+              <!-- 1-3. 小飛俠彼得潘、溫蒂、約翰飛越月亮剪影 (3位) -->
+              <g class="peter-pan-flight" fill="#fff6cc" opacity="0.92">
+                <!-- 彼得潘 -->
+                <g transform="translate(86, 0)">
+                  <path d="M-12,2 L8,-4 L16,-1 L6,5 L-6,8 L-16,12 L-10,4 Z"/>
+                  <circle cx="8" cy="-7" r="3.5"/>
+                  <polygon points="6,-10 14,-13 10,-7"/>
+                </g>
+                <!-- 溫蒂 -->
+                <g transform="translate(46, 10)">
+                  <path d="M-12,4 Q0,-3 12,0 L10,8 Q-2,10 -14,9 Z"/>
+                  <circle cx="11" cy="-3" r="3.3"/>
+                </g>
+                <!-- 約翰 (高禮帽＋雨傘) -->
+                <g transform="translate(10, 18)">
+                  <rect x="-8" y="-1" width="16" height="6" rx="2"/>
+                  <circle cx="7" cy="-4" r="3.2"/>
+                  <rect x="4" y="-10" width="6" height="4"/>
+                  <line x1="8" y1="-2" x2="18" y2="-8" stroke="#fff6cc" stroke-width="1.4"/>
+                </g>
+              </g>
+
+              <!-- 4. 小飛象 Dumbo 拍動大耳朵飛翔 -->
+              <g class="dumbo-flight">
+                <ellipse cx="0" cy="4" rx="14" ry="10" fill="#a5d8ff"/>
+                <circle cx="-11" cy="-1" r="8" fill="#a5d8ff"/>
+                <!-- 黃色小馬戲團帽 -->
+                <polygon points="-15,-8 -11,-17 -7,-8" fill="#ffd166"/>
+                <!-- 拍動的大耳朵 -->
+                <ellipse class="dumbo-ear" cx="-5" cy="-2" rx="12" ry="7" fill="#74c0fc" stroke="#ff9ebb" stroke-width="1.2"/>
+                <!-- 翹起的象鼻 -->
+                <path d="M-18,1 Q-25,1 -24,-5" fill="none" stroke="#a5d8ff" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- 魔法羽毛 -->
+                <path d="M-24,-5 L-31,-9" stroke="#ffd166" stroke-width="2" stroke-linecap="round"/>
+              </g>
+
+              <!-- 5. 奇妙仙子 Tinker Bell 環繞城堡撒金粉 -->
+              <g class="tinkerbell-orbit">
+                <circle cx="0" cy="0" r="14" fill="rgba(255, 243, 176, 0.35)"/>
+                <ellipse class="tink-wing" cx="-4" cy="-4" rx="8" ry="3.5" transform="rotate(-25 -4 -4)" fill="#e0f2fe" opacity="0.85"/>
+                <ellipse class="tink-wing" cx="4" cy="-4" rx="8" ry="3.5" transform="rotate(25 4 -4)" fill="#e0f2fe" opacity="0.85"/>
+                <polygon points="-4,6 4,6 0,-2" fill="#8ce99a"/>
+                <circle cx="0" cy="-5" r="3" fill="#ffe8cc"/>
+                <circle cx="0" cy="-8" r="2.2" fill="#ffd166"/>
+                <circle cx="-10" cy="8" r="1.6" fill="#fff3b0"/>
+                <circle cx="-18" cy="12" r="1.2" fill="#ffd166"/>
+              </g>
+
+              <!-- 6-7. 阿拉丁與茉莉公主乘魔毯飛翔 (2位) -->
+              <g class="aladdin-carpet">
+                <!-- 魔毯 -->
+                <path d="M-24,8 Q0,2 24,8 L20,13 Q0,8 -20,13 Z" fill="#9c36b5" stroke="#ffd166" stroke-width="1.3"/>
+                <!-- 阿拉丁 -->
+                <rect x="2" y="-3" width="7" height="9" rx="2" fill="#f8f9fa"/>
+                <circle cx="6" cy="-6" r="3.2" fill="#e0a96d"/>
+                <rect x="4" y="-10" width="4" height="2.2" fill="#ff6b6b"/>
+                <!-- 茉莉公主 -->
+                <rect x="-10" y="-2" width="7" height="8" rx="2" fill="#4dabf7"/>
+                <circle cx="-6" cy="-5" r="3.2" fill="#e0a96d"/>
+                <path d="M-9,-6 Q-15,0 -13,6" fill="none" stroke="#182238" stroke-width="2.5"/>
+              </g>
+
+              <!-- 8. 巴斯光年 Buzz Lightyear 展開飛翼滑翔 -->
+              <g class="buzz-soar">
+                <polygon points="-4,0 16,-12 14,2" fill="#69db7c" stroke="#c77dff" stroke-width="1"/>
+                <polygon points="-4,4 16,16 14,2" fill="#69db7c" stroke="#c77dff" stroke-width="1"/>
+                <ellipse cx="-4" cy="2" rx="13" ry="5.5" fill="#ffffff"/>
+                <circle cx="-14" cy="2" r="4.8" fill="rgba(165, 216, 255, 0.65)" stroke="#74c0fc" stroke-width="1"/>
+                <circle cx="-14" cy="2" r="2.8" fill="#ffd8a8"/>
+              </g>
+
+              <!-- 9. 伊芙 EVE 帶著瓦力 WALL-E 太空漫步 (2位) -->
+              <g class="eve-walle-drift">
+                <!-- 伊芙 EVE -->
+                <ellipse cx="18" cy="-4" rx="7" ry="11" fill="#ffffff" transform="rotate(15 18 -4)"/>
+                <ellipse cx="20" cy="-8" rx="4.5" ry="2.8" fill="#182238" transform="rotate(15 20 -8)"/>
+                <circle cx="19" cy="-8" r="1" fill="#4dabf7"/>
+                <circle cx="22" cy="-7.5" r="1" fill="#4dabf7"/>
+                <!-- 瓦力 WALL-E -->
+                <rect x="-12" y="2" width="12" height="10" rx="2" fill="#f59f00"/>
+                <rect x="-13" y="11" width="14" height="4" rx="2" fill="#343a40"/>
+                <rect x="-10" y="-4" width="9" height="4" rx="1.5" fill="#ced4da"/>
+                <circle cx="-8" cy="-2" r="1.2" fill="#182238"/>
+                <circle cx="-3" cy="-2" r="1.2" fill="#182238"/>
+              </g>
+
+              <!-- 【地標定點＆驚喜探頭彩蛋組】 -->
+              <!-- 10. 獅子王辛巴 Simba 站在左側山岩剪影上仰望夜空 -->
+              <g class="simba-roar" transform="translate(328, 560)">
+                <path d="M-8,12 L-5,-2 L4,-4 L9,12 Z" fill="#f59f00"/>
+                <circle cx="5" cy="-6" r="5" fill="#f59f00"/>
+                <circle cx="2" cy="-10" r="2.2" fill="#f59f00"/>
+                <circle cx="8" cy="-10" r="2.2" fill="#f59f00"/>
+                <path d="M-8,8 Q-16,2 -14,-4" fill="none" stroke="#f59f00" stroke-width="2" stroke-linecap="round"/>
+              </g>
+
+              <!-- 11. 愛麗絲夢遊仙境 妙妙貓 Cheshire Cat 在樹梢微笑閃現 -->
+              <g class="cheshire-fade" transform="translate(476, 558)">
+                <ellipse cx="0" cy="0" rx="11" ry="8" fill="#f06595"/>
+                <polygon points="-9,-5 -11,-13 -4,-7" fill="#f06595"/>
+                <polygon points="9,-5 11,-13 4,-7" fill="#f06595"/>
+                <circle cx="-4" cy="-2" r="1.6" fill="#ffd166"/>
+                <circle cx="4" cy="-2" r="1.6" fill="#ffd166"/>
+                <path d="M-7,2 Q0,8 7,2" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              </g>
+
+              <!-- 12. 史迪奇 Stitch 從左側小鎮屋頂驚喜探頭揮手 -->
+              <g class="peek-stitch" transform="translate(48, 564)">
+                <ellipse cx="0" cy="4" rx="11" ry="9" fill="#339af0"/>
+                <ellipse cx="-12" cy="-3" rx="5" ry="11" transform="rotate(-25 -12 -3)" fill="#339af0" stroke="#ff8787" stroke-width="1"/>
+                <ellipse cx="12" cy="-3" rx="5" ry="11" transform="rotate(25 12 -3)" fill="#339af0" stroke="#ff8787" stroke-width="1"/>
+                <circle cx="-4" cy="2" r="2.3" fill="#182238"/>
+                <circle cx="4" cy="2" r="2.3" fill="#182238"/>
+                <ellipse cx="0" cy="5" rx="3" ry="2" fill="#1864ab"/>
+              </g>
+
+              <!-- 13-14. 奇奇與蒂蒂 Chip 'n' Dale 在左側街燈旁探頭 (2位) -->
+              <g class="peek-chipdale" transform="translate(154, 622)">
+                <!-- 奇奇 (黑鼻) -->
+                <circle cx="-9" cy="0" r="7.5" fill="#8d5524"/>
+                <circle cx="-13" cy="-7" r="3" fill="#8d5524"/>
+                <circle cx="-5" cy="-7" r="3" fill="#8d5524"/>
+                <circle cx="-9" cy="1" r="2" fill="#182238"/>
+                <!-- 蒂蒂 (紅鼻) -->
+                <circle cx="9" cy="1" r="7.5" fill="#a46628"/>
+                <circle cx="5" cy="-6" r="3" fill="#a46628"/>
+                <circle cx="13" cy="-6" r="3" fill="#a46628"/>
+                <circle cx="9" cy="2" r="2.3" fill="#ff6b6b"/>
+              </g>
+
+              <!-- 15-16. 怪獸電力公司 毛怪蘇利文＆大眼仔麥克 在右側草坡探頭 (2位) -->
+              <g class="peek-monsters" transform="translate(1110, 618)">
+                <!-- 毛怪 Sulley -->
+                <ellipse cx="-12" cy="2" rx="13" ry="15" fill="#3bc9db"/>
+                <polygon points="-20,-10 -24,-18 -15,-12" fill="#ced4da"/>
+                <polygon points="-4,-10 0,-18 -9,-12" fill="#ced4da"/>
+                <circle cx="-16" cy="-2" r="2" fill="#ffffff"/>
+                <circle cx="-8" cy="-2" r="2" fill="#ffffff"/>
+                <!-- 大眼仔 Mike Wazowski -->
+                <circle cx="12" cy="6" r="10.5" fill="#69db7c"/>
+                <polygon points="6,-3 4,-8 9,-4" fill="#e9ecef"/>
+                <polygon points="18,-3 20,-8 15,-4" fill="#e9ecef"/>
+                <circle cx="12" cy="5" r="4.5" fill="#ffffff"/>
+                <circle cx="12" cy="5" r="2.2" fill="#2b8a3e"/>
+              </g>
+
+              <!-- 17. 大英雄天團 杯麵 Baymax 從右側小鎮屋頂探頭打招呼 -->
+              <g class="peek-baymax" transform="translate(1386, 564)">
+                <ellipse cx="0" cy="4" rx="14" ry="10" fill="#ffffff"/>
+                <circle cx="-5" cy="3" r="1.8" fill="#182238"/>
+                <circle cx="5" cy="3" r="1.8" fill="#182238"/>
+                <line x1="-5" y1="3" x2="5" y2="3" stroke="#182238" stroke-width="1.3"/>
+              </g>
+
+              <!-- 18. 冰雪奇緣 艾莎 Elsa 站在城堡陽台揮舞冰晶魔法 -->
+              <g transform="translate(756, 526)">
+                <polygon points="-5,16 5,16 2,2 -2,2" fill="#74c0fc"/>
+                <circle cx="0" cy="-1" r="3" fill="#ffe8cc"/>
+                <path d="M-2,-3 Q4,-2 5,5" fill="none" stroke="#fff3bf" stroke-width="2"/>
+                <circle cx="10" cy="-5" r="3" fill="#a5d8ff" class="star-twinkle star-t1"/>
+              </g>
+
+              <!-- 【前景草坡大遊行組：向右行走隊伍 (19-24，共6位)】 -->
+              <g class="parade-group-1">
+                <!-- 19. 米奇 Mickey Mouse -->
+                <g class="char-bob" transform="translate(0, -14)">
+                  <rect x="-5" y="2" width="10" height="10" rx="3" fill="#fa5252"/>
+                  <circle cx="0" cy="-4" r="5.5" fill="#182238"/>
+                  <circle cx="-5.5" cy="-9.5" r="3.5" fill="#182238"/>
+                  <circle cx="5.5" cy="-9.5" r="3.5" fill="#182238"/>
+                  <ellipse cx="-3" cy="13" rx="3.2" ry="1.8" fill="#ffd166"/>
+                  <ellipse cx="3" cy="13" rx="3.2" ry="1.8" fill="#ffd166"/>
+                </g>
+                <!-- 20. 米妮 Minnie Mouse (紅色蝴蝶結＋圓點裙) -->
+                <g class="char-bob char-bob-2" transform="translate(26, -14)">
+                  <polygon points="-7,12 7,12 4,1 -4,1" fill="#ff6b6b"/>
+                  <circle cx="0" cy="-4" r="5.5" fill="#182238"/>
+                  <circle cx="-5.5" cy="-9.5" r="3.5" fill="#182238"/>
+                  <circle cx="5.5" cy="-9.5" r="3.5" fill="#182238"/>
+                  <polygon points="-4,-11 0,-9 4,-11 4,-7 0,-9 -4,-7" fill="#ff4d4f"/>
+                </g>
+                <!-- 21. 唐老鴨 Donald Duck -->
+                <g class="char-bob char-bob-3" transform="translate(52, -13)">
+                  <rect x="-5" y="1" width="10" height="9" rx="3" fill="#339af0"/>
+                  <circle cx="0" cy="-4" r="5" fill="#ffffff"/>
+                  <ellipse cx="4" cy="-3" rx="4" ry="1.8" fill="#fcc419"/>
+                  <rect x="-4" y="-10" width="8" height="2.5" rx="1" fill="#228be6"/>
+                </g>
+                <!-- 22. 高飛 Goofy -->
+                <g class="char-bob" transform="translate(78, -18)">
+                  <rect x="-4" y="2" width="8" height="14" rx="2" fill="#ff922b"/>
+                  <circle cx="0" cy="-4" r="4.8" fill="#182238"/>
+                  <polygon points="-3,-9 3,-9 1,-16 -2,-16" fill="#69db7c"/>
+                </g>
+                <!-- 23. 維尼小熊 Winnie the Pooh -->
+                <g class="char-bob char-bob-2" transform="translate(114, -13)">
+                  <ellipse cx="0" cy="5" rx="6.5" ry="7" fill="#fcc419"/>
+                  <rect x="-6" y="0" width="12" height="5.5" rx="2" fill="#fa5252"/>
+                  <circle cx="0" cy="-4" r="5.2" fill="#fcc419"/>
+                  <circle cx="-4.5" cy="-8.5" r="2.2" fill="#fcc419"/>
+                  <circle cx="4.5" cy="-8.5" r="2.2" fill="#fcc419"/>
+                </g>
+                <!-- 24. 跳跳虎 Tigger (彈簧跳躍!) -->
+                <g class="tigger-bounce" transform="translate(140, -15)">
+                  <ellipse cx="0" cy="5" rx="5.5" ry="8" fill="#ff922b"/>
+                  <circle cx="0" cy="-5" r="5" fill="#ff922b"/>
+                  <circle cx="-4" cy="-9" r="2" fill="#ff922b"/>
+                  <circle cx="4" cy="-9" r="2" fill="#ff922b"/>
+                  <path d="M-5,10 Q-12,6 -10,0 Q-8,-4 -13,-6" fill="none" stroke="#ff922b" stroke-width="2.2" stroke-linecap="round"/>
+                </g>
+              </g>
+
+              <!-- 【前景草坡大遊行組：向左行走隊伍 (25-29，共5位)】 -->
+              <g class="parade-group-2">
+                <!-- 25. 雪寶 Olaf -->
+                <g class="char-bob" transform="translate(0, -14)">
+                  <circle cx="0" cy="8" r="5.5" fill="#ffffff"/>
+                  <circle cx="0" cy="1" r="4.2" fill="#ffffff"/>
+                  <ellipse cx="0" cy="-5" rx="3.8" ry="4.5" fill="#ffffff"/>
+                  <polygon points="-3,-5 -9,-4 -3,-3" fill="#ff922b"/>
+                </g>
+                <!-- 26. 胡迪警長 Woody -->
+                <g class="char-bob char-bob-2" transform="translate(28, -17)">
+                  <rect x="-4" y="2" width="8" height="13" rx="2" fill="#ffd43b"/>
+                  <circle cx="0" cy="-4" r="4.5" fill="#ffe8cc"/>
+                  <ellipse cx="0" cy="-8" rx="8" ry="2.2" fill="#8d5524"/>
+                  <rect x="-4" y="-11" width="8" height="3.5" rx="1" fill="#8d5524"/>
+                </g>
+                <!-- 27. 玩具總動員三眼怪 Alien -->
+                <g class="char-bob char-bob-3" transform="translate(54, -12)">
+                  <rect x="-5" y="1" width="10" height="9" rx="3" fill="#339af0"/>
+                  <ellipse cx="0" cy="-4" rx="6.5" ry="4.5" fill="#69db7c"/>
+                  <line x1="0" y1="-8.5" x2="0" y2="-13" stroke="#69db7c" stroke-width="1.8"/>
+                  <circle cx="0" cy="-13.5" r="1.8" fill="#69db7c"/>
+                  <circle cx="-2.8" cy="-4.5" r="1.1" fill="#182238"/>
+                  <circle cx="0" cy="-4.5" r="1.1" fill="#182238"/>
+                  <circle cx="2.8" cy="-4.5" r="1.1" fill="#182238"/>
+                </g>
+                <!-- 28. 達菲熊 Duffy -->
+                <g class="char-bob" transform="translate(86, -13)">
+                  <ellipse cx="0" cy="5" rx="6" ry="7" fill="#c68b59"/>
+                  <circle cx="0" cy="-4" r="5.5" fill="#c68b59"/>
+                  <circle cx="-5" cy="-8.5" r="2.6" fill="#c68b59"/>
+                  <circle cx="5" cy="-8.5" r="2.6" fill="#c68b59"/>
+                  <rect x="-3.5" y="-11" width="7" height="2.5" rx="1" fill="#ffffff"/>
+                </g>
+                <!-- 29. 雪莉玫 ShellieMay (蝴蝶結小熊) -->
+                <g class="char-bob char-bob-2" transform="translate(112, -13)">
+                  <ellipse cx="0" cy="5" rx="6" ry="7" fill="#d99b84"/>
+                  <circle cx="0" cy="-4" r="5.5" fill="#d99b84"/>
+                  <circle cx="-5" cy="-8.5" r="2.6" fill="#d99b84"/>
+                  <circle cx="5" cy="-8.5" r="2.6" fill="#d99b84"/>
+                  <polygon points="-3.5,-10 0,-8.5 3.5,-10 3.5,-7 0,-8.5 -3.5,-7" fill="#ff8787"/>
+                </g>
+              </g>
+
+              <!-- 30. 汽車總動員 閃電麥坤 Lightning McQueen 偶爾呼嘯駛過 -->
+              <g class="mcqueen-zip">
+                <path d="M-24,0 L-18,-9 L8,-9 L20,-2 L24,0 Z" fill="#fa5252" stroke="#ffd166" stroke-width="1"/>
+                <polygon points="-12,-8 4,-8 8,-3 -14,-3" fill="#a5d8ff"/>
+                <circle cx="-13" cy="1" r="4" fill="#182238" stroke="#fa5252" stroke-width="1.3"/>
+                <circle cx="13" cy="1" r="4" fill="#182238" stroke="#fa5252" stroke-width="1.3"/>
+                <polygon points="-6,-1 4,-3 2,0 10,-1 -2,2 0,-1" fill="#ffd166"/>
+              </g>
+
+              <!-- 隱藏米奇微光剪影 (Hidden Mickeys) -->
+              <g class="hidden-mickey-sparkle" fill="rgba(255, 243, 176, 0.42)">
+                <g transform="translate(268, 634)">
+                  <circle cx="0" cy="0" r="5"/>
+                  <circle cx="-5" cy="-4.5" r="3"/>
+                  <circle cx="5" cy="-4.5" r="3"/>
+                </g>
+                <g transform="translate(1195, 636)">
+                  <circle cx="0" cy="0" r="5"/>
+                  <circle cx="-5" cy="-4.5" r="3"/>
+                  <circle cx="5" cy="-4.5" r="3"/>
+                </g>
               </g>
 
               <!-- 漂浮的魔法金粉光點 -->
