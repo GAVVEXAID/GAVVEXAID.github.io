@@ -2588,6 +2588,14 @@
       :root { --tb-h: 72px; --bb-h: 76px; }
       .pill-btn, .pill-btn[data-page] { font-size: 1rem; padding: 9px 26px; }
     }
+    /* v18：iPhone 橫向／全螢幕時底部空一截的修正
+       iOS 進入全螢幕、旋轉或工具列收起後，100% 高度常常沒更新；改用程式量到的實際高度撐滿 */
+    html, body { background: #081a44; }
+    html:fullscreen, html:-webkit-full-screen { width: 100% !important; height: 100% !important; position: static !important; padding: 0 !important; }
+    .tv-shell {
+      top: 0 !important; left: 0 !important; right: 0 !important; bottom: auto !important;
+      height: 100vh !important; height: 100dvh !important; height: var(--app-h, 100dvh) !important;
+    }
   </style>
 </head>
 <body>
@@ -7146,6 +7154,31 @@
       };
       window.addEventListener("pointerup", once, true);
     }
+  })();
+  </script>
+  <script>
+  /* ===== v18：量測實際可視高度，讓畫面永遠剛好撐滿（修正 iPhone 橫向底部空白） ===== */
+  (function () {
+    const root = document.documentElement;
+    const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+    function measure() {
+      let h = window.innerHeight;
+      if (window.visualViewport) h = Math.max(h, Math.round(window.visualViewport.height));
+      if (fsEl() && window.screen) {
+        // 全螢幕時以螢幕尺寸為準（iOS 的 screen 永遠是直向數值，所以依方向取短邊或長邊）
+        const sw = screen.width, sh = screen.height, landscape = window.innerWidth > window.innerHeight;
+        h = Math.max(h, landscape ? Math.min(sw, sh) : Math.max(sw, sh));
+      }
+      root.style.setProperty("--app-h", h + "px");
+    }
+    function burst() { measure(); [80, 250, 500, 900, 1500].forEach(t => setTimeout(measure, t)); }
+    measure();
+    window.addEventListener("resize", burst);
+    window.addEventListener("orientationchange", burst);
+    window.addEventListener("pageshow", burst);
+    document.addEventListener("fullscreenchange", burst);
+    document.addEventListener("webkitfullscreenchange", burst);
+    if (window.visualViewport) window.visualViewport.addEventListener("resize", measure);
   })();
   </script>
 </body>
